@@ -16,4 +16,19 @@ do {
 
 kitchen.cleanUp();
 
+
 // Waiter Life Cycle
+
+do{
+	aux = Bar.lookAround();
+	switch(aux)
+		case enter:
+			Table.saluteTheClient();
+			Table.returnToBar();
+		case callTheWaiter():
+			Table.getThePad();
+			Kitchen.handNoteToChef();
+			Kitchen.returnToBar();
+		case alertTheWaiter:
+			do{
+			
