@@ -1,0 +1,19 @@
+// Chef Life Cycle
+
+kitchen.watchNews()
+kitchen.startPreparation()
+
+do {
+	if (!firstCourse) kitchen.continuePreparation();
+	else firstCourse = False;
+	kitchen.proceedToPreparation();
+	bar.alertTheWaiter();
+	while(!kitchen.haveAllPortionsBeenDelivered()){
+		kitchen.haveNextPortionReady();
+		bar.alertTheWaiter();
+	}
+} while !kitchen.hasTheOrderBeenCompleted()
+
+kitchen.cleanUp();
+
+// Waiter Life Cycle
