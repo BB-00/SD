@@ -58,7 +58,7 @@ public class Kitchen {
 
     }
 
-    public synchronized boolean haveAllCoursesBeenServed(){
+    public synchronized boolean haveAllPortionsBeenServed(){
 
         System.out.println("Number of Portions Served: "+numberOfPortionsServed);
         if(numberOfPortionsServed == 7){
@@ -74,7 +74,7 @@ public class Kitchen {
 
         System.out.println("Number of courses Served: "+numberOfCoursesServed);
         
-        if(numberOfCoursesServed == M){
+        if(numberOfCoursesServed == 3){
             return true;
         }
 
@@ -100,6 +100,50 @@ public class Kitchen {
 
         ((Chef) Thread.currentThread()).set_state(ChefStates.CLOSING_SERVICE);
 		repos.set_state(ChefStates.CLOSING_SERVICE);
+
+    }
+
+    public synchronized void returnToBar(){
+
+        ((Waiter) Thread.currentThread()).set_state(WaiterStates.APPRAISING_SITUATION);
+		repos.set_state(WaiterStates.APPRAISING_SITUATION);
+
+    }
+
+    public synchronized void handNoteToChef(){
+
+        ((Waiter) Thread.currentThread()).set_state(WaiterStates.PLACING_THE_ORDER);
+		repos.set_state(WaiterStates.PLACING_THE_ORDER);
+
+        notifyAll();
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+    }
+
+    public synchronized void collectPortion(){
+
+        ((Waiter) Thread.currentThread()).set_state(WaiterStates.WAITING_FOR_PORTION);
+		repos.set_state(WaiterStates.WAITING_FOR_PORTION);
+
+        while (this.numberOfPortionsCooked == 0) {
+            try{
+                wait();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+
+        numberOfPortionsCooked--;
+        numberOfPortionsServed++;
+
+        if (numberOfPortionsServed==7) numberOfPortionsServed=0;
+
+        notifyAll();
+
 
     }
 

@@ -25,7 +25,7 @@ public class Waiter extends Thread {
         this.kitchen=kit;
         this.bar=b;
         this.table=tab;
-        this.waiter_state = WaiterStates.APRAISING_SITUATION;
+        this.waiter_state = WaiterStates.APPRAISING_SITUATION;
     }
 
     @Override
@@ -34,30 +34,30 @@ public class Waiter extends Thread {
         boolean exit = false;
 
         do{
-            char aux = Bar.lookAround();
+            char aux = this.bar.lookAround();
             switch (aux) {
                 case 'e':
-                    Table.saluteTheClient();
-                    Table.returnToBar();
+                    this.table.saluteTheClient();
+                    this.table.returnToBar();
                     break;
                 case 'c':
-                    Table.getThePad();
-                    Kitchen.handNoteToChef();
-                    Kitchen.returnToBar();
+                    this.table.getThePad();
+                    this.kitchen.handNoteToChef();
+                    this.kitchen.returnToBar();
                     break;
                 case 'a':
                     do{
-                        Kitchen.collectPortion();
-                        Table.deliverPortion();
-                    }while(Table.haveAllPortionsBeenDelivered);
-                    Table.returnToBar();
+                        this.kitchen.collectPortion();
+                        this.table.deliverPortion();
+                    }while(this.table.haveAllPortionsBeenDelivered);
+                    this.table.returnToBar();
                     break;
                 case 's':
-                    Bar.prepareTheBill();
-                    Table.presentTheBill();
-                    Table.returnToBar();
+                    this.bar.prepareTheBill();
+                    this.table.presentTheBill();
+                    this.kitchen.returnToBar();
                 case 'g':
-                    exit = Bar.sayGoodBye();
+                    exit = this.bar.sayGoodBye();
                     break;
             }
         } while(!exit);

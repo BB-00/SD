@@ -31,26 +31,26 @@ public class Chef extends Thread{
     @Override
     public void run(){
 
-        Kitchen.watchNews();
-        Kitchen.startPreparation();
+        this.kitchen.watchNews();
+        this.kitchen.startPreparation();
         boolean firstCourse = true;
 
         do {
 
-            if (!firstCourse) Kitchen.continuePreparation();
+            if (!firstCourse) this.kitchen.continuePreparation();
             else firstCourse = false;
 
-            Kitchen.proceedToPreparation();
-            Bar.alertTheWaiter();
+            this.kitchen.proceedToPreparation();
+            this.bar.alertTheWaiter();
 
-            while(!Kitchen.haveAllPortionsBeenDelivered()) {
-                Kitchen.haveNextPortionReady();
-                Bar.alertTheWaiter();
+            while(!this.kitchen.haveAllPortionsBeenServed()) {
+                this.kitchen.haveNextPortionReady();
+                this.bar.alertTheWaiter();
             }
 
-        } while(!Kitchen.hasTheOrderBeenCompleted());
+        } while(!this.kitchen.hasTheOrderBeenCompleted());
 
-        Kitchen.cleanUp();
+        this.kitchen.cleanUp();
 
     }
     
