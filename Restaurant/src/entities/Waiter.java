@@ -1,0 +1,112 @@
+package entities;
+
+import sharedRegions.*;
+
+
+/**
+ *   Waiter thread.
+ *
+ *   Used to simulate the Waiter life cycle.
+ */
+
+public class Waiter extends Thread{
+
+	/**
+	 * 	Waiter state
+	 */
+	
+	private int waiterState;
+	
+	/**
+	 * Reference to the kitchen
+	 */
+	
+	private final Kitchen kit;
+	
+	/**
+	 * Reference to the bar
+	 */
+	
+	private final Bar bar;
+	
+	/**
+	 * Reference to the table
+	 */
+	private final Table tab;
+	
+	/**
+	 * 	@param waiter state
+	 */
+	
+	public void setWaiterState(int waiterState) {
+		this.waiterState = waiterState;
+	}
+	
+	/**
+	 * 	@return waiter state
+	 */
+
+	public int getWaiterState() {
+		return waiterState;
+	}
+	
+	/**
+	 * 	Instantiation of waiter thread
+	 * 
+	 * 	@param waiterState
+	 */
+	
+	public Waiter(String name, Kitchen kit, Bar bar, Table tab) {
+		super(name);
+		this.waiterState = WaiterStates.APPRAISING_SITUATION;
+		this.kit = kit;
+		this.bar = bar;
+		this.tab = tab;
+	}
+	
+	/**
+	 *	Life cycle of the waiter
+	 */
+
+	@Override
+	public void run ()
+	{
+		//used to store the request that needs to be performed by the waiter
+		char request;
+		//used to check if simulation may stop or not
+		boolean stop = false;
+		
+		do {
+			request = bar.lookAround();
+			
+			switch(request)
+			{
+				case 'e':	//Client arriving, needs to be presented with the menu
+					tab.saluteClient(bar.getStudentBeingAnswered());
+					tab.returnBar();
+					break;
+				case 'c':	//Order will be described to the waiter
+					tab.getThePad();
+					kit.handNoteToChef();
+					kit.returnToBar();
+					break;
+				case 'a':	//Portions need to be collected and delivered
+					while(!tab.haveAllClientsBeenServed()) {
+						kit.collectPortion();
+						tab.deliverPortion();
+					}
+					tab.returnBar();
+					break;
+				case 's':	//Bill needs to be prepared so it can be payed by the student
+					bar.preprareBill();
+					tab.presentBill();
+					tab.returnBar();
+					break;
+				case 'g':	//Goodbye needs to be said to a student
+					stop = bar.sayGoodbye();
+					break;
+			}
+			//If the last student has left the restaurant, life cycle may terminate
+		}while (!stop);
+	}
+}

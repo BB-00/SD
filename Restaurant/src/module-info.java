@@ -1,0 +1,3 @@
+module Restaurant {
+	requires genclass;
+}
