@@ -286,7 +286,7 @@ public class Table {
      * Called by the student (inside enter method in the bar)
      */
     public synchronized void seatAtTable() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	
 		students[studentId] = ((Student) Thread.currentThread());
 		students[studentId].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
@@ -321,7 +321,7 @@ public class Table {
      * Called by the student to read a menu, wakes up waiter to signal that he already read the menu
      */
     public synchronized void readMenu() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	
     	students[studentId].setStudentState(StudentStates.SELECTING_THE_COURSES);
     	repos.updateStudentState(studentId, StudentStates.SELECTING_THE_COURSES);
@@ -422,7 +422,7 @@ public class Table {
      * Blocks waiting for courses
      */
     public synchronized void informCompanion() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	
     	while(informingCompanion) {
     		try {
@@ -446,7 +446,7 @@ public class Table {
      * Called by the student to start eating the meal (During random time)
      */    
     public synchronized void startEating() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	 
     	students[studentId].setStudentState(StudentStates.ENJOYING_THE_MEAL);
     	repos.updateStudentState(studentId, StudentStates.ENJOYING_THE_MEAL);
@@ -462,7 +462,7 @@ public class Table {
      * Called by the student to signal that he has finished eating his meal
      */
     public synchronized void endEating() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	
     	numberOfStudentsThatHasFinishEat++;
     	System.out.println("Student "+studentId+" finished");
@@ -482,7 +482,7 @@ public class Table {
      * Called by to student to wait for his companions to finish eating
      */
     public synchronized boolean hasEverybodyFinishedEating() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
     	
     	if(studentId == lastToEatID) {
     		numberOfStudentsThatHasFinishEat = 0;
@@ -566,7 +566,7 @@ public class Table {
      * @return True if current student was the last to arrive, false otherwise
      */
     public synchronized boolean shouldHaveArrivedEarlier() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentId();
+    	int studentId = ((Student) Thread.currentThread()).getStudentID();
 
     	if(studentId == lastToArriveID) {
 	    	students[studentId].setStudentState(StudentStates.PAYING_THE_MEAL);
