@@ -176,10 +176,9 @@ public class Table {
 				e1.printStackTrace();
 			}
     	}
-    	System.out.println("Saluting");
     	
     	notifyAll();
-    	System.out.println("Waiter Saluting student "+studentBeingAnsweredID+ " "+presentingTheMenu);
+    	System.out.println("Waiter Saluting student "+studentBeingAnsweredID);
 
     	while(studentsThatHaveReadTheMenu[studentBeingAnsweredID] == false) {
 	    	try {
@@ -218,7 +217,6 @@ public class Table {
     	
     	notifyAll();
     	
-    	System.out.println("Waiter is now wainting for order description");
     	while(takingTheOrder) {
 	    	try {
 				wait();
@@ -228,7 +226,7 @@ public class Table {
 			}
     	}
     	
-    	System.out.println("Waiter Got the order");
+    	System.out.println("Waiter got the order");
     	
     }
     
@@ -306,13 +304,13 @@ public class Table {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	System.out.println("I student "+studentId+"was waken up ("+studentBeingAnsweredID+", "+takingTheOrder+")");
+	    	System.out.println("Student "+studentId+" was waken up");
 	    	if (studentId == studentBeingAnsweredID && presentingTheMenu == true) {
-	    		System.out.println("I student "+studentId+" Can Proceed");
+	    		System.out.println("Student "+studentId+" Can Proceed");
 	    		break;
 	    	}
 	    }
-    	System.out.println("Student "+studentId+ " was presented with the menu ("+studentBeingAnsweredID+")");
+    	System.out.println("Student "+studentId+ " was presented with the menu");
     	
     	
     }
@@ -467,7 +465,7 @@ public class Table {
     	int studentId = ((Student) Thread.currentThread()).getStudentId();
     	
     	numberOfStudentsThatHasFinishEat++;
-    	System.out.println("I "+studentId+" finished"+numberOfStudentsThatHasFinishEat);
+    	System.out.println("Student "+studentId+" finished");
     	
     	if(numberOfStudentsThatHasFinishEat == ExecConsts.N) {
     		numberOfCoursesEaten++;

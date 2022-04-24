@@ -71,13 +71,13 @@ public class Bar
 			pendingServiceRequestQueue = new MemFIFO<> (new Request [ExecConsts.N * ExecConsts.M]);
 		} catch (MemException e) {
 			pendingServiceRequestQueue = null;
-		    System.exit (1);
+		    System.exit(1);
 		}
 	
+		this.tab = tab;
+		this.repo = repo;
 		this.courseFinished = true;
 		this.studentBeingAnswered = -1;
-		this.repo = repo;
-		this.tab = tab;
 		
 		this.studentsGreeted = new boolean[ExecConsts.N];
 		for(int i = 0 ;i < ExecConsts.N; i++)
@@ -87,7 +87,9 @@ public class Bar
 	/**
 	 * @return Id of the student whose request is being answered
 	 */
-	public int getStudentBeingAnswered() { return studentBeingAnswered; }
+	public int getStudentBeingAnswered() {
+		return studentBeingAnswered;
+	}
 	
 	
 	/**
@@ -101,7 +103,8 @@ public class Bar
      */
 	public void enter() {		
 		synchronized(this) {
-			int studentId = ((Student) Thread.currentThread()).getStudentId();
+			int studentId = ((Student) Thread.currentThread()).getStudentID();
+			Request request = new Request(studentId,'e');
 			
 			students[studentId] = ((Student) Thread.currentThread());
 			students[studentId].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
@@ -114,7 +117,7 @@ public class Bar
 				tab.setLastToArrive(studentId);
 			
 			try {
-				pendingServiceRequestQueue.write(new Request(studentId, 'e'));
+				pendingServiceRequestQueue.write(request);
 			} catch (MemException e) {
 				e.printStackTrace();
 			}
@@ -137,11 +140,11 @@ public class Bar
 	 * Operation call The Waiter, called by the student who arrived first, to call the waiter
 	 */
 	public synchronized void callWaiter() {
-		int studentId = ((Student) Thread.currentThread()).getStudentId();
-		Request r = new Request(studentId,'c');
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentId,'c');
 		
 		try {
-			pendingServiceRequestQueue.write(r);
+			pendingServiceRequestQueue.write(request);
 		} catch (MemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,11 +160,12 @@ public class Bar
 	 * It is called by the last student to finish eating to signal waiter to bring next course
 	 */
 	public synchronized void signalWaiter() {
-		int studentId = ((Student) Thread.currentThread()).getStudentId();
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentId,'s');
 
 		if(((Student) Thread.currentThread()).getStudentState() == StudentStates.PAYING_THE_MEAL) {		
 			try {
-				pendingServiceRequestQueue.write(new Request(studentId, 's'));
+				pendingServiceRequestQueue.write(request);
 			} catch (MemException e) {
 				e.printStackTrace();
 			}
@@ -181,11 +185,11 @@ public class Bar
      * Operation Exit, called by the students when they want to leave
      */
 	public synchronized void exit() {
-		int studentId = ((Student) Thread.currentThread()).getStudentId();
-		Request r = new Request(studentId,'g');
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentId,'g');
 		
 		try {
-			pendingServiceRequestQueue.write(r);
+			pendingServiceRequestQueue.write(request);
 		} catch (MemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -205,9 +209,10 @@ public class Bar
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("Student "+studentId+" wants to leave"+studentBeingAnswered);
+			
 		}
-		System.out.println("I want out "+studentId);		
+		System.out.println("Student "+studentId+" is leaving!");
+		
 	}
 	
 	
@@ -228,7 +233,7 @@ public class Bar
      * 				'g': some student wants to leave and waiter needs to say bye bye
      */
 	public synchronized char lookAround() {
-		Request r;
+		Request request;
 		
 		while(numberOfPendingRequests == 0) {
 			try {
@@ -240,17 +245,15 @@ public class Bar
 		}
 		
 		try {
-			r = pendingServiceRequestQueue.read();
+			request = pendingServiceRequestQueue.read();
 			numberOfPendingRequests--;
 		} catch (MemException e) {	
 			e.printStackTrace();
 			return 0;
 		}		
-
-		System.out.println("Waiter took student "+r.id+ " request from the queue");
-		studentBeingAnswered = r.id;
+		studentBeingAnswered = request.id;
 		
-		return r.type;
+		return request.type;
 	}
 	
 	/**
@@ -302,16 +305,16 @@ public class Bar
 		{
 			try {
 				wait();
-			} catch (InterruptedException e1) {
+			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				e.printStackTrace();
 			}
 		}
 		
-		Request r = new Request(ExecConsts.N+1,'a');
+		Request request = new Request(ExecConsts.N+1,'a');
 		
 		try {
-			pendingServiceRequestQueue.write(r);
+			pendingServiceRequestQueue.write(request);
 		} catch (MemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

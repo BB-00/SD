@@ -10,18 +10,11 @@ import sharedRegions.*;
  */
 
 public class Waiter extends Thread{
-
-	/**
-	 * 	Waiter state
-	 */
-	
-	private int waiterState;
-	
 	/**
 	 * Reference to the kitchen
 	 */
 	
-	private final Kitchen kit;
+	private final Kitchen kitchen;
 	
 	/**
 	 * Reference to the bar
@@ -32,7 +25,13 @@ public class Waiter extends Thread{
 	/**
 	 * Reference to the table
 	 */
-	private final Table tab;
+	private final Table table;
+
+	/**
+	 * 	Waiter state
+	 */
+	
+	private int waiterState;
 	
 	/**
 	 * 	@param waiter state
@@ -59,9 +58,9 @@ public class Waiter extends Thread{
 	public Waiter(String name, Kitchen kit, Bar bar, Table tab) {
 		super(name);
 		this.waiterState = WaiterStates.APPRAISING_SITUATION;
-		this.kit = kit;
+		this.kitchen = kit;
 		this.bar = bar;
-		this.tab = tab;
+		this.table = tab;
 	}
 	
 	/**
@@ -71,42 +70,40 @@ public class Waiter extends Thread{
 	@Override
 	public void run ()
 	{
-		//used to store the request that needs to be performed by the waiter
 		char request;
-		//used to check if simulation may stop or not
-		boolean stop = false;
+		boolean exit = false;
 		
 		do {
-			request = bar.lookAround();
+			request = this.bar.lookAround();
 			
 			switch(request)
 			{
 				case 'e':	//Client arriving, needs to be presented with the menu
-					tab.saluteClient(bar.getStudentBeingAnswered());
-					tab.returnBar();
+					this.table.saluteClient(bar.getStudentBeingAnswered());
+					this.table.returnBar();
 					break;
 				case 'c':	//Order will be described to the waiter
-					tab.getThePad();
-					kit.handNoteToChef();
-					kit.returnToBar();
+					this.table.getThePad();
+					this.kitchen.handNoteToChef();
+					this.kitchen.returnToBar();
 					break;
 				case 'a':	//Portions need to be collected and delivered
-					while(!tab.haveAllClientsBeenServed()) {
-						kit.collectPortion();
-						tab.deliverPortion();
+					while(!this.table.haveAllClientsBeenServed()) {
+						this.kitchen.collectPortion();
+						this.table.deliverPortion();
 					}
-					tab.returnBar();
+					this.table.returnBar();
 					break;
 				case 's':	//Bill needs to be prepared so it can be payed by the student
-					bar.preprareBill();
-					tab.presentBill();
-					tab.returnBar();
+					this.bar.preprareBill();
+					this.table.presentBill();
+					this.table.returnBar();
 					break;
 				case 'g':	//Goodbye needs to be said to a student
-					stop = bar.sayGoodbye();
+					exit = this.bar.sayGoodbye();
 					break;
 			}
 			//If the last student has left the restaurant, life cycle may terminate
-		}while (!stop);
+		}while (!exit);
 	}
 }

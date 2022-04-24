@@ -2,7 +2,6 @@ package entities;
 
 import sharedRegions.Bar;
 import sharedRegions.Table;
-import main.ExecConsts;
 
 /**
  *   Student thread.
@@ -13,79 +12,71 @@ import main.ExecConsts;
 public class Student extends Thread{
 	
 	/**
-	 * 	Student identification
+	 * Reference to the Table
 	 */
-	private int studentId;
-	
+	private final Table table;
+
 	/**
-	 * 	Student state
+	 * Reference to the Bar
 	 */
-	private int studentState;
-	
-	/**
-	 * Reference to the bar
-	 */
-	
 	private final Bar bar;
 	
 	/**
-	 * Reference to the table
+	 * Student ID
 	 */
-	private final Table tab;
+	private  int studentID;
 	
 	/**
-	 * 	@param student id
+	 * Student States
 	 */
-	
-	public void setStudentId(int studentId) {
-		this.studentId = studentId;
-	}
-	
-	/**
-	 * 	@return student id
-	 */
-	
-	public int getStudentId() {
-		return studentId;
-	}
-
-	/**
-	 * 	@param student state
-	 */
-	
-	public void setStudentState(int studentState) {
-		this.studentState = studentState;
-	}
-	
-	/**
-	 * 	@return student state
-	 */
-
-	public int getStudentState() {
-		return studentState;
-	}
-
-	
-	
+	private int studentState;
 	
 	/**
 	 * Instatiation of a student thread
 	 * 
 	 * @param studentId student id
-	 * @param studentState student state
+	 * @param reference to bar
+	 * @param reference to table
 	 */
-	public Student(String name, int studentId, Bar bar, Table tab) {
+	public Student(String name, int studentID, Bar bar, Table table) {
 		super(name);
-		this.studentId = studentId;
+		this.studentID = studentID;
 		this.studentState = StudentStates.GOING_TO_THE_RESTAURANT;
 		this.bar = bar;
-		this.tab = tab;
+		this.table = table;
 	}
-
 	
+	/**
+	 * Set the studentID
+	 * 
+	 * @param studentID
+	 */
+	public void setStudentID(int studentID) {
+		this.studentID = studentID;
+	}
 	
+	/**
+	 * @return studentID
+	 */
+	public int getStudentID() {
+		return this.studentID;
+	}
 	
+	/**
+	 * set the student state
+	 * 
+	 * @param studentState
+	 */
+	public void setStudentState(int studentState) {
+		this.studentState = studentState;
+	}
 	
+	/**
+	 * @return student state
+	 */
+	public int getStudentState() {
+		return this.studentState;
+	}
 	/**
 	 *	Life cycle of the student
 	 */
@@ -94,48 +85,32 @@ public class Student extends Thread{
 	public void run ()
 	{
 		walkABit();
-		bar.enter();
-		tab.readMenu();
+		this.bar.enter();
+		this.table.readMenu();
 		
-		if(studentId == tab.getFirstToArrive())
+		if(studentID == this.table.getFirstToArrive())
 		{
-			tab.prepareOrder();
+			this.table.prepareOrder();
 			do{
-				this.tab.addUpOnesChoices();
-			}while(!this.tab.everybodyHasChosen());
-//			while(!tab.everybodyHasChosen())
-//				tab.addUpOnesChoices();
-			bar.callWaiter();
-			tab.describeOrder();
-			tab.joinTalk();
+				this.table.addUpOnesChoices();
+			}while(!this.table.everybodyHasChosen());
+			this.bar.callWaiter();
+			this.table.describeOrder();
+			this.table.joinTalk();
 		}
-		else
-			tab.informCompanion();
-		
+		else	this.table.informCompanion();
 		do{
-			this.tab.startEating();
-			this.tab.endEating();
-			while(!this.tab.hasEverybodyFinishedEating());
-			if(studentId == this.tab.getLastToEat()) this.bar.signalWaiter();
-		}while(!this.tab.haveAllCoursesBeenEaten());
-//		while(!tab.haveAllCoursesBeenEaten())
-//		{
-//			tab.startEating();
-//			tab.endEating();
-//			numCoursesEaten++;
-//			
-//			while(!tab.hasEverybodyFinishedEating());
-//			System.out.println("I FINISHED MY MEAL");
-//			if(studentId == tab.getLastToEat() && numCoursesEaten != ExecConsts.M)
-//				bar.signalWaiter();
-//		}
-//		
-		if(tab.shouldHaveArrivedEarlier()) 
-		{
-			bar.signalWaiter();
-			tab.honourBill();
+			this.table.startEating();
+			this.table.endEating();
+			while(!this.table.hasEverybodyFinishedEating());
+			if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
+		}while(!this.table.haveAllCoursesBeenEaten());
+
+		if(this.table.shouldHaveArrivedEarlier()) {
+			this.bar.signalWaiter();
+			this.table.honourBill();
 		}
-		bar.exit();
+		this.bar.exit();
 	}
 	
 	

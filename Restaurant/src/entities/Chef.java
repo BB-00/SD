@@ -21,7 +21,7 @@ public class Chef extends Thread{
 	 * Reference to the kitchen
 	 */
 	
-	private final Kitchen kit;
+	private final Kitchen kitchen;
 	
 	/**
 	 * Reference to the bar
@@ -56,7 +56,7 @@ public class Chef extends Thread{
 	public Chef(String name, Kitchen kit, Bar bar) {
 		super(name);
 		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
-		this.kit = kit;
+		this.kitchen = kit;
 		this.bar = bar;
 	}
 
@@ -69,19 +69,19 @@ public class Chef extends Thread{
 	{
 		boolean firstCourse = true;
 		
-		kit.watchTheNews();
-		kit.startPreparation();
+		this.kitchen.watchTheNews();
+		this.kitchen.startPreparation();
 		do {
-			if(!firstCourse) kit.continuePreparation();
+			if(!firstCourse) this.kitchen.continuePreparation();
 			else firstCourse = false;
 			
-			kit.proceedToPresentation();
-			bar.alertWaiter();
+			this.kitchen.proceedToPresentation();
+			this.bar.alertWaiter();
 			
-			while(!kit.haveAllPortionsBeenDelivered()) kit.haveNextPortionReady();
+			while(!this.kitchen.haveAllPortionsBeenDelivered()) this.kitchen.haveNextPortionReady();
 				
-		} while(!kit.hasOrderBeenCompleted());
+		} while(!this.kitchen.hasOrderBeenCompleted());
 		
-		kit.cleanUp();
+		this.kitchen.cleanUp();
 	}
 }
