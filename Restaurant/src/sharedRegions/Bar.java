@@ -103,18 +103,18 @@ public class Bar
      */
 	public void enter() {		
 		synchronized(this) {
-			int studentId = ((Student) Thread.currentThread()).getStudentID();
-			Request request = new Request(studentId,'e');
+			int studentID = ((Student) Thread.currentThread()).getStudentID();
+			Request request = new Request(studentID,'e');
 			
-			students[studentId] = ((Student) Thread.currentThread());
-			students[studentId].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			students[studentID] = ((Student) Thread.currentThread());
+			students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
 			
 			numberOfStudentsAtRestaurant++;
 
 			if(numberOfStudentsAtRestaurant == 1)
-				tab.setFirstToArrive(studentId);
+				tab.setFirstToArrive(studentID);
 			else if (numberOfStudentsAtRestaurant == ExecConsts.N)
-				tab.setLastToArrive(studentId);
+				tab.setLastToArrive(studentID);
 			
 			try {
 				pendingServiceRequestQueue.write(request);
@@ -124,10 +124,10 @@ public class Bar
 
 			numberOfPendingRequests++;
 			
-			students[studentId].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			repo.updateStudentState(studentId, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			repo.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
-			repo.updateStudentSeat(numberOfStudentsAtRestaurant-1, studentId);
+			repo.updateStudentSeat(studentID, numberOfStudentsAtRestaurant-1);
 			
 			notifyAll();
 		}
@@ -140,8 +140,8 @@ public class Bar
 	 * Operation call The Waiter, called by the student who arrived first, to call the waiter
 	 */
 	public synchronized void callWaiter() {
-		int studentId = ((Student) Thread.currentThread()).getStudentID();
-		Request request = new Request(studentId,'c');
+		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentID,'c');
 		
 		try {
 			pendingServiceRequestQueue.write(request);
@@ -160,8 +160,8 @@ public class Bar
 	 * It is called by the last student to finish eating to signal waiter to bring next course
 	 */
 	public synchronized void signalWaiter() {
-		int studentId = ((Student) Thread.currentThread()).getStudentID();
-		Request request = new Request(studentId,'s');
+		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentID,'s');
 
 		if(((Student) Thread.currentThread()).getStudentState() == StudentStates.PAYING_THE_MEAL) {		
 			try {
@@ -185,8 +185,8 @@ public class Bar
      * Operation Exit, called by the students when they want to leave
      */
 	public synchronized void exit() {
-		int studentId = ((Student) Thread.currentThread()).getStudentID();
-		Request request = new Request(studentId,'g');
+		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		Request request = new Request(studentID,'g');
 		
 		try {
 			pendingServiceRequestQueue.write(request);
@@ -199,10 +199,10 @@ public class Bar
 
 		notifyAll();
 		
-		students[studentId].setStudentState(StudentStates.GOING_HOME);
-		repo.updateStudentState(studentId, StudentStates.GOING_HOME);
+		students[studentID].setStudentState(StudentStates.GOING_HOME);
+		repo.updateStudentState(studentID, StudentStates.GOING_HOME);
 		
-		while(studentsGreeted[studentId] == false) {
+		while(studentsGreeted[studentID] == false) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
@@ -211,7 +211,8 @@ public class Bar
 			}
 			
 		}
-		System.out.println("Student "+studentId+" is leaving!");
+		repo.updateStudentSeat(studentID, -1);
+		System.out.println("Student "+studentID+" has left!");
 		
 	}
 	

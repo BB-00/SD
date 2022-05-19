@@ -106,8 +106,8 @@ public class GenRepos {
 	         }
 	      log.writelnString("\t\t\t\t\t\t  The Restaurant - Description of the internal state");
 	      //log.writelnString ("\nNumber of iterations = " + nIter + "\n");
-	      log.writelnString("\n\tChef\tWaiter\tStu0\tStu1\tStu2\tStu3\tStu4\tStu5\tStu6\tNCourse\tNPortion\t\t\tTable\n");
-	      log.writelnString("\n\tState\tState\tState\tState\tState\tState\tState\tState\tState\t\t\t\tSeat0\tSeat1\tSeat2\tSeat3\tSeat4\tSeat5\tSeat6\n");
+	      log.writelnString("\nChef\tWaiter\tStu0\tStu1\tStu2\tStu3\tStu4\tStu5\tStu6\tNCourse\tNPortion\t\t\tTable\n");
+	      log.writelnString("\nState\tState\tState\tState\tState\tState\tState\tState\tState\t\t\t\t Seat0\tSeat1\tSeat2\tSeat3\tSeat4\tSeat5\tSeat6\n");
 	      if (!log.close())
 	         { GenericIO.writelnString("The operation of closing the file " + file + " failed!");
 	           System.exit(1);
@@ -129,65 +129,65 @@ public class GenRepos {
 	             System.exit(1);
 	           }
 	        switch(chefState){ 
-	            case ChefStates.WAITING_FOR_AN_ORDER:  lineStatus += "\tWAFOR";
+	            case ChefStates.WAITING_FOR_AN_ORDER:  lineStatus += "WAFOR\t";
 	                                               break;
-	            case ChefStates.PREPARING_THE_COURSE: lineStatus += "\tPRPCS";
+	            case ChefStates.PREPARING_THE_COURSE: lineStatus += "PRPCS\t";
 	                                               break;
-	            case ChefStates.DISHING_THE_PORTIONS:      lineStatus += "\tDSHPT";
+	            case ChefStates.DISHING_THE_PORTIONS:      lineStatus += "DSHPT\t";
 	                                               break;
-	            case ChefStates.DELIVERING_THE_PORTIONS:    lineStatus += "\tDLVPT";
+	            case ChefStates.DELIVERING_THE_PORTIONS:    lineStatus += "DLVPT\t";
 	                                               break;
-	            case ChefStates.CLOSING_SERVICE:    lineStatus += "\tCLSSV";
+	            case ChefStates.CLOSING_SERVICE:    lineStatus += "CLSSV\t";
 	                                               break;
 	          }
 	        switch(waiterState){ 
-	            case WaiterStates.APPRAISING_SITUATION:  lineStatus += "\tAPPST";
+	            case WaiterStates.APPRAISING_SITUATION:  lineStatus += "APPST\t";
 	                                               break;
-	            case WaiterStates.PRESENTING_THE_MENU: lineStatus += "\tPRSMN";  
+	            case WaiterStates.PRESENTING_THE_MENU: lineStatus += "PRSMN\t";  
 	                                               break;
-	            case WaiterStates.TAKING_THE_ORDER:      lineStatus += "\tTKODR";
+	            case WaiterStates.TAKING_THE_ORDER:      lineStatus += "TKODR\t";
 	                                               break;
-	            case WaiterStates.PLACING_THE_ORDER:    lineStatus += "\tPCODR";
+	            case WaiterStates.PLACING_THE_ORDER:    lineStatus += "PCODR\t";
 	                                               break;
-	            case WaiterStates.WAITING_FOR_PORTION:    lineStatus += "\tWTFPT";
+	            case WaiterStates.WAITING_FOR_PORTION:    lineStatus += "WTFPT\t";
 	                                               break;
-	            case WaiterStates.PROCESSING_THE_BILL:    lineStatus += "\tPRCBL";
+	            case WaiterStates.PROCESSING_THE_BILL:    lineStatus += "PRCBL\t";
 	                                               break;                                              
-	            case WaiterStates.RECEIVING_PAYMENT:    lineStatus += "\tRECPM";
+	            case WaiterStates.RECEIVING_PAYMENT:    lineStatus += "RECPM\t";
 	                                               break;                                            
 	          }
 	        for(int i = 0; i < ExecConsts.N; i++){
 	            switch (studentStates[i]){ 
-	                case StudentStates.GOING_TO_THE_RESTAURANT:   lineStatus += "\tGGTRT";
+	                case StudentStates.GOING_TO_THE_RESTAURANT:   lineStatus += "GGTRT\t";
 	                                            break;
-	                case StudentStates.TAKING_A_SEAT_AT_THE_TABLE: lineStatus += "\tTKSTT";
+	                case StudentStates.TAKING_A_SEAT_AT_THE_TABLE: lineStatus += "TKSTT\t";
 	                                              break;    
-	                case StudentStates.SELECTING_THE_COURSES: lineStatus += "\tSELCS";
+	                case StudentStates.SELECTING_THE_COURSES: lineStatus += "SELCS\t";
 	                                              break; 
-	                case StudentStates.ORGANIZING_THE_ORDER: lineStatus += "\tOGODR";
+	                case StudentStates.ORGANIZING_THE_ORDER: lineStatus += "OGODR\t";
 	                                              break; 
-	                case StudentStates.CHATTING_WITH_COMPANIONS: lineStatus += "\tCHTWC";
+	                case StudentStates.CHATTING_WITH_COMPANIONS: lineStatus += "CHTWC\t";
 	                                              break; 
-	                case StudentStates.PAYING_THE_MEAL: lineStatus += "\tPYTML";
+	                case StudentStates.PAYING_THE_MEAL: lineStatus += "PYTML\t";
 	                                              break; 
-	                case StudentStates.ENJOYING_THE_MEAL: lineStatus += "\tEJTML";
+	                case StudentStates.ENJOYING_THE_MEAL: lineStatus += "EJTML\t";
 	                                              break; 
-	                case StudentStates.GOING_HOME: lineStatus += "\tGGHOM";
+	                case StudentStates.GOING_HOME: lineStatus += "GGHOM\t";
 	                                              break; 
 	                
 	            }
 	        }
-	        lineStatus += "\t"+ExecConsts.M+"\t"+ExecConsts.N;
+	        lineStatus += ExecConsts.M+"\t\t"+ExecConsts.N;
 	        
 	        for(int i=0 ; i<ExecConsts.N ; i++)
 	        {
 	            lineStatus += "\t";
 	            if(studentSeats[i] == -1){
-	                lineStatus += "-";
+	                lineStatus += " -";
 	            }
 	            else
 	            {
-	                lineStatus += studentSeats[i];
+	                lineStatus += " "+studentSeats[i];
 	            }
 	        }
 	     

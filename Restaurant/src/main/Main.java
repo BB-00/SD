@@ -17,7 +17,7 @@ public class Main {
         GenRepos repos;
         
         // Initialization
-        repos = new GenRepos("teste.txt");
+        repos = new GenRepos("log");
         table = new Table(repos);
         bar = new Bar(repos, table);
         kitchen = new Kitchen(repos);

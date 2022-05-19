@@ -149,6 +149,8 @@ public class Kitchen {
 	public synchronized void cleanUp() {	
 		((Chef) Thread.currentThread()).setChefState(ChefStates.CLOSING_SERVICE);
 		repos.updateChefState(ChefStates.CLOSING_SERVICE);
+		
+		System.out.println("Chef has closed Service!");
 	}
 	
 	/**
