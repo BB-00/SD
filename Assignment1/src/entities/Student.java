@@ -106,7 +106,7 @@ public class Student extends Thread{
 		// 	if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
 		// }while(!this.table.haveAllCoursesBeenEaten());
 
-		while(!this.table.haveAllClientsBeenServed()){
+		while(!this.table.haveAllCoursesBeenEaten()){
 			if(this.table.haveAllClientsBeenServed()){
 				this.table.startEating();
 				this.table.endEating();
@@ -124,12 +124,10 @@ public class Student extends Thread{
 	
 	
 	
-	private void walkABit()
-	{
-		try
-		{ sleep ((long) (1 + 50 * Math.random ()));
-		}
-		catch (InterruptedException e) {}
+	private void walkABit(){
+		try{ 
+			sleep ((long) (1 + 50 * Math.random ()));
+		} catch (InterruptedException e) {}
 	}
 	
 }

@@ -108,6 +108,7 @@ public class Kitchen {
 		
 		if(numberOfPortionsServed == ExecConsts.N) {
 			numberOfCoursesServed++;
+			//ExecConsts.M--;
 			return true;
 		}
 		return false;

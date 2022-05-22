@@ -39,20 +39,20 @@ public class Main {
         	try {
         		student[i].join();
         	} catch (InterruptedException e) {
-        		System.out.print("Student with id "+ i + " has left the restaurant");
+        		System.out.print("Error occured while executing Student "+i);
         	}
         }
         
         try {
             waiter.join();
         } catch (InterruptedException e) {
-            System.out.print("Waiter has finished is shift");
+            System.out.print("Error occured while executing Waiter");
         }
 
         try {
             chef.join();
         } catch (InterruptedException e) {
-            System.out.print("Chef has finished is shift");
+            System.out.print("Error occured while executing Chef");
         }
 
 

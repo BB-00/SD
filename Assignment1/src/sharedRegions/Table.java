@@ -9,6 +9,11 @@ public class Table {
 	 * Array of Students Threads
 	 */
 	private final Student [] students;
+	
+	/**
+	 * number of Students that are seated at the table
+	 */
+	private int numberOfStudentsAtTable;
 
 	/**
 	 * number of Students that have already chosen the courses
@@ -89,7 +94,7 @@ public class Table {
 	 * Reference to General Repositories
 	 */
 	private final GenRepos repos;
-	
+		
 	/**
 	 * Table Instantiation
 	 * 
@@ -125,8 +130,7 @@ public class Table {
     		studentsThatHaveReadTheMenu[i] = false;
     	}
 		
-		this.repos = repos;
-		
+		this.repos = repos;		
 	}
     
 
@@ -290,14 +294,17 @@ public class Table {
     	
 		students[studentId] = ((Student) Thread.currentThread());
 		students[studentId].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+		repos.updateStudentState(studentId, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+		repos.updateStudentSeat(studentId, numberOfStudentsAtTable);
+		numberOfStudentsAtTable++;
     	
-    	System.out.println("Student"+ studentId+" took a seat!");
+    	System.out.println("Student "+studentId+" took a seat!");
 
     	studentsSeated[studentId] = true;
     	
     	notifyAll();
     	
-    	while (true) {
+    	//while (true) {
 	    	try {
 				wait();
 			} catch (InterruptedException e) {
@@ -307,9 +314,9 @@ public class Table {
 	    	System.out.println("Student "+studentId+" was waken up");
 	    	if (studentId == studentBeingAnsweredID && presentingTheMenu == true) {
 	    		System.out.println("Student "+studentId+" Can Proceed");
-	    		break;
+	    		//break;
 	    	}
-	    }
+	    //}
     	System.out.println("Student "+studentId+ " was presented with the menu");
     	
     	

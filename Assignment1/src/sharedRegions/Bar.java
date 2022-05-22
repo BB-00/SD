@@ -91,6 +91,10 @@ public class Bar
 		return studentBeingAnswered;
 	}
 	
+	public int getNumberOfStudentsAtRestaurant() {
+		return numberOfStudentsAtRestaurant;
+	}
+	
 	
 	/**
 	 * 
@@ -124,7 +128,7 @@ public class Bar
 
 			numberOfPendingRequests++;
 
-			repo.updateStudentSeat(studentID, numberOfStudentsAtRestaurant-1);
+			//repo.updateStudentSeat(studentID, numberOfStudentsAtRestaurant-1);
 			
 			notifyAll();
 		}
@@ -196,8 +200,8 @@ public class Bar
 
 		notifyAll();
 		
-		students[studentID].setStudentState(StudentStates.GOING_HOME);
-		repo.updateStudentState(studentID, StudentStates.GOING_HOME);
+//		students[studentID].setStudentState(StudentStates.GOING_HOME);
+//		repo.updateStudentState(studentID, StudentStates.GOING_HOME);
 		
 		while(studentsGreeted[studentID] == false) {
 			try {
