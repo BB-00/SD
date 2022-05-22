@@ -99,12 +99,21 @@ public class Student extends Thread{
 			this.table.joinTalk();
 		}
 		else	this.table.informCompanion();
-		do{
-			this.table.startEating();
-			this.table.endEating();
-			while(!this.table.hasEverybodyFinishedEating());
-			if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
-		}while(!this.table.haveAllCoursesBeenEaten());
+		// do{
+		// 	this.table.startEating();
+		// 	this.table.endEating();
+		// 	while(!this.table.hasEverybodyFinishedEating());
+		// 	if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
+		// }while(!this.table.haveAllCoursesBeenEaten());
+
+		while(!this.table.haveAllClientsBeenServed()){
+			if(this.table.haveAllClientsBeenServed()){
+				this.table.startEating();
+				this.table.endEating();
+				while(!this.table.hasEverybodyFinishedEating());
+				if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
+			}
+		}
 
 		if(this.table.shouldHaveArrivedEarlier()) {
 			this.bar.signalWaiter();

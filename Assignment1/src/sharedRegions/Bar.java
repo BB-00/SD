@@ -123,9 +123,6 @@ public class Bar
 			}
 
 			numberOfPendingRequests++;
-			
-			students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			repo.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
 			repo.updateStudentSeat(studentID, numberOfStudentsAtRestaurant-1);
 			
