@@ -106,8 +106,8 @@ public class GenRepos {
 	         }
 	      log.writelnString("\t\t\t\t\t\t  The Restaurant - Description of the internal state");
 	      //log.writelnString ("\nNumber of iterations = " + nIter + "\n");
-	      log.writelnString("\nChef\tWaiter\tStu0\tStu1\tStu2\tStu3\tStu4\tStu5\tStu6\tNCourse\tNPortion\t\t\tTable\n");
-	      log.writelnString("\nState\tState\tState\tState\tState\tState\tState\tState\tState\t\t\t\t Seat0\tSeat1\tSeat2\tSeat3\tSeat4\tSeat5\tSeat6\n");
+	      log.writelnString("\nChef\tWaiter\tStu0\tStu1\tStu2\tStu3\tStu4\tStu5\tStu6\tNCourse\tNPortion\t\t\t\tTable\n");
+	      log.writelnString("\nState\tState\tState\tState\tState\tState\tState\tState\tState\t\t\t\t\t Seat0\tSeat1\tSeat2\tSeat3\tSeat4\tSeat5\tSeat6\n");
 	      if (!log.close())
 	         { GenericIO.writelnString("The operation of closing the file " + file + " failed!");
 	           System.exit(1);
@@ -177,7 +177,7 @@ public class GenRepos {
 	                
 	            }
 	        }
-	        lineStatus += ExecConsts.M+"\t\t"+ExecConsts.N;
+	        lineStatus += ExecConsts.M+"\t\t"+ExecConsts.N+"\t";
 	        
 	        for(int i=0 ; i<ExecConsts.N ; i++)
 	        {
