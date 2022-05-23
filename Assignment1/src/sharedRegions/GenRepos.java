@@ -3,6 +3,7 @@ package sharedRegions;
 import genclass.GenericIO;
 import genclass.TextFile;
 import java.util.Objects;
+import java.util.Arrays;
 
 
 import entities.*;
@@ -23,7 +24,7 @@ public class GenRepos {
 	/**
 	 * Seats of the Students;
 	 */
-	private int [] studentSeats;
+	private int [] seats;
 	
 	/**
 	 * State of the Waiter
@@ -41,10 +42,10 @@ public class GenRepos {
 		
 		//set initial states
 		studentStates = new int[ExecConsts.N];
-		studentSeats = new int[ExecConsts.N];
+		seats = new int[ExecConsts.N];
 		for(int i=0 ; i<ExecConsts.N ; i++) {
 			studentStates[i] = StudentStates.GOING_TO_THE_RESTAURANT;
-			studentSeats[i] = -1;
+			seats[i] = -1;
 		}
 		waiterState = WaiterStates.APPRAISING_SITUATION;
 		chefState = ChefStates.WAITING_FOR_AN_ORDER;
@@ -70,7 +71,22 @@ public class GenRepos {
 	 * @param studentSeat
 	 */
 	public synchronized void updateStudentSeat(int studentID, int studentSeat) {
-		studentSeats[studentID] = studentSeat;
+		seats[studentID] = studentSeat;
+	}
+	
+	/**
+	 * Get Student Seat
+	 * 
+	 * @param studentID
+	 * @return number of seat
+	 */
+	public synchronized int getStudentSeat(int studentSeat){
+		for(int i=0 ; i<seats.length ; i++) {
+			if (seats[i] == studentSeat) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	/**
@@ -182,12 +198,12 @@ public class GenRepos {
 	        for(int i=0 ; i<ExecConsts.N ; i++)
 	        {
 	            lineStatus += "\t";
-	            if(studentSeats[i] == -1){
+	            if(seats[i] == -1){
 	                lineStatus += " -";
 	            }
 	            else
 	            {
-	                lineStatus += " "+studentSeats[i];
+	                lineStatus += " "+seats[i];
 	            }
 	        }
 	     

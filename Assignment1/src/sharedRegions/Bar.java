@@ -5,12 +5,10 @@ import entities.*;
 import main.*;
 
 
-public class Bar 
-{
+public class Bar {
 	/**
 	 *	Number of students present in the restaurant
 	 */
-	
 	private int numberOfStudentsAtRestaurant;
 	
 	/**
@@ -36,7 +34,7 @@ public class Bar
 	/**
 	 * Reference to the general repository
 	 */
-	private final GenRepos repo;
+	private final GenRepos repos;
 	
 	/**
 	 * Auxiliary variable to keep track of the id of the student whose request is being answered
@@ -58,9 +56,9 @@ public class Bar
 	/**
 	 * Bar instantiation
 	 * 
-	 * @param repo reference to the general repository 
+	 * @param repos reference to the general repository 
 	 */
-	public Bar(GenRepos repo, Table tab) {
+	public Bar(GenRepos repos, Table tab) {
 		//Initizalization of students thread
 		students = new Student[ExecConsts.N];
 		for(int i = 0; i < ExecConsts.N; i++ ) 
@@ -75,7 +73,7 @@ public class Bar
 		}
 	
 		this.tab = tab;
-		this.repo = repo;
+		this.repos = repos;
 		this.courseFinished = true;
 		this.studentBeingAnswered = -1;
 		
@@ -107,11 +105,18 @@ public class Bar
      */
 	public void enter() {		
 		synchronized(this) {
-			int studentID = ((Student) Thread.currentThread()).getStudentID();
+			Student student = ((Student) Thread.currentThread());
+			
+			int studentID = student.getStudentID();
+			
+			students[studentID] = student;
+
 			Request request = new Request(studentID,'e');
 			
-			students[studentID] = ((Student) Thread.currentThread());
-			students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			if(student.getStudentState() != StudentStates.GOING_TO_THE_RESTAURANT) {
+				students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+				repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
+			}
 			
 			numberOfStudentsAtRestaurant++;
 
@@ -128,7 +133,7 @@ public class Bar
 
 			numberOfPendingRequests++;
 
-			//repo.updateStudentSeat(studentID, numberOfStudentsAtRestaurant-1);
+			repos.updateStudentSeat(numberOfStudentsAtRestaurant-1, studentID);
 			
 			notifyAll();
 		}
@@ -186,7 +191,10 @@ public class Bar
      * Operation Exit, called by the students when they want to leave
      */
 	public synchronized void exit() {
-		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		Student student = ((Student) Thread.currentThread());
+		
+		int studentID = student.getStudentID();
+		
 		Request request = new Request(studentID,'g');
 		
 		try {
@@ -200,9 +208,6 @@ public class Bar
 
 		notifyAll();
 		
-//		students[studentID].setStudentState(StudentStates.GOING_HOME);
-//		repo.updateStudentState(studentID, StudentStates.GOING_HOME);
-		
 		while(studentsGreeted[studentID] == false) {
 			try {
 				wait();
@@ -212,8 +217,14 @@ public class Bar
 			}
 			
 		}
-		repo.updateStudentSeat(studentID, -1);
+		
+		repos.updateStudentSeat(studentID, -1);
 		System.out.println("Student "+studentID+" has left!");
+		
+		if(student.getStudentState() != StudentStates.GOING_HOME) {
+			students[studentID].setStudentState(StudentStates.GOING_HOME);
+			repos.updateStudentState(studentID, StudentStates.GOING_HOME);
+		}
 		
 	}
 	
@@ -272,7 +283,7 @@ public class Bar
 		numberOfStudentsAtRestaurant--;
 		studentBeingAnswered = -1;
 		
-		repo.updateWaiterState(((Waiter) Thread.currentThread()).getWaiterState());
+		//repos.updateWaiterState(((Waiter) Thread.currentThread()).getWaiterState());
 		
 		if(numberOfStudentsAtRestaurant == 0)
 			return true;
@@ -286,8 +297,11 @@ public class Bar
 	 * It is called the waiter to prepare the bill of the meal eaten by the students
 	 */
 	public synchronized void preprareBill() {
-		((Waiter) Thread.currentThread()).setWaiterState(WaiterStates.PROCESSING_THE_BILL);
-		repo.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
+		Waiter waiter = ((Waiter) Thread.currentThread());
+    	if(waiter.getWaiterState() != WaiterStates.PROCESSING_THE_BILL) {
+			waiter.setWaiterState(WaiterStates.PROCESSING_THE_BILL);
+			repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
+		}
 	}
 	
 	/**
@@ -303,6 +317,8 @@ public class Bar
 	 * 	For requests the chef id will be N+1
 	 */
 	public synchronized void alertWaiter() {
+		Chef chef = ((Chef) Thread.currentThread());
+
 		while(!courseFinished)
 		{
 			try {
@@ -325,8 +341,10 @@ public class Bar
 		numberOfPendingRequests++;
 		courseFinished = false;
 		
-		((Chef) Thread.currentThread()).setChefState(ChefStates.DELIVERING_THE_PORTIONS);
-		repo.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
+		if(chef.getChefState() != ChefStates.DELIVERING_THE_PORTIONS) {
+			chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
+			repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
+		}
 		
 		notifyAll();
 	}

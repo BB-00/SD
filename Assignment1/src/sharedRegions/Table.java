@@ -324,7 +324,7 @@ public class Table {
     		students[studentId].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
     		repos.updateStudentState(studentId, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 		}
-		repos.updateStudentSeat(studentId, numberOfStudentsAtTable);
+		//repos.updateStudentSeat(studentId, numberOfStudentsAtTable);
 		numberOfStudentsAtTable++;
     	
     	System.out.println("Student "+studentId+" took a seat!");
