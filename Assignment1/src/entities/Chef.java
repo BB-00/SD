@@ -14,19 +14,16 @@ public class Chef extends Thread{
 	/**
 	 *	Chef state 
 	 */
-	
 	private int chefState;
 	
 	/**
 	 * Reference to the kitchen
 	 */
-	
 	private final Kitchen kitchen;
 	
 	/**
 	 * Reference to the bar
 	 */
-	
 	private final Bar bar;
 	
 	
@@ -78,7 +75,10 @@ public class Chef extends Thread{
 			this.kitchen.proceedToPresentation();
 			this.bar.alertWaiter();
 			
-			while(!this.kitchen.haveAllPortionsBeenDelivered()) this.kitchen.haveNextPortionReady();
+			while(!this.kitchen.haveAllPortionsBeenDelivered()) {
+				this.kitchen.haveNextPortionReady();
+				//this.bar.alertWaiter();
+			}
 				
 		} while(!this.kitchen.hasOrderBeenCompleted());
 		
