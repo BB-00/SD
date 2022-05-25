@@ -1,7 +1,7 @@
-package entities;
+package clientSide.entities;
 
-import sharedRegions.Bar;
-import sharedRegions.Kitchen;
+import clientSide.stubs.BarStub;
+import clientSide.stubs.KitchenStub;
 
 /**
  *   Chef thread.
@@ -18,12 +18,12 @@ public class Chef extends Thread{
 	/**
 	 * Reference to the kitchen
 	 */
-	private final Kitchen kitchen;
+	private final KitchenStub kitchen;
 	
 	/**
 	 * Reference to the bar
 	 */
-	private final Bar bar;
+	private final BarStub bar;
 	
 	
 	
@@ -48,7 +48,7 @@ public class Chef extends Thread{
 	 * 
 	 * 	@param chefState
 	 */
-	public Chef(String name, Kitchen kit, Bar bar) {
+	public Chef(String name, KitchenStub kit, BarStub bar) {
 		super(name);
 		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
 		this.kitchen = kit;
