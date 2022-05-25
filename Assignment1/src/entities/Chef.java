@@ -31,9 +31,8 @@ public class Chef extends Thread{
 	/**
 	 * 	@param chef state
 	 */
-	public void setChefState(int chefState)
-	{
-		this.chefState = chefState;
+	public void setChefState(int state) {
+		chefState = state;
 	}
 	
 	/**
@@ -66,22 +65,22 @@ public class Chef extends Thread{
 	{
 		boolean firstCourse = true;
 		
-		this.kitchen.watchTheNews();
-		this.kitchen.startPreparation();
+		kitchen.watchTheNews();
+		kitchen.startPreparation();
 		do {
-			if(!firstCourse) this.kitchen.continuePreparation();
+			if(!firstCourse) kitchen.continuePreparation();
 			else firstCourse = false;
 			
-			this.kitchen.proceedToPresentation();
-			this.bar.alertWaiter();
+			kitchen.proceedToPresentation();
+			bar.alertWaiter();
 			
-			while(!this.kitchen.haveAllPortionsBeenDelivered()) {
-				this.kitchen.haveNextPortionReady();
+			while(!kitchen.haveAllPortionsBeenDelivered()) {
+				kitchen.haveNextPortionReady();
 				//this.bar.alertWaiter();
 			}
 				
-		} while(!this.kitchen.hasOrderBeenCompleted());
+		} while(!kitchen.hasOrderBeenCompleted());
 		
-		this.kitchen.cleanUp();
+		kitchen.cleanUp();
 	}
 }

@@ -37,8 +37,8 @@ public class Waiter extends Thread{
 	 * 	@param waiter state
 	 */
 	
-	public void setWaiterState(int waiterState) {
-		this.waiterState = waiterState;
+	public void setWaiterState(int state) {
+		waiterState = state;
 	}
 	
 	/**
@@ -74,33 +74,33 @@ public class Waiter extends Thread{
 		boolean exit = false;
 		
 		do {
-			request = this.bar.lookAround();
+			request = bar.lookAround();
 			
 			switch(request)
 			{
 				case 'e':	//Client arriving, needs to be presented with the menu
-					this.table.saluteClient(bar.getStudentBeingAnswered());
-					this.table.returnBar();
+					table.saluteClient(bar.getStudentBeingAnswered());
+					table.returnBar();
 					break;
 				case 'c':	//Order will be described to the waiter
-					this.table.getThePad();
-					this.kitchen.handNoteToChef();
-					this.kitchen.returnToBar();
+					table.getThePad();
+					kitchen.handNoteToChef();
+					kitchen.returnToBar();
 					break;
 				case 'a':	//Portions need to be collected and delivered
-					while(!this.table.haveAllClientsBeenServed()) {
-						this.kitchen.collectPortion();
-						this.table.deliverPortion();
+					while(!table.haveAllClientsBeenServed()) {
+						kitchen.collectPortion();
+						table.deliverPortion();
 					}
-					this.table.returnBar();
+					table.returnBar();
 					break;
 				case 's':	//Bill needs to be prepared so it can be payed by the student
-					this.bar.preprareBill();
-					this.table.presentBill();
-					this.table.returnBar();
+					bar.preprareBill();
+					table.presentBill();
+					table.returnBar();
 					break;
 				case 'g':	//Goodbye needs to be said to a student
-					exit = this.bar.sayGoodbye();
+					exit = bar.sayGoodbye();
 					break;
 			}
 			//If the last student has left the restaurant, life cycle may terminate

@@ -51,15 +51,15 @@ public class Student extends Thread{
 	 * 
 	 * @param studentID
 	 */
-	public void setStudentID(int studentID) {
-		this.studentID = studentID;
+	public void setStudentID(int id) {
+		studentID = id;
 	}
 	
 	/**
 	 * @return studentID
 	 */
 	public int getStudentID() {
-		return this.studentID;
+		return studentID;
 	}
 	
 	/**
@@ -67,15 +67,15 @@ public class Student extends Thread{
 	 * 
 	 * @param studentState
 	 */
-	public void setStudentState(int studentState) {
-		this.studentState = studentState;
+	public void setStudentState(int state) {
+		studentState = state;
 	}
 	
 	/**
 	 * @return student state
 	 */
 	public int getStudentState() {
-		return this.studentState;
+		return studentState;
 	}
 	/**
 	 *	Life cycle of the student
@@ -85,20 +85,20 @@ public class Student extends Thread{
 	public void run ()
 	{
 		walkABit();
-		this.bar.enter();
-		this.table.readMenu();
+		bar.enter();
+		table.readMenu();
 		
-		if(studentID == this.table.getFirstToArrive())
+		if(studentID == table.getFirstToArrive())
 		{
-			this.table.prepareOrder();
+			table.prepareOrder();
 			do{
-				this.table.addUpOnesChoices();
-			}while(!this.table.everybodyHasChosen());
-			this.bar.callWaiter();
-			this.table.describeOrder();
-			this.table.joinTalk();
+				table.addUpOnesChoices();
+			}while(!table.everybodyHasChosen());
+			bar.callWaiter();
+			table.describeOrder();
+			table.joinTalk();
 		}
-		else	this.table.informCompanion();
+		else table.informCompanion();
 		// do{
 		// 	this.table.startEating();
 		// 	this.table.endEating();
@@ -106,22 +106,21 @@ public class Student extends Thread{
 		// 	if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
 		// }while(!this.table.haveAllCoursesBeenEaten());
 
-		while(!this.table.haveAllCoursesBeenEaten()){
-			if(this.table.haveAllClientsBeenServed()){
-				this.table.startEating();
-				this.table.endEating();
-				while(!this.table.hasEverybodyFinishedEating());
-				if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
+		while(!table.haveAllCoursesBeenEaten()){
+			if(table.haveAllClientsBeenServed()){
+				table.startEating();
+				table.endEating();
+				while(!table.hasEverybodyFinishedEating());
+				if(studentID == table.getLastToEat()) bar.signalWaiter();
 			}
 		}
 
-		if(this.table.shouldHaveArrivedEarlier()) {
-			this.bar.signalWaiter();
-			this.table.honourBill();
+		if(table.shouldHaveArrivedEarlier()) {
+			bar.signalWaiter();
+			table.honourBill();
 		}
-		this.bar.exit();
+		bar.exit();
 	}
-	
 	
 	
 	private void walkABit(){
