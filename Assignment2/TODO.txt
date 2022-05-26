@@ -1,0 +1,20 @@
+Client Side:
+	Stubs:
+		- GenRepos
+
+Server Side:
+	sharedRegions:
+		- Todas as Interfaces
+		- GenRepos
+	main:
+		- Tudo
+	entities:
+		- Proxies
+Common Infra:
+	- Message
+	- Message Type
+	- Message Exceptions
+
+Testar Localmente + scripts
+
+Testar Distribuido + scripts

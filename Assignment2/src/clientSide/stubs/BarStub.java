@@ -2,6 +2,7 @@ package clientSide.stubs;
 
 import clientSide.entities.*;
 import genclass.GenericIO;
+import commInfra.*;
 
 public class BarStub {
 	
@@ -66,8 +67,6 @@ public class BarStub {
 	    
 	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudenState());
 	    com.close();
-		
-		//TODO table.seatAtTable
 	}
 	
 	public void callWaiter() {
@@ -184,7 +183,36 @@ public class BarStub {
 	
 	
 	
-	
+	public int getStudentBeingAnswered() {
+		ClientCom com;                                                 // communication channel
+	    Message outMessage,                                            // outgoing message
+	            inMessage;                                             // incoming message
+
+	    com = new ClientCom (serverHostName, serverPortNum);
+	    while (!com.open()) {
+	    	try {
+	    		Thread.currentThread().sleep((long)(10));
+	    	} catch(InterruptedException e) {}
+	    }
+	    
+	    //MESSAGES
+	    outMessage = new Message(MessageType.REQGSBA, ((Waiter) Thread.currentThread()).getWaiterState());
+	    
+	    com.writeObject(outMessage);
+	    inMessage = (Message) com.readObject();
+	    
+	    //TODO Message Types - enter
+	    if((inMessage.getMsgType() != MessageType.GSBADONE) && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
+	    	GenericIO.writelnString(inMessage.toString());
+	    	System.exit(1);
+	    }
+	    
+	    ((Waiter) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
+	    com.close();
+	    
+	    return inMessage.getID();
+	}
 	
 	
 	public char lookAround() {

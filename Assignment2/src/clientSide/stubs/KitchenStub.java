@@ -5,6 +5,7 @@ import clientSide.entities.Waiter;
 import clientSide.entities.ChefStates;
 import clientSide.entities.WaiterStates;
 import genclass.GenericIO;
+import commInfra.*;
 
 public class KitchenStub {
 	/**
@@ -98,7 +99,7 @@ public class KitchenStub {
 	    com.close();
 	}
 	
-	public void proceedToPreparation() {
+	public void proceedToPresentation() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
 	            inMessage;                                             // incoming message
