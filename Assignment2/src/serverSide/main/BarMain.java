@@ -70,7 +70,7 @@ public class BarMain {
 	    genReposStub = new GenReposStub (reposServerName, reposPortNumb);       // communication to the general repository is instantiated
 	    table = new Table(genReposStub);
 	    bar = new Bar(genReposStub, table);									// service is instantiated
-	    barInterface = new BarInterface(genReposStub);					// interface to the service is instantiated                          
+	    barInterface = new BarInterface(bar);					// interface to the service is instantiated                          
 	    scon = new ServerCom (portNumb);                                        // listening channel at the public port is established
 	    scon.start ();
 	    GenericIO.writelnString ("Service is established!");

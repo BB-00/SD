@@ -67,7 +67,7 @@ public class TableMain {
 
 	    genReposStub = new GenReposStub (reposServerName, reposPortNumb);       // communication to the general repository is instantiated
 	    table = new Table(genReposStub);									// service is instantiated
-	    tableInterface = new TableInterface(genReposStub);					// interface to the service is instantiated                          
+	    tableInterface = new TableInterface(table);					// interface to the service is instantiated                          
 	    scon = new ServerCom (portNumb);                                        // listening channel at the public port is established
 	    scon.start ();
 	    GenericIO.writelnString ("Service is established!");

@@ -10,6 +10,11 @@ import genclass.GenericIO;
 
 public class Bar {
 	/**
+	 *   Number of entity groups requesting the shutdown.
+	 */
+	private int nEntities;
+	
+	/**
 	 *	Number of students present in the restaurant
 	 */
 	private int numberOfStudentsAtRestaurant;
@@ -62,16 +67,17 @@ public class Bar {
 	 * @param repos reference to the general repository 
 	 */
 	public Bar(GenReposStub repos, Table tab) {
+		this.nEntities = 0;
 		//Initizalization of students thread
-		students = new Student[ExecConsts.N];
+		this.students = new Student[ExecConsts.N];
 		for(int i = 0; i < ExecConsts.N; i++ ) 
-			students[i] = null;
+			this.students[i] = null;
 		
 		//Initialization of the queue of pending requests
 		try {
-			pendingServiceRequestQueue = new MemFIFO<> (new Request [ExecConsts.N * ExecConsts.M]);
+			this.pendingServiceRequestQueue = new MemFIFO<> (new Request [ExecConsts.N * ExecConsts.M]);
 		} catch (MemException e) {
-			pendingServiceRequestQueue = null;
+			this.pendingServiceRequestQueue = null;
 		    System.exit(1);
 		}
 	
@@ -82,7 +88,7 @@ public class Bar {
 		
 		this.studentsGreeted = new boolean[ExecConsts.N];
 		for(int i = 0 ;i < ExecConsts.N; i++)
-			studentsGreeted[i] = false;
+			this.studentsGreeted[i] = false;
 	}
 	
 	/**
@@ -351,6 +357,17 @@ public class Bar {
 		
 		notifyAll();
 	}
+	
+	/**
+	   *   Operation server shutdown.
+	   *
+	   *   New operation.
+	   */
+	   public synchronized void shutdown() {
+	       nEntities += 1;
+	       if (nEntities >= ExecConsts.E)
+	          ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	   }
 }
 
 

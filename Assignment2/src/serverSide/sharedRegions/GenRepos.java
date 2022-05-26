@@ -13,6 +13,11 @@ import commInfra.*;
 
 public class GenRepos {
 	/**
+	 *   Number of entity groups requesting the shutdown.
+	 */
+	private int nEntities;
+	
+	/**
 	 * Name of the log file
 	 */
 	private final String file;
@@ -39,17 +44,19 @@ public class GenRepos {
 	
 
 	public GenRepos(String file){
+		this.nEntities =  0;
+		
 		this.file = file;
 		
 		//set initial states
-		studentStates = new int[ExecConsts.N];
-		seats = new int[ExecConsts.N];
+		this.studentStates = new int[ExecConsts.N];
+		this.seats = new int[ExecConsts.N];
 		for(int i=0 ; i<ExecConsts.N ; i++) {
-			studentStates[i] = StudentStates.GOING_TO_THE_RESTAURANT;
-			seats[i] = -1;
+			this.studentStates[i] = StudentStates.GOING_TO_THE_RESTAURANT;
+			this.seats[i] = -1;
 		}
-		waiterState = WaiterStates.APPRAISING_SITUATION;
-		chefState = ChefStates.WAITING_FOR_AN_ORDER;
+		this.waiterState = WaiterStates.APPRAISING_SITUATION;
+		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
 		
 		reportInitialStatus();
 	}
@@ -213,5 +220,16 @@ public class GenRepos {
 	         { GenericIO.writelnString ("The operation of closing the file " + file + " failed!");
 	           System.exit (1);
 	         }
+	   }
+	   
+	   /**
+	   *   Operation server shutdown.
+	   *
+	   *   New operation.
+	   */
+	   public synchronized void shutdown() {
+	       nEntities += 1;
+	       if (nEntities >= ExecConsts.E)
+	          ServerSleepingBarbersGeneralRepos.waitConnection = false;
 	   }
 }

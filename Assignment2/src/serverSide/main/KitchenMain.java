@@ -67,7 +67,7 @@ public class KitchenMain {
 
 	    genReposStub = new GenReposStub (reposServerName, reposPortNumb);       // communication to the general repository is instantiated
 	    kitchen = new Kitchen(genReposStub);									// service is instantiated
-	    kitchenInterface = new kitchenInterface(genReposStub);					// interface to the service is instantiated                          
+	    kitchenInterface = new kitchenInterface(kitchen);					// interface to the service is instantiated                          
 	    scon = new ServerCom (portNumb);                                        // listening channel at the public port is established
 	    scon.start ();
 	    GenericIO.writelnString ("Service is established!");

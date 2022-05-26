@@ -9,6 +9,11 @@ import genclass.GenericIO;
 
 public class Table {
 	/**
+	 *   Number of entity groups requesting the shutdown.
+	 */
+	private int nEntities;
+	
+	/**
 	 * Array of Students Threads
 	 */
 	private final Student [] students;
@@ -104,10 +109,11 @@ public class Table {
 	 * @param repos
 	 */
 	public Table(GenReposStub repos) {
+		this.nEntities = 0;
 		//Init students threads
-		students = new Student[ExecConsts.N];
+		this.students = new Student[ExecConsts.N];
 		for(int i=0 ; i<ExecConsts.N ; i++) {
-			students[i] = null;
+			this.students[i] = null;
 		}
 		
 		this.numberOfStudentsThatHasChosen = 0;
@@ -124,13 +130,13 @@ public class Table {
 		this.takingTheOrder = false;
 		this.processingTheBill = false;
 		
-		studentsSeated = new boolean[ExecConsts.N];
-		studentsThatHaveReadTheMenu = new boolean[ExecConsts.N];
+		this.studentsSeated = new boolean[ExecConsts.N];
+		this.studentsThatHaveReadTheMenu = new boolean[ExecConsts.N];
 		
 		for(int i=0 ; i<ExecConsts.N ; i++)
     	{
-    		studentsSeated[i] = false;
-    		studentsThatHaveReadTheMenu[i] = false;
+    		this.studentsSeated[i] = false;
+    		this.studentsThatHaveReadTheMenu[i] = false;
     	}
 		
 		this.repos = repos;		
@@ -638,4 +644,15 @@ public class Table {
     	}
     	else return false;
     }
+    
+    /**
+	 *   Operation server shutdown.
+	 *
+	 *   New operation.
+	 */
+	 public synchronized void shutdown() {
+		 nEntities += 1;
+	     if (nEntities >= ExecConsts.E)
+	    	 ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	 }
 }

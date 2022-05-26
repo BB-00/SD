@@ -8,9 +8,14 @@ import clientSide.stubs.*;
 import genclass.GenericIO;
 
 public class Kitchen {
-	 /**
-	 *	Number of portions that are ready to serve
+	/**
+	 *   Number of entity groups requesting the shutdown.
 	 */
+	private int nEntities;
+	
+	/**
+	*	Number of portions that are ready to serve
+	*/
    private int numberOfPortionsCooked;
 
    /**
@@ -35,6 +40,7 @@ public class Kitchen {
 	 * @param repos
 	 */
    public Kitchen(GenReposStub rep){
+	   this.nEntities = 0;
        this.numberOfCoursesServed=0;
        this.numberOfPortionsCooked=0;
        this.numberOfPortionsServed=0;
@@ -239,5 +245,16 @@ public class Kitchen {
 		notifyAll();
 		
 	}
+	
+	/**
+	 *   Operation server shutdown.
+	 *
+	 *   New operation.
+	 */
+	 public synchronized void shutdown() {
+		 nEntities += 1;
+	     if (nEntities >= ExecConsts.E)
+	    	 ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	 }
 
 }

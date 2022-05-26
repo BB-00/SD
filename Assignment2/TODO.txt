@@ -1,21 +1,33 @@
 Client Side:
 	Stubs:
 		- GenRepos (DONE)
+		- FALTA_DAR_NOME_A_ESTA_MERDA
+		- returns das funções Message.getCheck(), etc
+		
+	Main:
+		- Argumentos construtores, hostName e hostPort - por no commInfra ExecConsts
+
 
 Server Side:
 	sharedRegions:
-		- Todas as Interfaces
+		- Todas as Interfaces - falta a para o GenRepos
 		- GenRepos (DONE)
-		- adicionar shutdowns
+		- adicionar shutdowns (DONE)
+		- corrigir nomes variaveis shutdowns
+		
 	main:
 		- Tudo (DONE)
+		- GenRepos - reportSummary() ?? 
+		
 	entities:
 		- Proxies
 		
 Common Infra:
-	- Message 
-	- Message Type
+	- Message - está com a versão do Eduardo
+	- Message Type (DONE)
 	- Message Exceptions (DONE)
+
+
 
 Testar Localmente + scripts
 
