@@ -363,7 +363,6 @@ public class BarStub {
 	
 	
 	
-	
 	/**
 	 *   Operation server shutdown.
 	 *
