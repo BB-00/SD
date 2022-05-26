@@ -37,7 +37,7 @@ public class Bar {
 	/**
 	 * Reference to the general repository
 	 */
-	private final GenRepos repos;
+	private final GenReposStub repos;
 	
 	/**
 	 * Auxiliary variable to keep track of the id of the student whose request is being answered
@@ -61,7 +61,7 @@ public class Bar {
 	 * 
 	 * @param repos reference to the general repository 
 	 */
-	public Bar(GenRepos repos, Table tab) {
+	public Bar(GenReposStub repos, Table tab) {
 		//Initizalization of students thread
 		students = new Student[ExecConsts.N];
 		for(int i = 0; i < ExecConsts.N; i++ ) 

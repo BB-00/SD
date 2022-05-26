@@ -26,7 +26,7 @@ public class Kitchen {
    /**
     *  Reference to General Repositories
     */
-   private final GenRepos repos;
+   private final GenReposStub repos;
 
 
    /**
@@ -34,7 +34,7 @@ public class Kitchen {
 	 * 
 	 * @param repos
 	 */
-   public Kitchen(GenRepos rep){
+   public Kitchen(GenReposStub rep){
        this.numberOfCoursesServed=0;
        this.numberOfPortionsCooked=0;
        this.numberOfPortionsServed=0;

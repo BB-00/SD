@@ -1,4 +1,4 @@
-package clientSide.main;
+package commInfra;
 
 public class ExecConsts {
 

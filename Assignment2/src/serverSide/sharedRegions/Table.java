@@ -96,14 +96,14 @@ public class Table {
 	/**
 	 * Reference to General Repositories
 	 */
-	private final GenRepos repos;
+	private final GenReposStub repos;
 		
 	/**
 	 * Table Instantiation
 	 * 
 	 * @param repos
 	 */
-	public Table(GenRepos repos) {
+	public Table(GenReposStub repos) {
 		//Init students threads
 		students = new Student[ExecConsts.N];
 		for(int i=0 ; i<ExecConsts.N ; i++) {

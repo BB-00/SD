@@ -1,15 +1,16 @@
 Client Side:
 	Stubs:
-		- GenRepos
+		- GenRepos (DONE)
 
 Server Side:
 	sharedRegions:
 		- Todas as Interfaces
-		- GenRepos
+		- GenRepos (DONE)
 	main:
-		- Tudo
+		- Tudo (DONE)
 	entities:
 		- Proxies
+		
 Common Infra:
 	- Message
 	- Message Type

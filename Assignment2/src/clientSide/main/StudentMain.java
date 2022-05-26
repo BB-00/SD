@@ -3,7 +3,7 @@ package clientSide.main;
 import clientSide.entities.Student;
 import clientSide.stubs.BarStub;
 import clientSide.stubs.TableStub;
-import clientSide.main.ExecConsts;
+import commInfra.ExecConsts;
 
 public class StudentMain {
 		
