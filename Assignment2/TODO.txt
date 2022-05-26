@@ -6,15 +6,16 @@ Server Side:
 	sharedRegions:
 		- Todas as Interfaces
 		- GenRepos (DONE)
+		- adicionar shutdowns
 	main:
 		- Tudo (DONE)
 	entities:
 		- Proxies
 		
 Common Infra:
-	- Message
+	- Message 
 	- Message Type
-	- Message Exceptions
+	- Message Exceptions (DONE)
 
 Testar Localmente + scripts
 
