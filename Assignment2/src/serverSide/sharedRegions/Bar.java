@@ -37,7 +37,7 @@ public class Bar {
 	/**
 	 * Reference to the student threads
 	 */
-	private final Student [] students;
+	private final BarClientProxy[] students;
 	
 	/**
 	 * Reference to the general repository
@@ -69,7 +69,7 @@ public class Bar {
 	public Bar(GenReposStub repos, Table tab) {
 		this.nEntities = 0;
 		//Initizalization of students thread
-		this.students = new Student[ExecConsts.N];
+		this.students = new BarClientProxy[ExecConsts.N];
 		for(int i = 0; i < ExecConsts.N; i++ ) 
 			this.students[i] = null;
 		
@@ -114,7 +114,7 @@ public class Bar {
      */
 	public void enter() {		
 		synchronized(this) {
-			Student student = ((Student) Thread.currentThread());
+			BarClientProxy student = ((BarClientProxy) Thread.currentThread());
 			
 			int studentID = student.getStudentID();
 			
@@ -155,7 +155,7 @@ public class Bar {
 	 * Operation call The Waiter, called by the student who arrived first, to call the waiter
 	 */
 	public synchronized void callWaiter() {
-		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		int studentID = ((BarClientProxy) Thread.currentThread()).getStudentID();
 		Request request = new Request(studentID,'c');
 		
 		try {
@@ -175,10 +175,10 @@ public class Bar {
 	 * It is called by the last student to finish eating to signal waiter to bring next course
 	 */
 	public synchronized void signalWaiter() {
-		int studentID = ((Student) Thread.currentThread()).getStudentID();
+		int studentID = ((BarClientProxy) Thread.currentThread()).getStudentID();
 		Request request = new Request(studentID,'s');
 
-		if(((Student) Thread.currentThread()).getStudentState() == StudentStates.PAYING_THE_MEAL) {		
+		if(((BarClientProxy) Thread.currentThread()).getStudentState() == StudentStates.PAYING_THE_MEAL) {		
 			try {
 				pendingServiceRequestQueue.write(request);
 			} catch (MemException e) {
@@ -200,7 +200,7 @@ public class Bar {
      * Operation Exit, called by the students when they want to leave
      */
 	public synchronized void exit() {
-		Student student = ((Student) Thread.currentThread());
+		BarClientProxy student = ((BarClientProxy) Thread.currentThread());
 		
 		int studentID = student.getStudentID();
 		
@@ -306,7 +306,7 @@ public class Bar {
 	 * It is called the waiter to prepare the bill of the meal eaten by the students
 	 */
 	public synchronized void preprareBill() {
-		Waiter waiter = ((Waiter) Thread.currentThread());
+		BarClientProxy waiter = ((BarClientProxy) Thread.currentThread());
     	if(waiter.getWaiterState() != WaiterStates.PROCESSING_THE_BILL) {
 			waiter.setWaiterState(WaiterStates.PROCESSING_THE_BILL);
 			repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
@@ -326,7 +326,7 @@ public class Bar {
 	 * 	For requests the chef id will be N+1
 	 */
 	public synchronized void alertWaiter() {
-		Chef chef = ((Chef) Thread.currentThread());
+		BarClientProxy chef = ((BarClientProxy) Thread.currentThread());
 
 		while(!courseFinished)
 		{

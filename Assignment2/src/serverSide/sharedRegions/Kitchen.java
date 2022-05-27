@@ -57,7 +57,7 @@ public class Kitchen {
      *  Operation what the news, in this operation the chef is waiting for the waiter to give in an order
      */
 	public synchronized void watchTheNews() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.WAITING_FOR_AN_ORDER) {
 			chef.setChefState(ChefStates.WAITING_FOR_AN_ORDER);
 			repos.updateChefState(ChefStates.WAITING_FOR_AN_ORDER);
@@ -75,7 +75,7 @@ public class Kitchen {
 	 * Operation start preparation, in this operation the chef will start the preparation of a course
 	 */
 	public synchronized void startPreparation() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.PREPARING_THE_COURSE) {
 			chef.setChefState(ChefStates.PREPARING_THE_COURSE);
 			repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
@@ -88,7 +88,7 @@ public class Kitchen {
     * Operation proceed to presentation, in this operation the chef will dish each portion
     */
 	public synchronized void proceedToPresentation() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.DISHING_THE_PORTIONS) {
 			chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
 			repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
@@ -101,7 +101,7 @@ public class Kitchen {
     * Operation have next portion ready, the chef has just served one portion and needs to dish another one
     */
 	public synchronized void haveNextPortionReady() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.DISHING_THE_PORTIONS) {
 			chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
 			repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
@@ -122,7 +122,7 @@ public class Kitchen {
     */
 
 	public synchronized void continuePreparation() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.PREPARING_THE_COURSE) {
 			chef.setChefState(ChefStates.PREPARING_THE_COURSE);
 			repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
@@ -172,7 +172,7 @@ public class Kitchen {
     */
 
 	public synchronized void cleanUp() {
-		Chef chef = ((Chef) Thread.currentThread());
+		KitchenClientProxy chef = ((KitchenClientProxy) Thread.currentThread());
 		if(chef.getChefState() != ChefStates.CLOSING_SERVICE) {
 			chef.setChefState(ChefStates.CLOSING_SERVICE);
 			repos.updateChefState(ChefStates.CLOSING_SERVICE);
@@ -191,7 +191,7 @@ public class Kitchen {
     * Operation return to bar, the waiter is in the kitchen and returns to the bar
     */
 	public synchronized void returnToBar() {
-		Waiter waiter = ((Waiter) Thread.currentThread());
+		KitchenClientProxy waiter = ((KitchenClientProxy) Thread.currentThread());
 		if(waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
 			waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
 			repos.updateChefState(WaiterStates.APPRAISING_SITUATION);
@@ -202,7 +202,7 @@ public class Kitchen {
     * Operation hand note to chef, the waiter hands the order note to the chef and wakes him up
     */
 	public synchronized void handNoteToChef() {
-		Waiter waiter = ((Waiter) Thread.currentThread());
+		KitchenClientProxy waiter = ((KitchenClientProxy) Thread.currentThread());
 		if(waiter.getWaiterState() != WaiterStates.PLACING_THE_ORDER) {
 			waiter.setWaiterState(WaiterStates.PLACING_THE_ORDER);
 			repos.updateChefState(WaiterStates.PLACING_THE_ORDER);
@@ -223,7 +223,7 @@ public class Kitchen {
     * Operation collect portion, the waiter collects the portion and will deliver it to the client, is signaled by the chef
     */
 	public synchronized void collectPortion() {
-		Waiter waiter = ((Waiter) Thread.currentThread());
+		KitchenClientProxy waiter = ((KitchenClientProxy) Thread.currentThread());
 		if(waiter.getWaiterState() != WaiterStates.WAITING_FOR_PORTION) {
 			waiter.setWaiterState(WaiterStates.WAITING_FOR_PORTION);
 			repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);

@@ -26,7 +26,7 @@ public class GenReposStub {
 		this.serverPortNum  = serverPortNum;
 	}
 	
-	public void initSimulation(String fileName, int nIter) {
+	public void initSimulation(String fileName) {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
 	            inMessage;                                             // incoming message

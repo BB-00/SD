@@ -63,13 +63,12 @@ public class GenReposMain {
       GenReposClientProxy cliProxy;                                  // service provider agent
 
       waitConnection = true;
-      while (waitConnection)
-      { try
-        { sconi = scon.accept ();                                              // enter listening procedure
-          cliProxy = new GenReposClientProxy (sconi, reposInter);          // start a service provider agent to address
-          cliProxy.start ();                                                   //   the request of service
-        }
-        catch (SocketTimeoutException e) {}
+      while (waitConnection) {
+    	  try {
+    		  sconi = scon.accept ();                                              // enter listening procedure
+    		  cliProxy = new GenReposClientProxy (sconi, reposInter);          // start a service provider agent to address
+    		  cliProxy.start ();                                                   //   the request of service
+    	  } catch (SocketTimeoutException e) {}
       }
       scon.end ();                                                   // operations termination
       GenericIO.writelnString ("Server was shutdown.");

@@ -43,6 +43,7 @@ public class BarMain {
 	    	GenericIO.writelnString ("Wrong number of parameters!");
 	        System.exit (1);
 	    }
+	    
 	    try {
 	    	portNumb = Integer.parseInt (args[0]);
 	    } catch(NumberFormatException e) {
@@ -53,6 +54,7 @@ public class BarMain {
 	    	GenericIO.writelnString ("args[0] is not a valid port number!");
 	        System.exit (1);
 	    }
+	    
 	    reposServerName = args[1];
 	    try {
 	    	reposPortNumb = Integer.parseInt (args[2]);
@@ -67,7 +69,7 @@ public class BarMain {
 	    
 	    /* service is established */
 
-	    genReposStub = new GenReposStub (reposServerName, reposPortNumb);       // communication to the general repository is instantiated
+	    genReposStub = new GenReposStub(reposServerName, reposPortNumb);       // communication to the general repository is instantiated
 	    table = new Table(genReposStub);
 	    bar = new Bar(genReposStub, table);									// service is instantiated
 	    barInterface = new BarInterface(bar);					// interface to the service is instantiated                          
@@ -88,7 +90,7 @@ public class BarMain {
 	    		cliProxy.start ();                                         //   the request of service
 	        } catch(SocketTimeoutException e) {}
 	    }
-	    scon.end ();                                                   // operations termination
+	    scon.end();                                                   // operations termination
 	    GenericIO.writelnString ("Server was shutdown.");
 	}
 }

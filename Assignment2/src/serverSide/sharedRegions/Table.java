@@ -16,7 +16,7 @@ public class Table {
 	/**
 	 * Array of Students Threads
 	 */
-	private final Student [] students;
+	private final TableClientProxy [] students;
 	
 	/**
 	 * number of Students that are seated at the table
@@ -111,7 +111,7 @@ public class Table {
 	public Table(GenReposStub repos) {
 		this.nEntities = 0;
 		//Init students threads
-		this.students = new Student[ExecConsts.N];
+		this.students = new TableClientProxy[ExecConsts.N];
 		for(int i=0 ; i<ExecConsts.N ; i++) {
 			this.students[i] = null;
 		}
@@ -179,7 +179,7 @@ public class Table {
      * It is called by the waiter when a student enters the restaurant
      */
     public synchronized void saluteClient(int studentIDBeingAnswered) {
-    	Waiter waiter = ((Waiter) Thread.currentThread());
+    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
     	studentBeingAnsweredID = studentIDBeingAnswered;
     	
 		if(waiter.getWaiterState() != WaiterStates.PRESENTING_THE_MENU) {
@@ -221,7 +221,7 @@ public class Table {
      * It is called by the waiter to change to return to the bar appraising situation
      */
     public synchronized void returnBar() {
-    	Waiter waiter = ((Waiter) Thread.currentThread());
+    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
     	if(waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
 			waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
 			repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
@@ -235,7 +235,7 @@ public class Table {
      * Waiter Blocks waiting for student to describe him the order
      */
     public synchronized void getThePad() {
-    	Waiter waiter = ((Waiter) Thread.currentThread());
+    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
     	if(waiter.getWaiterState() != WaiterStates.TAKING_THE_ORDER) {
 			waiter.setWaiterState(WaiterStates.TAKING_THE_ORDER);
 			repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
@@ -292,7 +292,7 @@ public class Table {
      * Called by the waiter to present the bill to the last student to arrive
      */
     public synchronized void presentBill() {
-    	Waiter waiter = ((Waiter) Thread.currentThread());
+    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
     	processingTheBill = true;
     	
     	notifyAll();
@@ -324,7 +324,7 @@ public class Table {
      * Called by the student (inside enter method in the bar)
      */
     public synchronized void seatAtTable() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
     	
@@ -364,7 +364,7 @@ public class Table {
      * Called by the student to read a menu, wakes up waiter to signal that he already read the menu
      */
     public synchronized void readMenu() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
     	
@@ -387,7 +387,7 @@ public class Table {
     public synchronized void prepareOrder() {    	
     	numberOfStudentsThatHasChosen++;
     	
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	    	
 		if(student.getStudentState() != StudentStates.ORGANIZING_THE_ORDER) {
     		students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
@@ -460,7 +460,7 @@ public class Table {
      * Called by the first student to arrive so he can join his companions while waiting for the courses 
      */
     public synchronized void joinTalk() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	    	
 		if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
     		students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
@@ -475,7 +475,7 @@ public class Table {
      * Blocks waiting for courses
      */
     public synchronized void informCompanion() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
     	    	
@@ -503,7 +503,7 @@ public class Table {
      * Called by the student to start eating the meal (During random time)
      */    
     public synchronized void startEating() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
     	
@@ -523,7 +523,7 @@ public class Table {
      * Called by the student to signal that he has finished eating his meal
      */
     public synchronized void endEating() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
     	    	
@@ -547,7 +547,7 @@ public class Table {
      * Called by to student to wait for his companions to finish eating
      */
     public synchronized boolean hasEverybodyFinishedEating() {
-    	int studentID = ((Student) Thread.currentThread()).getStudentID();
+    	int studentID = ((TableClientProxy) Thread.currentThread()).getStudentID();
     	
     	if(studentID == lastToEatID) {
     		numberOfStudentsThatHasFinishEat = 0;
@@ -631,7 +631,7 @@ public class Table {
      * @return True if current student was the last to arrive, false otherwise
      */
     public synchronized boolean shouldHaveArrivedEarlier() {
-    	Student student = ((Student) Thread.currentThread());
+    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = student.getStudentID();
 		
