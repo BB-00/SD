@@ -65,7 +65,7 @@ public class BarStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudenState());
+	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
 	    com.close();
 	}
 	
@@ -211,7 +211,7 @@ public class BarStub {
 	    ((Waiter) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
 	    com.close();
 	    
-	    return inMessage.getID();
+	    return inMessage.getStudentID();
 	}
 	
 	

@@ -253,7 +253,7 @@ public class Kitchen {
 	 */
 	 public synchronized void shutdown() {
 		 nEntities += 1;
-	     if (nEntities >= ExecConsts.E)
+	     if (nEntities >= 2)
 	    	 KitchenMain.waitConnection = false;
 	     notifyAll();
 	 }

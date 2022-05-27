@@ -80,21 +80,21 @@ public class GenReposInterface {
 
       switch (inMessage.getMsgType ()) { 
       	case MessageType.SETNFIC:
-      		repos.initSimul(inMessage.getLogFName(), inMessage.getNIter());
+      		repos.initSimulation(inMessage.getLogFileName());
             outMessage = new Message(MessageType.NFICDONE);
             break;
             
-        case MessageType.STSST:
-        	repos.setBarberState(inMessage.getStudentID(), inMessage.getStudentState());
+        case MessageType.SETUSSTATE:
+        	repos.updateStudentState(inMessage.getStudentID(), inMessage.getStudentState());
             outMessage = new Message(MessageType.SACK);
             break;
             
-        case MessageType.STCST:
-        	repos.setChefState(inMessage.getChefID(), inMessage.getCustState());
+        case MessageType.SETUCS:
+        	repos.updateChefState(inMessage.getChefState());
             outMessage = new Message(MessageType.SACK);
             break;
-        case MessageType.STWST:
-        	repos.setWaiterState(inMessage.getWaiterID(), inMessage.getWaiterState());                              
+        case MessageType.SETUWS:
+        	repos.updateWaiterState(inMessage.getWaiterState());                              
             outMessage = new Message (MessageType.SACK);
             break;
             

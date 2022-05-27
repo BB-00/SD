@@ -38,7 +38,7 @@ public class GenReposStub {
 	        }
 	        catch (InterruptedException e) {}
 	    }
-	    outMessage = new Message(MessageType.SETNFIC, fileName, nIter);
+	    outMessage = new Message(MessageType.SETNFIC, fileName);
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    if(inMessage.getMsgType() != MessageType.NFICDONE) {

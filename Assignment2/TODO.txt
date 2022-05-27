@@ -29,10 +29,3 @@ Testar Localmente + scripts
 
 Testar Distribuido + scripts
 
-
-
-
-
-Estava a fazer:
-	Mudar nomes funções interfaces
-		- Table (DONE)

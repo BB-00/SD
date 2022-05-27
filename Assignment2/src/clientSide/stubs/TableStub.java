@@ -267,7 +267,7 @@ public class TableStub {
 	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
 	    com.close();
 	    
-	    return inMessage.getID();
+	    return inMessage.getStudentID();
 	}
 	
 	public int getLastToEat() {
@@ -298,7 +298,7 @@ public class TableStub {
 	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
 	    com.close();
 	    
-	    return inMessage.getID();
+	    return inMessage.getStudentID();
 	}
 	
 	public void seatAtTable() {

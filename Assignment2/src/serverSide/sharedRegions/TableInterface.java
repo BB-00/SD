@@ -103,26 +103,23 @@ public class TableInterface {
         switch(inMessage.getMsgType()) {
       		case MessageType.REQSC:
       			((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-                if (table.saluteClient()) {
-                	outMessage = new Message(MessageType.SCDONE,
-                            ((TableClientProxy) Thread.currentThread()).getWaiterState());
-                }
+                table.saluteClient(inMessage.getStudentID());
+                outMessage = new Message(MessageType.SCDONE,
+                        ((TableClientProxy) Thread.currentThread()).getWaiterState());
                 break;
 
          case MessageType.REQRB:
         	 ((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-             if (table.returnBar()) {
-            	 outMessage = new Message(MessageType.RBDONE,
-                         ((TableClientProxy) Thread.currentThread()).getWaiterState());
-             }
+             table.returnBar();
+        	 outMessage = new Message(MessageType.RBDONE,
+                     ((TableClientProxy) Thread.currentThread()).getWaiterState());
              break;
 
          case MessageType.REQGB:
         	 ((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-             if (table.getThePad()) {
-            	 outMessage = new Message(MessageType.GBDONE,
-                         ((TableClientProxy) Thread.currentThread()).getWaiterState());
-             }
+             table.getThePad();
+        	 outMessage = new Message(MessageType.GBDONE,
+                     ((TableClientProxy) Thread.currentThread()).getWaiterState());
              break;
 
          case MessageType.REQHACBS:
@@ -135,68 +132,61 @@ public class TableInterface {
 
          case MessageType.REQDP:
         	 ((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-             if (table.returnBar()) {
+             table.deliverPortion();
             	 outMessage = new Message(MessageType.DPDONE,
                          ((TableClientProxy) Thread.currentThread()).getWaiterState());
-             }
              break;    
 
          case MessageType.REQPB:
         	 ((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-             if (table.presentBill()) {
+             table.presentBill();
             	 outMessage = new Message(MessageType.PBDONE,
                          ((TableClientProxy) Thread.currentThread()).getWaiterState());
-             }
              break;
 
          case MessageType.REQGFTA:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
         	 ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.getFirstToArrive()) {
-            	 outMessage = new Message (MessageType.GTFADONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.getFirstToArrive();
+        	 outMessage = new Message (MessageType.GFTADONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
          
          case MessageType.REQGLTE:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread ()).setStudentState(inMessage.getStudentState());
-             if (table.getLastToEat()) {
-            	 outMessage = new Message(MessageType.GLTEDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.getLastToEat();
+        	 outMessage = new Message(MessageType.GLTEDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQSAT:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.seatAtTable()) {
-            	 outMessage = new Message(MessageType.SATDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.seatAtTable();
+        	 outMessage = new Message(MessageType.SATDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQRM:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
         	 ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.readMenu()) {
-            	 outMessage = new Message(MessageType.RMDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.readMenu();
+        	 outMessage = new Message(MessageType.RMDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQPO:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.prepareOrder()) {
-            	 outMessage = new Message(MessageType.PODONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.prepareOrder();
+             outMessage = new Message(MessageType.PODONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQEHC:  
@@ -205,68 +195,62 @@ public class TableInterface {
              if (table.everybodyHasChosen()) {
             	 outMessage = new Message(MessageType.EHCDONE,
                          ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
+                         ((TableClientProxy) Thread.currentThread()).getStudentState());
              }
              break;
 
          case MessageType.REQAUOC:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.addUpOnesChoices()) {
-            	 outMessage = new Message(MessageType.AUOCDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.addUpOnesChoices();
+        	 outMessage = new Message(MessageType.AUOCDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQDO:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState (inMessage.getStudentState());
-             if (table.describeOrder()) {
-            	 outMessage = new Message(MessageType.DODONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.describeOrder();
+        	 outMessage = new Message(MessageType.DODONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQJT:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.joinTalk()) {
-            	 outMessage = new Message(MessageType.JTDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.joinTalk();
+        	 outMessage = new Message(MessageType.JTDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQIC:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.informCompanion()) {
-            	 outMessage = new Message(MessageType.ICDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.informCompanion();
+        	 outMessage = new Message(MessageType.ICDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQSE:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.startEating()) {
-            	 outMessage = new Message(MessageType.SEDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.startEating();
+        	 outMessage = new Message(MessageType.SEDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQEE:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-             if (table.endEating()) {
-            	 outMessage = new Message(MessageType.EEDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.endEating();
+        	 outMessage = new Message(MessageType.EEDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQHEFE:
@@ -275,18 +259,17 @@ public class TableInterface {
              if (table.hasEverybodyFinishedEating()) {
             	 outMessage = new Message(MessageType.HEFEDONE,
                          ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
+                         ((TableClientProxy) Thread.currentThread()).getStudentState());
              }
              break;
 
          case MessageType.REQHB:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState (inMessage.getStudentState());
-             if (table.honourBill()) {
-            	 outMessage = new Message(MessageType.HBDONE,
-                         ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
-             }
+             table.honourBill();
+        	 outMessage = new Message(MessageType.HBDONE,
+                     ((TableClientProxy) Thread.currentThread()).getStudentID(),
+                     ((TableClientProxy) Thread.currentThread()).getStudentState());
              break;
 
          case MessageType.REQHACBE:
@@ -295,7 +278,7 @@ public class TableInterface {
              if (table.haveAllCoursesBeenEaten()) {
             	 outMessage = new Message(MessageType.HACBEDONE,
                          ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
+                         ((TableClientProxy) Thread.currentThread()).getStudentState());
              }
              break;
 
@@ -305,7 +288,7 @@ public class TableInterface {
              if (table.shouldHaveArrivedEarlier()) {
             	 outMessage = new Message(MessageType.SHAEDONE,
                          ((TableClientProxy) Thread.currentThread()).getStudentID(),
-                         ((TableClientProxy) Thread.currentThread()).setStudentState());
+                         ((TableClientProxy) Thread.currentThread()).getStudentState());
              }
              break;
 

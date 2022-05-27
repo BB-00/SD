@@ -41,12 +41,14 @@ public class GenRepos {
 	 * State of the Chef
 	 */
 	private int chefState;
+
+	private String logFileName;
 	
 
-	public GenRepos(String file){
+	public GenRepos(){
 		this.nEntities =  0;
 		
-		this.file = file;
+		this.file = "log.txt";
 		
 		//set initial states
 		this.studentStates = new int[ExecConsts.N];
@@ -222,6 +224,12 @@ public class GenRepos {
 	         }
 	   }
 	   
+	   public synchronized void initSimulation(String logFileName) {
+		   if(!Objects.equals(logFileName, ""))
+			   this.logFileName = logFileName;
+		   reportInitialStatus();
+	   }
+	   
 	   /**
 	   *   Operation server shutdown.
 	   *
@@ -229,7 +237,7 @@ public class GenRepos {
 	   */
 	   public synchronized void shutdown() {
 	       nEntities += 1;
-	       if (nEntities >= ExecConsts.E)
+	       if (nEntities >= 3)
 	          GenReposMain.waitConnection = false;
 	   }
 }

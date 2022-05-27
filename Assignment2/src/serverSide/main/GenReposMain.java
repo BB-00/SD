@@ -1,57 +1,77 @@
 package serverSide.main;
 
-import java.net.SocketTimeoutException;
-
+import serverSide.entities.*;
+import serverSide.sharedRegions.*;
 import commInfra.*;
-import serverSide.entities.GenReposClientProxy;
-import serverSide.sharedRegions.GenReposInterface;
-import serverSide.sharedRegions.GenRepos;
-
+import genclass.GenericIO;
+import java.net.*;
 
 /**
- * This class implements the Repository Main that instantiates the shared region Stubs
- * that are part of Repository arguments, instantiates the Repository Interface
- * and launches the Repository Proxy.
+ *    Server side of the General Repository of Information.
+ *
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
  */
+
 public class GenReposMain {
+  /**
+   *  Flag signaling the service is active.
+   */
 
-	public static boolean waitConnection;
-	
-    public static boolean finished;
+   public static boolean waitConnection;
 
-    public static void main(String[] args) {
+  /**
+   *  Main method.
+   *
+   *    @param args runtime arguments
+   *        args[0] - port nunber for listening to service requests
+   */
 
-        //Repository port
-        final int portNumb = ExecConsts.GenReposPort;
+   public static void main (String [] args) {
+      GenRepos repos;                                            // general repository of information (service to be rendered)
+      GenReposInterface reposInter;                              // interface to the general repository of information
+      ServerCom scon, sconi;                                         // communication channels
+      int portNumb = -1;                                             // port number for listening to service requests
 
-        ServerCom scon, sconi;
-        GenReposClientProxy repoProxy;
+      if (args.length != 1)
+         { GenericIO.writelnString ("Wrong number of parameters!");
+           System.exit (1);
+         }
+      try
+      { portNumb = Integer.parseInt (args[0]);
+      }
+      catch (NumberFormatException e)
+      { GenericIO.writelnString ("args[0] is not a number!");
+        System.exit (1);
+      }
+      if ((portNumb < 4000) || (portNumb >= 65536))
+         { GenericIO.writelnString ("args[0] is not a valid port number!");
+           System.exit (1);
+         }
 
-        //Create listening channel
-        scon = new ServerCom(portNumb);
-        scon.start();
+     /* service is established */
 
-        //Instantiate Shared Region
-        GenRepos repos = null;
-        repos = new GenRepos(ExecConsts.NUM_PASSANGERS, ExecConsts.fileName);
+      repos = new GenRepos();                                   // service is instantiated
+      reposInter = new GenReposInterface (repos);                // interface to the service is instantiated
+      scon = new ServerCom (portNumb);                               // listening channel at the public port is established
+      scon.start ();
+      GenericIO.writelnString ("Service is established!");
+      GenericIO.writelnString ("Server is listening for service requests.");
 
-        //Instantiate Shared Region interface
-        GenReposInterface reposInterface = new GenReposInterface(repos);
+     /* service request processing */
 
-        //Process Requests while clients not finished
-        finished = false;
-        while (!finished)
-        { 	try {
-            //listening
-            sconi = scon.accept ();
-            //Launch proxy
-            repoProxy = new GenReposClientProxy(sconi, reposInterface);
-            repoProxy.start ();
-        } catch (SocketTimeoutException e) {}
+      GenReposClientProxy cliProxy;                                  // service provider agent
+
+      waitConnection = true;
+      while (waitConnection)
+      { try
+        { sconi = scon.accept ();                                              // enter listening procedure
+          cliProxy = new GenReposClientProxy (sconi, reposInter);          // start a service provider agent to address
+          cliProxy.start ();                                                   //   the request of service
         }
-        //Terminate operations
-        scon.end();
-        repos.reportSummary();
-    }
-
+        catch (SocketTimeoutException e) {}
+      }
+      scon.end ();                                                   // operations termination
+      GenericIO.writelnString ("Server was shutdown.");
+   }
 }
