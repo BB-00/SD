@@ -33,7 +33,7 @@ public class Student extends Thread{
 	/**
 	 * Instatiation of a student thread
 	 * 
-	 * @param studentId student id
+	 * @param studentID student id
 	 * @param reference to bar
 	 * @param reference to table
 	 */

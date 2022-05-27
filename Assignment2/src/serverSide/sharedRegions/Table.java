@@ -178,9 +178,9 @@ public class Table {
      * 
      * It is called by the waiter when a student enters the restaurant
      */
-    public synchronized void saluteClient(int studentIdBeingAnswered) {
+    public synchronized void saluteClient(int studentIDBeingAnswered) {
     	Waiter waiter = ((Waiter) Thread.currentThread());
-    	studentBeingAnsweredID = studentIdBeingAnswered;
+    	studentBeingAnsweredID = studentIDBeingAnswered;
     	
 		if(waiter.getWaiterState() != WaiterStates.PRESENTING_THE_MENU) {
 			waiter.setWaiterState(WaiterStates.PRESENTING_THE_MENU);
@@ -326,19 +326,19 @@ public class Table {
     public synchronized void seatAtTable() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
     	
-		students[studentId] = student;
+		students[studentID] = student;
 		if(student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
-    		students[studentId].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-    		repos.updateStudentState(studentId, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+    		students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+    		repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 		}
-		//repos.updateStudentSeat(studentId, numberOfStudentsAtTable);
+		//repos.updateStudentSeat(studentID, numberOfStudentsAtTable);
 		numberOfStudentsAtTable++;
     	
-    	System.out.println("Student "+studentId+" took a seat!");
+    	System.out.println("Student "+studentID+" took a seat!");
 
-    	studentsSeated[studentId] = true;
+    	studentsSeated[studentID] = true;
     	
     	notifyAll();
     	
@@ -349,13 +349,13 @@ public class Table {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	System.out.println("Student "+studentId+" was waken up");
-	    	if (studentId == studentBeingAnsweredID && presentingTheMenu == true) {
-	    		System.out.println("Student "+studentId+" Can Proceed");
+	    	System.out.println("Student "+studentID+" was waken up");
+	    	if (studentID == studentBeingAnsweredID && presentingTheMenu == true) {
+	    		System.out.println("Student "+studentID+" Can Proceed");
 	    		//break;
 	    	}
 	    //}
-    	System.out.println("Student "+studentId+ " was presented with the menu");
+    	System.out.println("Student "+studentID+ " was presented with the menu");
     }
     
     /**
@@ -366,17 +366,17 @@ public class Table {
     public synchronized void readMenu() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
     	
 		if(student.getStudentState() != StudentStates.SELECTING_THE_COURSES) {
-    		students[studentId].setStudentState(StudentStates.SELECTING_THE_COURSES);
-    		repos.updateStudentState(studentId, StudentStates.SELECTING_THE_COURSES);
+    		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
+    		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 		}
     	
-    	studentsThatHaveReadTheMenu[studentId] = true;
+    	studentsThatHaveReadTheMenu[studentID] = true;
     	notifyAll();
     	
-    	System.out.println("Student "+studentId+ " read the menu ("+studentBeingAnsweredID+")");
+    	System.out.println("Student "+studentID+ " read the menu ("+studentBeingAnsweredID+")");
     }
     
     /**
@@ -477,7 +477,7 @@ public class Table {
     public synchronized void informCompanion() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
     	    	
     	while(informingCompanion) {
     		try {
@@ -492,8 +492,8 @@ public class Table {
     	notifyAll();
     	
     	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
-    		students[studentId].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		repos.updateStudentState(studentId, StudentStates.CHATTING_WITH_COMPANIONS);
+    		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
     	}   	
     }
 
@@ -505,11 +505,11 @@ public class Table {
     public synchronized void startEating() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
     	
 		if(student.getStudentState() != StudentStates.ENJOYING_THE_MEAL) {
-    		students[studentId].setStudentState(StudentStates.ENJOYING_THE_MEAL);
-    		repos.updateStudentState(studentId, StudentStates.ENJOYING_THE_MEAL);
+    		students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
+    		repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
 		}
     	
         try {
@@ -525,19 +525,19 @@ public class Table {
     public synchronized void endEating() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
     	    	
     	numberOfStudentsThatHasFinishEat++;
-    	System.out.println("Student "+studentId+" finished");
+    	System.out.println("Student "+studentID+" finished");
     	
     	if(numberOfStudentsThatHasFinishEat == ExecConsts.N) {
     		numberOfCoursesEaten++;
-    		lastToEatID = studentId;
+    		lastToEatID = studentID;
     	}
     	
     	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
-    		students[studentId].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		repos.updateStudentState(studentId, StudentStates.CHATTING_WITH_COMPANIONS);
+    		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
 		}
     }
     
@@ -547,9 +547,9 @@ public class Table {
      * Called by to student to wait for his companions to finish eating
      */
     public synchronized boolean hasEverybodyFinishedEating() {
-    	int studentId = ((Student) Thread.currentThread()).getStudentID();
+    	int studentID = ((Student) Thread.currentThread()).getStudentID();
     	
-    	if(studentId == lastToEatID) {
+    	if(studentID == lastToEatID) {
     		numberOfStudentsThatHasFinishEat = 0;
     		numberOfStudentsServed = 0;
     		numberOfStudentsWokenUp++;
@@ -633,12 +633,12 @@ public class Table {
     public synchronized boolean shouldHaveArrivedEarlier() {
     	Student student = ((Student) Thread.currentThread());
     	
-    	int studentId = student.getStudentID();
+    	int studentID = student.getStudentID();
 		
-    	if(studentId == lastToArriveID) {
+    	if(studentID == lastToArriveID) {
     		if(student.getStudentState() != StudentStates.PAYING_THE_MEAL) {
-        		students[studentId].setStudentState(StudentStates.PAYING_THE_MEAL);
-        		repos.updateStudentState(studentId, StudentStates.PAYING_THE_MEAL);
+        		students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
+        		repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
     		}
 	    	return true;
     	}
@@ -653,6 +653,7 @@ public class Table {
 	 public synchronized void shutdown() {
 		 nEntities += 1;
 	     if (nEntities >= ExecConsts.E)
-	    	 ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	    	 TableMain.waitConnection = false;
+	     notifyAll();
 	 }
 }

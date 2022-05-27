@@ -66,7 +66,7 @@ public class GenReposStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    if(inMessage.getMsgType() != MessageType.USSSTATEDONE) {
+	    if(inMessage.getMsgType() != MessageType.SACK) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");
 	        GenericIO.writelnString(inMessage.toString());
 	        System.exit(1);
@@ -91,7 +91,7 @@ public class GenReposStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    if(inMessage.getMsgType() != MessageType.USSEATDONE) {
+	    if(inMessage.getMsgType() != MessageType.SACK) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");
 	        GenericIO.writelnString(inMessage.toString());
 	        System.exit(1);
@@ -143,7 +143,7 @@ public class GenReposStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    if(inMessage.getMsgType() != MessageType.UWSDONE) {
+	    if(inMessage.getMsgType() != MessageType.SACK) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");
 	        GenericIO.writelnString(inMessage.toString());
 	        System.exit(1);
@@ -168,7 +168,7 @@ public class GenReposStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    if(inMessage.getMsgType() != MessageType.UCSDONE) {
+	    if(inMessage.getMsgType() != MessageType.SACK) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");
 	        GenericIO.writelnString(inMessage.toString());
 	        System.exit(1);

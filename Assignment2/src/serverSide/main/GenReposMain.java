@@ -3,7 +3,7 @@ package serverSide.main;
 import java.net.SocketTimeoutException;
 
 import commInfra.*;
-import serverSide.entities.GenReposProxy;
+import serverSide.entities.GenReposClientProxy;
 import serverSide.sharedRegions.GenReposInterface;
 import serverSide.sharedRegions.GenRepos;
 
@@ -15,6 +15,8 @@ import serverSide.sharedRegions.GenRepos;
  */
 public class GenReposMain {
 
+	public static boolean waitConnection;
+	
     public static boolean finished;
 
     public static void main(String[] args) {
@@ -23,7 +25,7 @@ public class GenReposMain {
         final int portNumb = ExecConsts.GenReposPort;
 
         ServerCom scon, sconi;
-        GenReposProxy repoProxy;
+        GenReposClientProxy repoProxy;
 
         //Create listening channel
         scon = new ServerCom(portNumb);
@@ -43,7 +45,7 @@ public class GenReposMain {
             //listening
             sconi = scon.accept ();
             //Launch proxy
-            repoProxy = new GenReposProxy(sconi, reposInterface);
+            repoProxy = new GenReposClientProxy(sconi, reposInterface);
             repoProxy.start ();
         } catch (SocketTimeoutException e) {}
         }

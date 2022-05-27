@@ -537,26 +537,31 @@ public class MessageType
    public static final int SHUTDONE = 88;
 
   /**
-   *  setStudentState (REQUEST).
+   *  updateStudentState (REQUEST).
    */
 
-   public static final int STSST = 89;
+   public static final int SETUSSTATE = 89;
 
   /**
-   *  setWaiterState (REQUEST).
+   *  updateWaiterState (REQUEST).
    */
 
-   public static final int STWST = 90;
+   public static final int SETUWS = 90;
 
   /**
-   *  setChefState (REQUEST).
+   *  updateChefState (REQUEST).
    */
 
-   public static final int STCST = 91;
+   public static final int SETUCS = 91;
+   
+   /**
+    * updateStudentSeat (REQUEST)
+    */
+   public static final int SETUSSEAT = 92;
 
   /**
    *  Setting acknowledged (reply).
    */
 
-   public static final int SACK = 92;
+   public static final int SACK = 120;
 }

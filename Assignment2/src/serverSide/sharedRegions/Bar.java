@@ -92,7 +92,7 @@ public class Bar {
 	}
 	
 	/**
-	 * @return Id of the student whose request is being answered
+	 * @return ID of the student whose request is being answered
 	 */
 	public int getStudentBeingAnswered() {
 		return studentBeingAnswered;
@@ -366,7 +366,8 @@ public class Bar {
 	   public synchronized void shutdown() {
 	       nEntities += 1;
 	       if (nEntities >= ExecConsts.E)
-	          ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	          BarMain.waitConnection = false;
+	       notifyAll();
 	   }
 }
 

@@ -254,7 +254,8 @@ public class Kitchen {
 	 public synchronized void shutdown() {
 		 nEntities += 1;
 	     if (nEntities >= ExecConsts.E)
-	    	 ServerSleepingBarbersGeneralRepos.waitConnection = false;
+	    	 KitchenMain.waitConnection = false;
+	     notifyAll();
 	 }
 
 }

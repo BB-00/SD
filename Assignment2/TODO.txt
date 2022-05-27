@@ -1,12 +1,12 @@
 Client Side:
 	Stubs:
 		- GenRepos (DONE)
-		- FALTA_DAR_NOME_A_ESTA_MERDA
+		- FALTA_DAR_NOME_A_ESTA_MERDA - está tudo em comentário, acho que não vamos precisar
 		- returns das funções Message.getCheck(), etc
 
 Server Side:
 	sharedRegions:
-		- Todas as Interfaces - falta para o GenRepos
+		- Todas as Interfaces - falta para o GenRepos (DONE)
 		- GenRepos (DONE)
 		- adicionar shutdowns (DONE)
 		- corrigir nomes variaveis shutdowns
@@ -16,7 +16,7 @@ Server Side:
 		- GenRepos - reportSummary() ?? 
 		
 	entities:
-		- Proxies - falta para o GenRepos
+		- Proxies - falta para o GenRepos (DONE)
 		
 Common Infra:
 	- Message - está com a versão do Eduardo
@@ -28,3 +28,11 @@ Common Infra:
 Testar Localmente + scripts
 
 Testar Distribuido + scripts
+
+
+
+
+
+Estava a fazer:
+	Mudar nomes funções interfaces
+		- Table (DONE)

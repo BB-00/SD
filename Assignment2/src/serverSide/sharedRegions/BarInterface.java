@@ -114,7 +114,7 @@ public class BarInterface {
                             ((BarClientProxy) Thread.currentThread()).getStudentState());
                 }
                 //   else outMessage = new Message (MessageType.BSHOPF,
-                //                                  ((BarClientProxy) Thread.currentThread ()).getCustomerId (),
+                //                                  ((BarClientProxy) Thread.currentThread ()).getCustomerID (),
                 //                                  ((BarClientProxy) Thread.currentThread ()).getCustomerState ());
                break;
             case MessageType.REQCW:
