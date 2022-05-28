@@ -1,6 +1,7 @@
 package commInfra;
 
 import java.io.Serializable;
+import genclass.GenericIO;
 
 public class Message implements Serializable {
 
@@ -19,6 +20,8 @@ public class Message implements Serializable {
     private int studentState = -1;
     
     private int studentSeat = -1;
+    
+    private char c = 'x';
 
     private Boolean check = null;
 
@@ -29,6 +32,7 @@ public class Message implements Serializable {
     }
 
     public Message(int type, int state) {
+    	GenericIO.writelnString("TYPE: "+type+" || STATE: "+state);
         this.msgType = type;
         if (type >= 43 && type <= 66)
             this.waiterState = state;
@@ -38,6 +42,11 @@ public class Message implements Serializable {
             this.waiterState = state;
             this.chefState = state;
         }
+    }
+    
+    public Message(int type, char request) {
+    	this.msgType = type;
+    	this.c = request;
     }
 
     public Message(int type, Boolean check, int state) {
@@ -149,6 +158,10 @@ public class Message implements Serializable {
     public int getStudentSeat() {
     	return studentSeat;
     }
+    
+    public char getChar() {
+    	return c;
+    }
 
 //    public int getVar1() {
 //        return var1;
@@ -166,7 +179,7 @@ public class Message implements Serializable {
     public String toString() {
         return ("Message type: " + msgType
                 + "\nCheck: " + check
-                + "\nRequest: " + request
+                + "\nRequest: " + request + " || Char: " + c
                 + "\nStudent ID: " + studentID
                 + "\nStudent State: " + studentState
                 + "\nWaiter State: " + waiterState

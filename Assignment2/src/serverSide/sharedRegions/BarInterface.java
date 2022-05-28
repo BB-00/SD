@@ -3,6 +3,7 @@ package serverSide.sharedRegions;
 import serverSide.entities.*;
 import clientSide.entities.*;
 import commInfra.*;
+import genclass.GenericIO;
 
 
 /**
@@ -146,13 +147,17 @@ public class BarInterface {
                 break;
 
             case MessageType.REQLA:
-            	((BarClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-            	char request = bar.lookAround();
-            	//System.out.println("Interface WaiterState: "+((BarClientProxy)Thread.currentThread()).getWaiterState());
-            	outMessage = new Message(MessageType.LADONE, 
-                        ((BarClientProxy)Thread.currentThread()).getWaiterState(), request);
-                //nao sei se falta alguma coisa
-                break;
+            	char c = bar.lookAround();
+				outMessage = new Message(MessageType.LADONE, c);
+				break;
+//            	GenericIO.writelnString("BarProxy inMessage Waiter State: "+inMessage.getWaiterState());
+//            	//((BarClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
+//            	char request = bar.lookAround();
+//            	GenericIO.writelnString("Interface char request: "+request);
+//            	outMessage = new Message(MessageType.LADONE, 
+//                        ((BarClientProxy)Thread.currentThread()).getWaiterState(), request);
+//                //nao sei se falta alguma coisa
+//                break;
 
             case MessageType.REQSG:
             	((BarClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());

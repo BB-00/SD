@@ -35,25 +35,25 @@ public class KitchenClientProxy extends Thread implements StudentCloning, Waiter
    *  Student identification.
    */
 
-   private int studentID;
+   private int studentID = -1;
 
   /**
    *  Student state.
    */
 
-   private int studentState;
+   private int studentState = 0;
 
   /**
    *  Chef state.
    */
 
-   private int chefState;
+   private int chefState = 0;
    
    /**
    *  Waiter state.
    */
 
-   private int waiterState;
+   private int waiterState = 0;
     
 
     /**

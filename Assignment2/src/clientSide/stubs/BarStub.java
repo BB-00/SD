@@ -232,13 +232,16 @@ public class BarStub {
 	    }
 	    
 	    //MESSAGES
+	    GenericIO.writelnString("WAITER LOOKAROUND");
+	    
 	    outMessage = new Message(MessageType.REQLA, ((Waiter) Thread.currentThread()).getWaiterState());
 	    
+	    GenericIO.writelnString("outMessage Waiter State: "+outMessage.getWaiterState());
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
-//	    System.out.println("WAITER STATE: "+((Waiter) Thread.currentThread()).getWaiterState());
-//	    System.out.println("inMessage WAITER STATE: "+ inMessage.getWaiterState());
+//	    GenericIO.writelnString("WAITER STATE: "+((Waiter) Thread.currentThread()).getWaiterState());
+//	    GenericIO.writelnString("inMessage WAITER STATE: "+ inMessage.getWaiterState());
 	    
 	    //TODO Message Types - enter
 	    if((inMessage.getMsgType() != MessageType.LADONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
@@ -257,7 +260,7 @@ public class BarStub {
 	    ((Waiter) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
 	    com.close();
 	    
-	    return inMessage.getRequest();
+	    return inMessage.getChar();
 	}
 	
 	public boolean sayGoodbye() {
