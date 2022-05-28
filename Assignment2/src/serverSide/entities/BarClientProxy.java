@@ -167,6 +167,7 @@ public class BarClientProxy extends Thread implements StudentCloning, WaiterClon
     */
     
     public void setWaiterState(int state) {
+    	//System.out.println("BarProxy WAITER STATE: "+ state);
        waiterState = state;
     }
     

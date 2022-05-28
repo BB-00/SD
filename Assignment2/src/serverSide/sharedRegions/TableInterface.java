@@ -163,15 +163,15 @@ public class TableInterface {
              break;
 
          case MessageType.REQSAT:
-        	 System.out.println("IN:\n"+inMessage.toString());
-             System.out.println();
+//        	 System.out.println("IN:\n"+inMessage.toString());
+//             System.out.println();
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
              ((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
              table.seatAtTable();
         	 outMessage = new Message(MessageType.SATDONE,
                      ((TableClientProxy) Thread.currentThread()).getStudentID(),
                      ((TableClientProxy) Thread.currentThread()).getStudentState());
-        	 System.out.println("OUT:\n"+outMessage.toString());
+//        	 System.out.println("OUT:\n"+outMessage.toString());
              break;
 
          case MessageType.REQRM:
@@ -306,7 +306,7 @@ public class TableInterface {
          case MessageType.REQSLTA:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
         	 //((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
-        	 table.setFirstToArrive(inMessage.getStudentID());
+        	 table.setLastToArrive(inMessage.getStudentID());
         	 outMessage = new Message(MessageType.SLTADONE,
         			 ((TableClientProxy) Thread.currentThread()).getStudentID(), "");
         	 break;

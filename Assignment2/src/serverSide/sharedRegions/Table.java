@@ -159,7 +159,7 @@ public class Table {
      * @param firstToArrive id of the first student to arrive
      */
     public void setFirstToArrive(int firstToArrive) {
-    	System.out.println("Student "+firstToArrive+" was first to arrive!");
+    	//System.out.println("Student "+firstToArrive+" was first to arrive!");
     	this.firstToArriveID = firstToArrive; }
     
     /**
@@ -368,13 +368,17 @@ public class Table {
     public synchronized void readMenu() {
     	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
-    	int studentID = student.getStudentID();
+    	int studentID = ((TableClientProxy) Thread.currentThread()).getStudentID();
     	
-		if(student.getStudentState() != StudentStates.SELECTING_THE_COURSES) {
+    	GenericIO.writelnString("Before: "+((TableClientProxy) Thread.currentThread()).getStudentState()+" - ID: "+student.getStudentID());
+    	
+		if(((TableClientProxy) Thread.currentThread()).getStudentState() != StudentStates.SELECTING_THE_COURSES) {
     		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
     		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 		}
     	
+		GenericIO.writelnString("After: "+((TableClientProxy) Thread.currentThread()).getStudentState()+" - ID: "+student.getStudentID());
+		
     	studentsThatHaveReadTheMenu[studentID] = true;
     	notifyAll();
     	

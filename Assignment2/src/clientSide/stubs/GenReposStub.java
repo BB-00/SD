@@ -61,6 +61,9 @@ public class GenReposStub {
 	        }
 	        catch (InterruptedException e) {}
 	    }
+	    
+	    GenericIO.writelnString("READ MENU Student State: "+studentState);
+	    
 	    outMessage = new Message(MessageType.SETUSSTATE, studentID, studentState);
 	    
 	    com.writeObject(outMessage);

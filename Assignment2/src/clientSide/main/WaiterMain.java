@@ -74,11 +74,11 @@ public class WaiterMain {
 	    try {
 	    	genReposServerPortNum = Integer.parseInt (args[7]);
 	    } catch (NumberFormatException e) {
-	    	GenericIO.writelnString ("args[3] is not a number!");
+	    	GenericIO.writelnString ("args[7] is not a number!");
 	        System.exit (1);
 	    }
 	    if ((genReposServerPortNum < 4000) || (genReposServerPortNum >= 65536)) {
-	    	GenericIO.writelnString ("args[3] is not a valid port number!");
+	    	GenericIO.writelnString ("args[7] is not a valid port number!");
 	        System.exit (1);
 	    }
 	    
@@ -90,10 +90,10 @@ public class WaiterMain {
 		table = new TableStub(tableServerHostName, tableServerPortNum);
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
 		genReposStub = new GenReposStub(genReposServerHostName, genReposServerPortNum);
-		genReposStub.initSimulation(fileName);
 		
 		waiter = new Waiter("Waiter", kitchen, bar, table);
 		
+		genReposStub.initSimulation(fileName);
 		
 		// Start of simulation
 		waiter.start();

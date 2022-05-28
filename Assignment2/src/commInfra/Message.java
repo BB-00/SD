@@ -70,7 +70,7 @@ public class Message implements Serializable {
             this.studentState = state;
         else if (type >= 43 && type <= 66)
             this.waiterState = state;
-        else if (type >= 87 && type <= 88) {
+        else if (type >= 87 && type <= 89) {
             this.waiterState = state;
             this.studentState = state;
         }

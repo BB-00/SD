@@ -128,7 +128,7 @@ public class Bar {
 			Request request = new Request(studentID,'e');
 			
 			numberOfStudentsAtRestaurant++;
-
+			
 			if(numberOfStudentsAtRestaurant == 1)
 				tab.setFirstToArrive(studentID);
 			else if (numberOfStudentsAtRestaurant == ExecConsts.N)
