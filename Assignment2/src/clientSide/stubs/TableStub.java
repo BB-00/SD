@@ -6,6 +6,7 @@ import clientSide.entities.Waiter;
 import clientSide.entities.WaiterStates;
 import genclass.GenericIO;
 import commInfra.*;
+import serverSide.entities.*;
 
 public class TableStub {
 	/**
@@ -378,7 +379,7 @@ public class TableStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQSAT, ((Student) Thread.currentThread()).getStudentID(), ((Student) Thread.currentThread()).getStudentState());
+	    outMessage = new Message(MessageType.REQSAT, ((BarClientProxy) Thread.currentThread()).getStudentID(), ((BarClientProxy) Thread.currentThread()).getStudentState());
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -390,7 +391,7 @@ public class TableStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getStudentID() != ((Student) Thread.currentThread()).getStudentID()) {
+	    if(inMessage.getStudentID() != ((BarClientProxy) Thread.currentThread()).getStudentID()) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Student ID!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -402,7 +403,7 @@ public class TableStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
+	    ((BarClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
 	    com.close();
 	}
 	

@@ -39,7 +39,7 @@ public class Waiter extends Thread{
 	 */
 	
 	public void setWaiterState(int state) {
-		waiterState = state;
+		this.waiterState = state;
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class Waiter extends Thread{
 	 */
 
 	public int getWaiterState() {
-		return waiterState;
+		return this.waiterState;
 	}
 	
 	/**

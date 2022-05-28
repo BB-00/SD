@@ -102,9 +102,6 @@ public class BarInterface {
 //        }
 
         // check nothing
-
-        System.out.println("IN:\n"+inMessage.toString());
-        System.out.println();
         
         // processing 
 
@@ -116,7 +113,6 @@ public class BarInterface {
             	outMessage = new Message(MessageType.ENTDONE,
                         ((BarClientProxy) Thread.currentThread()).getStudentID(),
                         ((BarClientProxy) Thread.currentThread()).getStudentState());
-            	System.out.println("OUT:\n"+outMessage.toString());
                 break;
                 
             case MessageType.REQCW:
@@ -152,6 +148,7 @@ public class BarInterface {
             case MessageType.REQLA:
             	((BarClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
             	char request = bar.lookAround();
+            	//System.out.println("Interface WaiterState: "+((BarClientProxy)Thread.currentThread()).getWaiterState());
             	outMessage = new Message(MessageType.LADONE, 
                         ((BarClientProxy)Thread.currentThread()).getWaiterState(), request);
                 //nao sei se falta alguma coisa
