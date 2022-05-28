@@ -79,7 +79,7 @@ public class GenRepos {
 	 */
 	public synchronized void updateStudentSeat(int studentID, int studentSeat) {
 		seats[studentID] = studentSeat;
-		reportStatus();
+		//reportStatus();
 	}
 	
 	/**

@@ -51,14 +51,14 @@ public class Student extends Thread{
 	 * @param studentID
 	 */
 	public void setStudentID(int id) {
-		studentID = id;
+		this.studentID = id;
 	}
 	
 	/**
 	 * @return studentID
 	 */
 	public int getStudentID() {
-		return studentID;
+		return this.studentID;
 	}
 	
 	/**
@@ -67,14 +67,14 @@ public class Student extends Thread{
 	 * @param studentState
 	 */
 	public void setStudentState(int state) {
-		studentState = state;
+		this.studentState = state;
 	}
 	
 	/**
 	 * @return student state
 	 */
 	public int getStudentState() {
-		return studentState;
+		return this.studentState;
 	}
 	/**
 	 *	Life cycle of the student

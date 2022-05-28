@@ -89,6 +89,11 @@ public class GenReposInterface {
             outMessage = new Message(MessageType.SACK);
             break;
             
+        case MessageType.SETUSSEAT:
+        	repos.updateStudentSeat(inMessage.getStudentID(), inMessage.getStudentState());
+            outMessage = new Message(MessageType.SACK);
+            break;
+            
         case MessageType.SETUCS:
         	repos.updateChefState(inMessage.getChefState());
             outMessage = new Message(MessageType.SACK);

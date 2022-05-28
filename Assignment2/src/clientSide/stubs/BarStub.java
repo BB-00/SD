@@ -40,9 +40,11 @@ public class BarStub {
 	    	} catch(InterruptedException e) {}
 	    }
 	    
+	    System.out.println("Connected");
+	    
 	    //MESSAGES
 	    outMessage = new Message(MessageType.REQENT, ((Student) Thread.currentThread()).getStudentID(), ((Student) Thread.currentThread()).getStudentState());
-	    
+	    	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    

@@ -29,7 +29,7 @@ public class BarClientProxy extends Thread implements StudentCloning, WaiterClon
    *  Interface to the Bar.
    */
 
-   private BarInterface barInter;
+   private BarInterface barInterface;
 
   /**
    *  Student identification.
@@ -66,7 +66,7 @@ public class BarClientProxy extends Thread implements StudentCloning, WaiterClon
     public BarClientProxy(ServerCom sconi, BarInterface barInter) {
        super ("BarProxy_"+BarClientProxy.getProxyId());
        this.sconi = sconi;
-       this.barInter = barInter;
+       this.barInterface = barInter;
     }
 
     /**
@@ -105,10 +105,11 @@ public class BarClientProxy extends Thread implements StudentCloning, WaiterClon
                outMessage = null;                                     // service reply
 
       /* service providing */
-
+       
        inMessage = (Message) sconi.readObject();                     // get service request
+       
        try {
-    	   outMessage = barInter.processAndReply(inMessage);         // process it
+    	   outMessage = barInterface.processAndReply(inMessage);         // process it
        } catch (MessageException e) {
     	   GenericIO.writelnString("Thread "+getName()+": "+e.getMessage()+"!");
     	   GenericIO.writelnString(e.getMessageVal().toString());

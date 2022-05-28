@@ -17,6 +17,8 @@ public class Message implements Serializable {
     private int studentID = -1;
 
     private int studentState = -1;
+    
+    private int studentSeat = -1;
 
     private Boolean check = null;
 
@@ -28,11 +30,11 @@ public class Message implements Serializable {
 
     public Message(int type, int state) {
         this.msgType = type;
-        if (type >= 40 && type <= 59)
+        if (type >= 43 && type <= 66)
             this.waiterState = state;
-        else if (type >= 60 && type <= 75)
+        else if (type >= 67 && type <= 86)
             this.chefState = state;
-        else if (type > 86) {
+        else if (type >= 87 && type <= 88) {
             this.waiterState = state;
             this.chefState = state;
         }
@@ -41,41 +43,58 @@ public class Message implements Serializable {
     public Message(int type, Boolean check, int state) {
         this.msgType = type;
         this.check = check;
-        if (type >= 40 && type <= 59)
+        if (type >= 43 && type <= 66)
             this.waiterState = state;
-        else if (type >= 60 && type <= 75)
+        else if (type >= 67 && type <= 86)
             this.chefState = state;
-        else if (type > 86) {
+        else if (type >= 87 && type <= 88) {
             this.waiterState = state;
             this.chefState = state;
         }
-
     }
 
     public Message(int type, Request request, int state) {
         this.msgType = type;
         this.request = request;
-        if (type >= 40 && type <= 59)
+        if (type >= 43 && type <= 66)
             this.waiterState = state;
+        else if (type >= 87 && type <= 88) {
+            this.waiterState = state;
+        }
     }
 
     public Message(int type, int studentID, int state) {
         this.msgType = type;
         this.studentID = studentID;
-        if (type >= 0 && type <= 39)
+        if (type >= 3 && type <= 42)
             this.studentState = state;
-        else if (type >= 40 && type <= 59)
+        else if (type >= 43 && type <= 66)
             this.waiterState = state;
+        else if (type >= 87 && type <= 88) {
+            this.waiterState = state;
+            this.studentState = state;
+        }
     }
 
     public Message(int type, Boolean check, int studentID, int state) {
         this.msgType = type;
         this.studentID = studentID;
-        if (type >= 0 && type <= 39)
+        if (type >= 3 && type <= 42)
             this.studentState = state;
-        else if (type >= 40 && type <= 59)
+        else if (type >= 43 && type <= 66)
             this.waiterState = state;
+        else if (type >= 87 && type <= 88) {
+            this.waiterState = state;
+            this.studentState = state;
+        }
         this.check = check;
+    }
+    
+    public Message(int type, int studentID, int seat, int a) {
+        this.msgType = type;
+        this.studentID = studentID;
+        if (type == 92)
+            this.studentSeat = seat;
     }
 
 //    public Message(int type, int var1, String fileName) {
@@ -121,6 +140,10 @@ public class Message implements Serializable {
     public int getChefState() {
         return chefState;
     }
+    
+    public int getStudentSeat() {
+    	return studentSeat;
+    }
 
 //    public int getVar1() {
 //        return var1;
@@ -142,7 +165,8 @@ public class Message implements Serializable {
                 + "\nStudent ID: " + studentID
                 + "\nStudent State: " + studentState
                 + "\nWaiter State: " + waiterState
-                + "\nChef State: " + chefState);
+                + "\nChef State: " + chefState
+                + "\nStudent Seat: "+ studentSeat);
 //                + "\nVar 1: " + var1
 //                + "\nVar 2: " + var2);
     }

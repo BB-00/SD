@@ -57,7 +57,7 @@ public class Bar {
 	/**
 	 * Reference to the table
 	 */
-	private final Table tab;
+	private final TableStub tab;
 	
 	
 	
@@ -66,7 +66,7 @@ public class Bar {
 	 * 
 	 * @param repos reference to the general repository 
 	 */
-	public Bar(GenReposStub repos, Table tab) {
+	public Bar(GenReposStub repos, TableStub tab) {
 		this.nEntities = 0;
 		//Initizalization of students thread
 		this.students = new BarClientProxy[ExecConsts.N];
@@ -120,12 +120,12 @@ public class Bar {
 			
 			students[studentID] = student;
 
-			Request request = new Request(studentID,'e');
-			
 			if(student.getStudentState() != StudentStates.GOING_TO_THE_RESTAURANT) {
 				students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
 				repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 			}
+
+			Request request = new Request(studentID,'e');
 			
 			numberOfStudentsAtRestaurant++;
 

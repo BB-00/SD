@@ -158,7 +158,9 @@ public class Table {
      * 
      * @param firstToArrive id of the first student to arrive
      */
-    public void setFirstToArrive(int firstToArrive) { this.firstToArriveID = firstToArrive; }
+    public void setFirstToArrive(int firstToArrive) {
+    	System.out.println("Student "+firstToArrive+" was first to arrive!");
+    	this.firstToArriveID = firstToArrive; }
     
     /**
      * 

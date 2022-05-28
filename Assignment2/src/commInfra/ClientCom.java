@@ -190,9 +190,12 @@ public class ClientCom
    public Object readObject ()
    {
       Object fromServer = null;                            // object that is read
-
+      
+      System.out.println(in.toString());
+      
       try
       { fromServer = in.readObject ();
+      System.out.println(fromServer.toString());
       }
       catch (InvalidClassException e)
       { GenericIO.writelnString (Thread.currentThread ().getName () +
@@ -245,5 +248,6 @@ public class ClientCom
         e.printStackTrace ();
         System.exit (1);
       }
+      
    }
 }

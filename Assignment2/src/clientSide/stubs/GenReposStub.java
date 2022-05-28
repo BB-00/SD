@@ -86,10 +86,12 @@ public class GenReposStub {
 	        }
 	        catch (InterruptedException e) {}
 	    }
-	    outMessage = new Message(MessageType.SETUSSEAT, studentID, studentSeat);
+	    outMessage = new Message(MessageType.SETUSSEAT, studentID, studentSeat, 0);
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
+	    
+	    int a = inMessage.getMsgType();
 	    
 	    if(inMessage.getMsgType() != MessageType.SACK) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");

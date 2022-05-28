@@ -103,6 +103,9 @@ public class BarInterface {
 
         // check nothing
 
+        System.out.println("IN:\n"+inMessage.toString());
+        System.out.println();
+        
         // processing 
 
         switch(inMessage.getMsgType()) {
@@ -113,6 +116,7 @@ public class BarInterface {
             	outMessage = new Message(MessageType.ENTDONE,
                         ((BarClientProxy) Thread.currentThread()).getStudentID(),
                         ((BarClientProxy) Thread.currentThread()).getStudentState());
+            	System.out.println("OUT:\n"+outMessage.toString());
                 break;
                 
             case MessageType.REQCW:

@@ -36,7 +36,7 @@ public class GenReposClientProxy extends Thread{
    *     @param reposInter interface to the general repository of information
    */
    public GenReposClientProxy(ServerCom sconi, GenReposInterface reposInter) {
-      super("GeneralReposProxy_"+GenReposClientProxy.getProxyId());
+      super("GenReposProxy_"+GenReposClientProxy.getProxyId());
       this.sconi = sconi;
       this.reposInterface = reposInter;
    }
@@ -51,9 +51,9 @@ public class GenReposClientProxy extends Thread{
       int proxyId;                                                   // instantiation identifier
 
       try {
-    	  cl = Class.forName("serverSide.entities.GeneralReposClientProxy");
+    	  cl = Class.forName("serverSide.entities.GenReposClientProxy");
       } catch (ClassNotFoundException e) {
-    	  GenericIO.writelnString("Data type GeneralReposClientProxy was not found!");
+    	  GenericIO.writelnString("Data type GenReposClientProxy was not found!");
     	  e.printStackTrace();
     	  System.exit(1);
       }

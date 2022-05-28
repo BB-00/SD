@@ -29,6 +29,70 @@ public class TableStub {
 		this.serverPortNum  = serverPortNum;
 	}
 	
+	public void setFirstToArrive(int studentID) {
+		ClientCom com;                                                 // communication channel
+	    Message outMessage,                                            // outgoing message
+	            inMessage;                                             // incoming message
+
+	    com = new ClientCom (serverHostName, serverPortNum);
+	    while (!com.open()) {
+	    	try {
+	    		Thread.currentThread().sleep((long)(10));
+	    	} catch(InterruptedException e) {}
+	    }
+	    
+	    //MESSAGES
+	    outMessage = new Message(MessageType.REQSFTA, studentID);
+	    
+	    com.writeObject(outMessage);
+	    inMessage = (Message) com.readObject();
+	    
+	    //TODO Message Types - enter
+	    if((inMessage.getMsgType() != MessageType.SFTADONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
+	    	GenericIO.writelnString(inMessage.toString());
+	    	System.exit(1);
+	    }
+	    
+	    if(inMessage.getStudentID() != studentID) {
+	    	GenericIO.writelnString("Thread Student"+inMessage.getStudentID()+": Invalid Student ID!");
+	    	GenericIO.writelnString(inMessage.toString());
+	    	System.exit(1);
+	    }
+	}
+	
+	public void setLastToArrive(int studentID) {
+		ClientCom com;                                                 // communication channel
+	    Message outMessage,                                            // outgoing message
+	            inMessage;                                             // incoming message
+
+	    com = new ClientCom (serverHostName, serverPortNum);
+	    while (!com.open()) {
+	    	try {
+	    		Thread.currentThread().sleep((long)(10));
+	    	} catch(InterruptedException e) {}
+	    }
+	    
+	    //MESSAGES
+	    outMessage = new Message(MessageType.REQSLTA, studentID);
+	    
+	    com.writeObject(outMessage);
+	    inMessage = (Message) com.readObject();
+	    
+	    //TODO Message Types - enter
+	    if((inMessage.getMsgType() != MessageType.SLTADONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
+	    	GenericIO.writelnString(inMessage.toString());
+	    	System.exit(1);
+	    }
+	    
+	    if(inMessage.getStudentID() != studentID) {
+	    	GenericIO.writelnString("Thread Student"+inMessage.getStudentID()+": Invalid Student ID!");
+	    	GenericIO.writelnString(inMessage.toString());
+	    	System.exit(1);
+	    }
+	}
+	
 	public void saluteClient(int studentIDBeingAnswered) {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
