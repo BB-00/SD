@@ -19,7 +19,7 @@ public class ChefMain {
 	
 	    /* getting problem runtime parameters */
 	
-	    if (args.length != 7) {
+	    if (args.length != 4) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
 	    }

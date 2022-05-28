@@ -21,7 +21,7 @@ public class StudentMain {
 		
 		/* getting problem runtime parameters */
 			
-	    if (args.length != 6) {
+	    if (args.length != 4) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
 	    }
