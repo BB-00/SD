@@ -53,7 +53,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getChefState() != ChefStates.WAITING_FOR_AN_ORDER) {
+	    if(inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -89,7 +89,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getChefState() != ChefStates.PREPARING_THE_COURSE) {
+	    if(inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -124,7 +124,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getChefState() != ChefStates.DISHING_THE_PORTIONS) {
+	    if(inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -159,7 +159,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if((inMessage.getChefState() != ChefStates.DISHING_THE_PORTIONS) || (inMessage.getChefState() != ChefStates.DELIVERING_THE_PORTIONS)) {
+	    if((inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) || (inMessage.getChefState() != ChefStates.DELIVERING_THE_PORTIONS)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -194,7 +194,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getChefState() != ChefStates.PREPARING_THE_COURSE) {
+	    if(inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -217,7 +217,7 @@ public class KitchenStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQHAPBD, ((Chef) Thread.currentThread()).getChefState());
+	    outMessage = new Message(MessageType.REQHAPBD);
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -229,10 +229,9 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Chef) Thread.currentThread()).setChefState(inMessage.getChefState());
 	    com.close();
 	    
-	    return inMessage.getCheck();
+	    return inMessage.getAllPortionsBeenDelivered();
 	}
 	
 	public boolean hasOrderBeenCompleted() {
@@ -248,7 +247,7 @@ public class KitchenStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQHOBC, ((Chef) Thread.currentThread()).getChefState());
+	    outMessage = new Message(MessageType.REQHOBC);
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -260,10 +259,9 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Chef) Thread.currentThread()).setChefState(inMessage.getChefState());
 	    com.close();
 	    
-	    return inMessage.getCheck();
+	    return inMessage.getHasOrderBeenCompleted();
 	}
 	
 	public void cleanUp() {
@@ -291,7 +289,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getChefState() != ChefStates.CLOSING_SERVICE) {
+	    if(inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Chef State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -330,7 +328,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
+	    if(inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Waiter State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -365,7 +363,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getWaiterState() != WaiterStates.PLACING_THE_ORDER) {
+	    if(inMessage.getWaiterState() < WaiterStates.APRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Waiter State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -400,7 +398,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getWaiterState() != WaiterStates.WAITING_FOR_PORTION) {
+	    if(inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Waiter State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
