@@ -112,6 +112,11 @@ public class Message implements Serializable {
     	this.msgType = type;
     	this.logFileName = fileName;
     }
+    
+    public Message(int type, int studentID, String FileName) {
+    	this.msgType = type;
+    	this.studentID = studentID;
+    }
 
     public int getMsgType() {
         return msgType;

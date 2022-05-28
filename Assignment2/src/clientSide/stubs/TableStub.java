@@ -42,7 +42,7 @@ public class TableStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQSFTA, studentID);
+	    outMessage = new Message(MessageType.REQSFTA, studentID, "");
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -74,7 +74,7 @@ public class TableStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQSLTA, studentID);
+	    outMessage = new Message(MessageType.REQSLTA, studentID, "");
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();

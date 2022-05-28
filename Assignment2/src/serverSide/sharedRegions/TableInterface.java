@@ -299,14 +299,16 @@ public class TableInterface {
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
         	 //((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
         	 table.setFirstToArrive(inMessage.getStudentID());
-        	 outMessage = new Message(MessageType.SFTADONE, inMessage.getStudentID()); // ((TableClientProxy) Thread.currentThread()).getStudentID());
+        	 outMessage = new Message(MessageType.SFTADONE,
+        			 ((TableClientProxy) Thread.currentThread()).getStudentID(), ""); // inMessage.getStudentID();
         	 break;
         	 
          case MessageType.REQSLTA:
         	 ((TableClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
         	 //((TableClientProxy) Thread.currentThread()).setStudentState(inMessage.getStudentState());
         	 table.setFirstToArrive(inMessage.getStudentID());
-        	 outMessage = new Message(MessageType.SLTADONE, ((TableClientProxy) Thread.currentThread()).getStudentID());
+        	 outMessage = new Message(MessageType.SLTADONE,
+        			 ((TableClientProxy) Thread.currentThread()).getStudentID(), "");
         	 break;
 
         case MessageType.SHUT:
