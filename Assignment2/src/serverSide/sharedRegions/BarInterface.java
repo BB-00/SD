@@ -49,62 +49,41 @@ public class BarInterface {
 
         /* processing */
 
-//        switch (inMessage.getMsgType()) {
-//            case MessageType.LA:
-//                if ((inMessage.getWaiterState() < 0) || (inMessage.getWaiterState() > 6))
-//                    throw new MessageException("Invalid waiter state!", inMessage);
-//                break;
-//            case MessageType.ENT:
-//                if ((inMessage.getStudentState() < 0) || (inMessage.getStudentState() > 7))
-//                    throw new MessageException("Invalid student state!", inMessage);
-//                if ((inMessage.getStudentID() < 0) || (inMessage.getStudentID() > 6))
-//                    throw new MessageException("Invalid student ID!", inMessage);
-//                break;
-//            case MessageType.CW:
-//                if ((inMessage.getStudentState() < 0) || (inMessage.getStudentState() > 7))
-//                    throw new MessageException("Invalid student state!", inMessage);
-//                if ((inMessage.getStudentID() < 0) || (inMessage.getStudentID() > 6))
-//                    throw new MessageException("Invalid student ID!", inMessage);
-//                break;
-//            case MessageType.AL:
-//                if ((inMessage.getChefState() < 0) || (inMessage.getChefState() > 4))
-//                    throw new MessageException("Invalid chef state!", inMessage);
-//                break;
-//            case MessageType.SW:
-//                if ((inMessage.getStudentState() < 0) || (inMessage.getStudentState() > 7))
-//                    throw new MessageException("Invalid student state!", inMessage);
-//                if ((inMessage.getStudentID() < 0) || (inMessage.getStudentID() > 6))
-//                    throw new MessageException("Invalid student ID!", inMessage);
-//                break;
-//            case MessageType.SHOULD_HAVE_ARRIVED_EARLIER:
-//                if ((inMessage.getStudentState() < 0) || (inMessage.getStudentState() > 7))
-//                    throw new MessageException("Invalid student state!", inMessage);
-//                if ((inMessage.getStudentID() < 0) || (inMessage.getStudentID() > 6))
-//                    throw new MessageException("Invalid student ID!", inMessage);
-//                break;
-//            case MessageType.PB:
-//                if ((inMessage.getWaiterState() < 0) || (inMessage.getWaiterState() > 6))
-//                    throw new MessageException("Invalid waiter state!", inMessage);
-//                break;
-//            case MessageType.SG:
-//                if ((inMessage.getWaiterState() < 0) || (inMessage.getWaiterState() > 6))
-//                    throw new MessageException("Invalid waiter state!", inMessage);
-//                break;
-//            case MessageType.EXIT:
-//                if ((inMessage.getStudentState() < 0) || (inMessage.getStudentState() > 7))
-//                    throw new MessageException("Invalid student state!", inMessage);
-//                if ((inMessage.getStudentID() < 0) || (inMessage.getStudentID() > 6))
-//                    throw new MessageException("Invalid student ID!", inMessage);
-//                break;
-//            case MessageType.SHUT:
-//                break;
-//            default:
-//                throw new MessageException("Invalid message type!", inMessage);
-//        }
-
-        // check nothing
-        
-        // processing 
+        switch(inMessage.getMsgType()) {
+			// Chef Messages that require type and state verification
+			case MessageType.REQAL: 		// Alert the Waiter Request
+				if (inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE)
+					throw new MessageException ("Invalid Chef state!", inMessage);
+				break;
+			
+			//Waiter Messages that require only type verification
+			case MessageType.REQLA: 		// Look around Request
+			case MessageType.SHUT:			// Bar shutdown 
+				break;
+			// Waiter Messages that require type and state verification
+			case MessageType.REQPB: 		// Prepare the bill Request
+			case MessageType.REQSG: 		// Say goodbye Request
+				if (inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT)
+					throw new MessageException("Inavlid Waiter state!", inMessage);
+				break;
+			
+			//Student Messages that require only type and id verification (already done in Message Constructor)
+			case MessageType.REQCW:		// Call the waiter Request
+				break;
+			// Student Messages that require type, state and id verification (done in Message Constructor)
+			case MessageType.REQENT:			// Enter Request
+			case MessageType.REQSW:			// Signal the waiter Request
+			case MessageType.REQEXIT:			// exit Request
+				if (inMessage.getStudentState() < StudentStates.GOING_TO_THE_RESTAURANT || inMessage.getStudentState() > StudentStates.GOING_HOME)
+					throw new MessageException("Invalid Student state!", inMessage);
+				break;
+			
+			//Additional Messages
+			case MessageType.REQGSBA:
+				break;
+			default:
+				throw new MessageException ("Invalid message type!", inMessage);
+		}
 
         switch(inMessage.getMsgType()) {
         	case MessageType.REQENT:  
@@ -118,11 +97,9 @@ public class BarInterface {
                 
             case MessageType.REQCW:
             	((BarClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentID());
-                ((BarClientProxy) Thread.currentThread()).setStudentID(inMessage.getStudentState());
                 bar.callWaiter();
             	outMessage = new Message(MessageType.CWDONE,
-            			((BarClientProxy) Thread.currentThread()).getStudentID(),
-                        ((BarClientProxy) Thread.currentThread()).getStudentState());
+            			((BarClientProxy) Thread.currentThread()).getStudentID());
                 //nao sei se falta alguma coisa
                 break;
 
@@ -161,10 +138,8 @@ public class BarInterface {
 
             case MessageType.REQSG:
             	((BarClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-                if(bar.sayGoodbye()) {
-                	outMessage = new Message(MessageType.SGDONE,
-                            ((BarClientProxy) Thread.currentThread()).getWaiterState());
-                }
+                boolean b = bar.sayGoodbye();
+                outMessage = new Message(MessageType.SGDONE, b);
                 //nao sei se falta alguma coisa
                 break;
                 
@@ -183,7 +158,12 @@ public class BarInterface {
                         ((BarClientProxy) Thread.currentThread()).getChefState());
                 //nao sei se falta alguma coisa
                 break;
-
+            
+            case MessageType.REQGSBA:
+				int id = bar.getStudentBeingAnswered();
+				outMessage = new Message(MessageType.GSBADONE, id);
+				break;
+			
             case MessageType.SHUT:
             	bar.shutdown();
                 outMessage = new Message(MessageType.SHUTDONE);

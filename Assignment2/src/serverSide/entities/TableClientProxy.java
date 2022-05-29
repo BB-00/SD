@@ -35,25 +35,30 @@ public class TableClientProxy extends Thread implements StudentCloning, WaiterCl
    *  Student identification.
    */
 
-   private int studentID  = -1;
+   private int studentID;
 
   /**
    *  Student state.
    */
 
-   private int studentState = 0;
+   private int studentState;
 
   /**
    *  Chef state.
    */
 
-   private int chefState = 0;
+   private int chefState;
    
    /**
    *  Waiter state.
    */
 
-   private int waiterState = 0;
+   private int waiterState;
+   
+   /**
+	 * Id of the student whose request the waiter is taking care of
+	 */
+	private int studentBeingAnswered;
     
 
     /**
@@ -199,4 +204,20 @@ public class TableClientProxy extends Thread implements StudentCloning, WaiterCl
     public int getChefState() {
        return chefState;
     }
+    
+    /**
+	 * Set studentBeingAnswered Id
+	 * 	@param id studentBeingAnswered ID
+	 */
+	public void setStudentBeingAnswered(int id) {
+		studentBeingAnswered = id;
+	}
+
+	/**
+	 * Get studentBeingAnswered Id
+	 *	@return id studentBeingAnswered
+	 */
+	public int getStudentBeingAnswered() {
+		return studentBeingAnswered;
+	}
 }

@@ -339,13 +339,13 @@ public class MessageType {
 	 * getThePad (REQUEST)
 	 */
 
-	public static final int REQGB = 55;
+	public static final int REQGP = 55;
 
 	/**
 	 * getThePad (REPLY)
 	 */
 
-	public static final int GBDONE = 56;
+	public static final int GPDONE = 56;
 
 	/**
 	 * handNoteToChef (REQUEST)

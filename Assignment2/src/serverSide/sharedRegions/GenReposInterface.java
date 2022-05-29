@@ -1,5 +1,8 @@
 package serverSide.sharedRegions;
 
+import clientSide.entities.ChefStates;
+import clientSide.entities.StudentStates;
+import clientSide.entities.WaiterStates;
 import commInfra.*;
 
 /**
@@ -41,42 +44,40 @@ public class GenReposInterface {
    
    public Message processAndReply (Message inMessage) throws MessageException {
       Message outMessage = null;                                     // mensagem de resposta
-/*
+
      // validation of the incoming message 
 
-      switch (inMessage.getMsgType ())
-      { case MessageType.SETNFIC:  if (inMessage.getLogFName () == null)
-                                      throw new MessageException ("Name of the logging file is not present!", inMessage);
-                                      else if (inMessage.getNIter () <= 0)
-                                              throw new MessageException ("Wrong number of iterations!", inMessage);
-                                   break;
-        case MessageType.STBST:    if ((inMessage.getBarbId () < 0) || (inMessage.getBarbId () >= SimulPar.M))
-                                      throw new MessageException ("Invalid barber id!", inMessage);
-                                      else if ((inMessage.getBarbState () != BarberStates.SLEEPING) && (inMessage.getBarbState () != BarberStates.INACTIVITY))
-                                              throw new MessageException ("Invalid barber state!", inMessage);
-                                   break;
-        case MessageType.STCST:    if ((inMessage.getCustId () < 0) || (inMessage.getCustId () >= SimulPar.N))
-                                      throw new MessageException ("Invalid customer id!", inMessage);
-                                      else if ((inMessage.getCustState () < CustomerStates.DAYBYDAYLIFE) || (inMessage.getCustState () > CustomerStates.CUTTHEHAIR))
-                                              throw new MessageException ("Invalid customer state!", inMessage);
-                                   break;
-        case MessageType.STBCST:   if ((inMessage.getBarbId () < 0) || (inMessage.getBarbId () >= SimulPar.M))
-                                      throw new MessageException ("Invalid barber id!", inMessage);
-                                      else if ((inMessage.getBarbState () != BarberStates.SLEEPING) && (inMessage.getBarbState () != BarberStates.INACTIVITY))
-                                              throw new MessageException ("Invalid barber state!", inMessage);
-                                   if ((inMessage.getCustId () < 0) || (inMessage.getCustId () >= SimulPar.N))
-                                      throw new MessageException ("Invalid customer id!", inMessage);
-                                      else if ((inMessage.getCustState () < CustomerStates.DAYBYDAYLIFE) || (inMessage.getCustState () > CustomerStates.CUTTHEHAIR))
-                                              throw new MessageException ("Invalid customer state!", inMessage);
-                                   break;
-        case MessageType.SHUT:     // check nothing
-                                   break;
-        default:                   throw new MessageException ("Invalid message type!", inMessage);
-      }
+      switch(inMessage.getMsgType())
+		{
+		// verify Chef state
+		case MessageType.SETUCS:
+			if (inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER || inMessage.getChefState() > ChefStates.CLOSING_SERVICE)
+				throw new MessageException ("Invalid Chef state!", inMessage);
+			break;
+		// verify Waiter state
+		case MessageType.SETUWS:
+			if (inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT)
+				throw new MessageException("Invalid Waiter state!", inMessage);
+			break;
+		// verify Student state
+		case MessageType.SETUSSTATE:
+		//case MessageType.REQUPDTSTUST2:
+			if (inMessage.getStudentState() < StudentStates.GOING_TO_THE_RESTAURANT || inMessage.getStudentState() > StudentStates.GOING_HOME)
+				throw new MessageException("Invalid Student state!", inMessage);
+			break;
+		// verify only message type
+		case MessageType.SETUSSEAT:
+//		case MessageType.REQSETNCOURSES:
+//		case MessageType.REQSETNPORTIONS:
+//		case MessageType.REQUPDSEATSTABLE:
+//		case MessageType.REQUPDSEATSTABLELV:
+		case MessageType.SHUT:
+			break;
+		default:
+			throw new MessageException ("Invalid message type!", inMessage);
+		}
 
-     // processing 
-      * 
-      */
+     // processing
 
       switch (inMessage.getMsgType ()) { 
       	case MessageType.SETNFIC:
@@ -90,7 +91,7 @@ public class GenReposInterface {
             break;
             
         case MessageType.SETUSSEAT:
-        	repos.updateStudentSeat(inMessage.getStudentID(), inMessage.getStudentState());
+        	repos.updateStudentSeat(inMessage.getStudentID(), inMessage.getSeatAtTable());
             outMessage = new Message(MessageType.SACK);
             break;
             

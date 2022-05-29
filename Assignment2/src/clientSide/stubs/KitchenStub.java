@@ -363,7 +363,7 @@ public class KitchenStub {
 	    	System.exit(1);
 	    }
 	    
-	    if(inMessage.getWaiterState() < WaiterStates.APRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT) {
+	    if(inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Waiter State!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);

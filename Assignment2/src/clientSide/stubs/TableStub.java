@@ -230,13 +230,13 @@ public class TableStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQGB, ((Waiter) Thread.currentThread()).getWaiterState());
+	    outMessage = new Message(MessageType.REQGP, ((Waiter) Thread.currentThread()).getWaiterState());
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
 	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.GBDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.GPDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
