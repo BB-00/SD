@@ -541,7 +541,7 @@ public class Table {
     	int studentID = student.getStudentID();
     	    	
     	numberOfStudentsThatHasFinishEat++;
-    	System.out.println("Student "+studentID+" finished");
+    	System.out.println("Student "+studentID+" finished course "+numberOfCoursesEaten+1+"!");
     	
     	if(numberOfStudentsThatHasFinishEat == ExecConsts.N) {
     		numberOfCoursesEaten++;

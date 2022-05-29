@@ -307,7 +307,6 @@ public class TableStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Waiter) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
 	    com.close();
 	}
 	
@@ -733,7 +732,7 @@ public class TableStub {
 	    }
 	    
 	    //MESSAGES
-	    outMessage = new Message(MessageType.REQHEFE, ((Student) Thread.currentThread()).getStudentID(), ((Student) Thread.currentThread()).getStudentState());
+	    outMessage = new Message(MessageType.REQHEFE, ((Student) Thread.currentThread()).getStudentID());
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -782,7 +781,7 @@ public class TableStub {
 	    	System.exit(1);
 	    }
 	    
-	    ((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
+	    //((Student) Thread.currentThread()).setStudentState(inMessage.getStudentState());
 	    com.close();
 	}
 	

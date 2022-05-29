@@ -220,7 +220,15 @@ public class Bar {
 		}
 		
 		numberOfPendingRequests++;
-
+		
+		repos.updateStudentSeat(studentID, -1);
+		
+		if(student.getStudentState() != StudentStates.GOING_HOME) {
+			students[studentID].setStudentState(StudentStates.GOING_HOME);
+			student.setStudentState(StudentStates.GOING_HOME);
+			repos.updateStudentState(studentID, StudentStates.GOING_HOME);
+		}
+		
 		notifyAll();
 		
 		while(studentsGreeted[studentID] == false) {
@@ -230,18 +238,8 @@ public class Bar {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
-		
-		repos.updateStudentSeat(studentID, -1);
 		System.out.println("Student "+studentID+" has left!");
-		
-		if(student.getStudentState() != StudentStates.GOING_HOME) {
-			students[studentID].setStudentState(StudentStates.GOING_HOME);
-			student.setStudentState(StudentStates.GOING_HOME);
-			repos.updateStudentState(studentID, StudentStates.GOING_HOME);
-		}
-		
 	}
 	
 	

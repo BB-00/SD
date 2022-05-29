@@ -9,6 +9,6 @@ javac -cp /home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.
   
  sleep 1 
  gnome-terminal --title="WaiterMain" -- java -cp .:/home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.jar clientSide.main.WaiterMain 127.0.0.1 22160 127.0.0.1 22162 127.0.0.1 22161 127.0.0.1 22169 log.txt 
- gnome-terminal --title="ChefMain" -- java -cp .:/home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.jar clientSide.main.ChefMain 127.0.0.1 22160 127.0.0.1 22161
+ gnome-terminal --title="ChefMain" -- java -cp .:/home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.jar clientSide.main.ChefMain 127.0.0.1 22160 127.0.0.1 22161 127.0.0.1 22169
  sleep 1 
- gnome-terminal --title="StudentMain" -- java -cp .:/home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.jar clientSide.main.StudentMain 127.0.0.1 22160 127.0.0.1 22162
+ gnome-terminal --title="StudentMain" -- java -cp .:/home/bernardo/Documents/Ano4/SD/Praticas/SD/Assignment2/src/genclass.jar clientSide.main.StudentMain 127.0.0.1 22160 127.0.0.1 22162 127.0.0.1 22169

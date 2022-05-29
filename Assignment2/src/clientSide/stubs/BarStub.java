@@ -161,6 +161,9 @@ public class BarStub {
 	    //MESSAGES
 	    outMessage = new Message(MessageType.REQEXIT, ((Student) Thread.currentThread()).getStudentID(), ((Student) Thread.currentThread()).getStudentState());
 	    
+	    GenericIO.writelnString("##################### StudentID: "+outMessage.getStudentID()+" StudentState: "+outMessage.getStudentState());
+	    GenericIO.writelnString("Thread StudentState: "+((Student) Thread.currentThread()).getStudentState());
+	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
