@@ -89,7 +89,7 @@ public class GenReposStub {
 	        }
 	        catch (InterruptedException e) {}
 	    }
-	    outMessage = new Message(MessageType.SETUSSEAT, studentID, studentSeat, 0);
+	    outMessage = new Message(MessageType.SETUSSEAT, studentID, studentSeat);
 	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
@@ -103,33 +103,6 @@ public class GenReposStub {
 	    }
 	    com.close ();
 	}
-	
-//	public int getStudentSeat(int studentSeat) {
-//		ClientCom com;                                                 // communication channel
-//	    Message outMessage,                                            // outgoing message
-//	            inMessage;                                             // incoming message
-//
-//	    com = new ClientCom(serverHostName, serverPortNum);
-//	    while(!com.open()){
-//	    	try{
-//	    		Thread.sleep((long) (1000));
-//	        }
-//	        catch (InterruptedException e) {}
-//	    }
-//	    outMessage = new Message(MessageType.SETGSSEAT, studentSeat);
-//	    
-//	    com.writeObject(outMessage);
-//	    inMessage = (Message) com.readObject();
-//	    
-//	    if(inMessage.getMsgType() != MessageType.GSSEATDONE) {
-//	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid message type!");
-//	        GenericIO.writelnString(inMessage.toString());
-//	        System.exit(1);
-//	    }
-//	    com.close ();
-//	    
-//	    return inMessage.getStudent();
-//	}
 	
 	public void updateWaiterState(int waiterState) {
 		ClientCom com;                                                 // communication channel
