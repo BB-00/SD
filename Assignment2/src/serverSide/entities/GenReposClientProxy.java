@@ -28,6 +28,28 @@ public class GenReposClientProxy extends Thread{
    *  Interface to the General Repository of Information.
    */
    private GenReposInterface reposInterface;
+   
+   /**
+	 * Chef State
+	 */
+	private int chefState;
+
+	/**
+	 * Waiter State
+	 */
+	private int waiterState;
+
+	/**
+	 * Student state
+	 */
+	private int studentState;
+
+	/**
+	 * Student id
+	 */
+	private int studentID;
+	
+	private int studentSeat;
 
   /**
    *  Instantiation of a client proxy.
@@ -89,4 +111,76 @@ public class GenReposClientProxy extends Thread{
       sconi.writeObject(outMessage);                                // send service reply
       sconi.close();                                                // close the communication channel
    }
+   
+   /**
+	 * Get chef state
+	 * @return chef state
+	 */
+	public int getChefState() {
+		return chefState;
+	}
+
+	/**
+	 * Set chef state
+	 * @param chefState state of the chef
+	 */
+	public void setChefState(int chefState) {
+		this.chefState = chefState;
+	}
+
+	/**
+	 * Get waiter state
+	 * @return waiter state
+	 */
+	public int getWaiterState() {
+		return waiterState;
+	}
+
+	/**
+	 * Set waiter state
+	 * @param waiterState state of the waiter
+	 */
+	public void setWaiterState(int waiterState) {
+		this.waiterState = waiterState;
+	}
+
+	/**
+	 * Get student state
+	 * 	@return student state
+	 */
+	public int getStudentState() {
+		return studentState;
+	}
+
+	/**
+	 * Set student state
+	 * 	@param studentState state of the student
+	 */
+	public void setStudentState(int studentState) {
+		this.studentState = studentState;
+	}
+
+	/**
+	 * Get student id
+	 * 	@return id of the student
+	 */
+	public int getStudentID() {
+		return studentID;
+	}
+
+	/**
+	 * Set student id
+	 * @param studentId id of the student
+	 */
+	public void setStudentID(int studentID) {
+		this.studentID = studentID;
+	}
+	
+	public int getStudentSeat() {
+		return studentSeat;
+	}
+	
+	public void setStudentSeat(int studentSeat) {
+		this.studentSeat = studentSeat;
+	}
 }

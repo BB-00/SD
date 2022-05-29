@@ -31,7 +31,7 @@ public class Chef extends Thread{
 	 * 	@param chef state
 	 */
 	public void setChefState(int state) {
-		chefState = state;
+		this.chefState = state;
 	}
 	
 	/**
@@ -46,7 +46,9 @@ public class Chef extends Thread{
 	/**
 	 * 	Instantiation of chef thread
 	 * 
-	 * 	@param chefState
+	 * 	@param name thread name
+	 *  @param kit reference to the kitchen stub
+	 *  @param bar reference to the bar stub
 	 */
 	public Chef(String name, KitchenStub kit, BarStub bar) {
 		super(name);

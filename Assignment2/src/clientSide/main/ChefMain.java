@@ -12,14 +12,17 @@ public class ChefMain {
 	    int barServerPortNum = -1;                             // port number for listening to service requests
 	    String kitchenServerHostName;                                 // name of the platform where is located the kitchen server
 	    int kitchenServerPortNum = -1;                               // port number for listening to service requests
+	    String genReposServerHostName;
+	    int genReposServerPortNum = -1;
 	    BarStub bar;													// remote reference to the bar
 		KitchenStub kitchen;
+		GenReposStub  genRepos;
 		
 		Chef chef;
 	
 	    /* getting problem runtime parameters */
 	
-	    if (args.length != 4) {
+	    if (args.length != 6) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
 	    }
@@ -49,12 +52,24 @@ public class ChefMain {
 		    System.exit (1);
 		}
 		
+	    genReposServerHostName = args[4];
+	    try {
+	    	genReposServerPortNum = Integer.parseInt(args[5]);
+	    } catch(NumberFormatException e) {
+	    	GenericIO.writelnString("args[3] is not a valid port number!");
+	    	System.exit(1);
+	    }
+	    if ((genReposServerPortNum < 4000) || (genReposServerPortNum >= 65536)) {
+		    GenericIO.writelnString("args[3] is not a valid port number!");
+		    System.exit (1);
+		}
 		
 		//Initialization
 		
 		
 		bar = new BarStub(barServerHostName, barServerPortNum);
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
+		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 		
 		chef = new Chef("Chef", kitchen, bar);
 		
@@ -72,5 +87,6 @@ public class ChefMain {
         
         bar.shutdown();
         kitchen.shutdown();
+        genRepos.shutdown();
 	}
 }

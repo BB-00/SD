@@ -79,7 +79,7 @@ public class GenRepos {
 	 */
 	public synchronized void updateStudentSeat(int studentID, int studentSeat) {
 		seats[studentID] = studentSeat;
-		//reportStatus();
+		reportStatus();
 	}
 	
 	/**
@@ -102,8 +102,8 @@ public class GenRepos {
 	 * 
 	 * @param newWaiterState
 	 */
-	public synchronized void updateWaiterState(int newWaiterState) {
-		waiterState = newWaiterState;
+	public synchronized void updateWaiterState(int waiterState) {
+		this.waiterState = waiterState;
 		reportStatus();
 	}
 	
@@ -112,8 +112,8 @@ public class GenRepos {
 	 * 
 	 * @param newChefState
 	 */
-	public synchronized void updateChefState(int newChefState) {
-		chefState = newChefState;
+	public synchronized void updateChefState(int chefState) {
+		this.chefState = chefState;
 		reportStatus();
 	}
 	
@@ -238,12 +238,6 @@ public class GenRepos {
 	    	GenericIO.writelnString("The operation of closing the file "+logFileName+" failed!");
 	        System.exit (1);
 	    }
-	}
-	   
-	public synchronized void initSimulation(String logFileName) {
-		if(!Objects.equals(logFileName, ""))
-			this.logFileName = logFileName;
-		reportInitialStatus();
 	}
 	   
 	/**

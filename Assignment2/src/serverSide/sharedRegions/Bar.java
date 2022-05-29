@@ -115,17 +115,16 @@ public class Bar {
 	public void enter() {		
 		synchronized(this) {
 			BarClientProxy student = ((BarClientProxy) Thread.currentThread());
-			
 			int studentID = student.getStudentID();
 			
 			students[studentID] = student;
 
 			if(student.getStudentState() != StudentStates.GOING_TO_THE_RESTAURANT) {
 				students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+				student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
 				repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 			}
 
-			Request request = new Request(studentID,'e');
 			
 			numberOfStudentsAtRestaurant++;
 			
@@ -134,6 +133,7 @@ public class Bar {
 			else if (numberOfStudentsAtRestaurant == ExecConsts.N)
 				tab.setLastToArrive(studentID);
 			
+			Request request = new Request(studentID,'e');
 			try {
 				pendingServiceRequestQueue.write(request);
 			} catch (MemException e) {
@@ -141,7 +141,13 @@ public class Bar {
 			}
 
 			numberOfPendingRequests++;
-
+			
+			
+			if(student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
+				students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+				student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+				repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			}
 			repos.updateStudentSeat(numberOfStudentsAtRestaurant-1, studentID);
 			
 			notifyAll();
@@ -232,6 +238,7 @@ public class Bar {
 		
 		if(student.getStudentState() != StudentStates.GOING_HOME) {
 			students[studentID].setStudentState(StudentStates.GOING_HOME);
+			student.setStudentState(StudentStates.GOING_HOME);
 			repos.updateStudentState(studentID, StudentStates.GOING_HOME);
 		}
 		

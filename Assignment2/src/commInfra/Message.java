@@ -133,12 +133,6 @@ public class Message implements Serializable
 	private boolean hold;
 
 	/**
-	 * Logger File Name
-	 */
-	private String logFileName;
-	
-
-	/**
 	 *  Message instantiation (form 1).
 	 *
 	 *     @param type message type
@@ -159,6 +153,8 @@ public class Message implements Serializable
 	{
 		msgType = type;
 		int entitie = getEntitieFromMessageType(type);
+		
+		System.out.println("Message entitie: "+entitie);
 
 		if(entitie == 1) //Chef message
 			chefState = stateOrId;
@@ -170,6 +166,7 @@ public class Message implements Serializable
 			else if(msgType == MessageType.REQPO || msgType == MessageType.PODONE || 
 				    msgType == MessageType.REQJT || msgType == MessageType.JTDONE)
 				studentState = stateOrId;
+			System.out.println("Student State: "+studentState);
 		}
 		else if (entitie == 4) {  //Additional message
 			if (msgType == MessageType.GFTADONE)
@@ -340,15 +337,6 @@ public class Message implements Serializable
 		requestType = c;		
 	}
 	
-	public Message(int type, String fileName) {
-		msgType = type;
-		logFileName = fileName;
-	}
-	
-	public String getLogFileName() {
-		return logFileName;
-	}
-	
 	/**
 	 *  Getting message type.
 	 *     @return message type
@@ -383,7 +371,7 @@ public class Message implements Serializable
 	 * Getting student being answered id
 	 * @return studentIDBeingAnswered
 	 */
-	public int getStudentIdBeingAnswered() {return (studentIDBeingAnswered); }
+	public int getStudentIDBeingAnswered() {return (studentIDBeingAnswered); }
 
 	/**
 	 * Get have all portions been delivered

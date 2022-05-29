@@ -1,6 +1,7 @@
 package clientSide.entities;
 
 import clientSide.stubs.TableStub;
+import commInfra.ExecConsts;
 import clientSide.stubs.BarStub;
 
 /**
@@ -34,8 +35,8 @@ public class Student extends Thread{
 	 * Instatiation of a student thread
 	 * 
 	 * @param studentID student id
-	 * @param reference to bar
-	 * @param reference to table
+	 * @param reference to bar stub
+	 * @param reference to table stub
 	 */
 	public Student(String name, int studentID, BarStub bar, TableStub table) {
 		super(name);
@@ -105,13 +106,16 @@ public class Student extends Thread{
 		// 	if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
 		// }while(!this.table.haveAllCoursesBeenEaten());
 
+		int coursesEatenNum = 0;
 		while(!table.haveAllCoursesBeenEaten()){
-			if(table.haveAllClientsBeenServed()){
+			//if(table.haveAllClientsBeenServed()){
 				table.startEating();
 				table.endEating();
+				coursesEatenNum++;
+				
 				while(!table.hasEverybodyFinishedEating());
-				if(studentID == table.getLastToEat()) bar.signalWaiter();
-			}
+				if(studentID == table.getLastToEat() && coursesEatenNum != ExecConsts.M) bar.signalWaiter();
+			//}
 		}
 
 		if(table.shouldHaveArrivedEarlier()) {

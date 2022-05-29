@@ -11,7 +11,7 @@ import genclass.GenericIO;
  *    Implementation of a client-server model of type 2 (server replication).
  *    Communication is based on a communication channel under the TCP protocol.
  */
-public class TableClientProxy extends Thread implements StudentCloning, WaiterCloning, ChefCloning  {
+public class TableClientProxy extends Thread implements StudentCloning, WaiterCloning  {
     
     /**
    *  Number of instantiayed threads.
@@ -42,12 +42,6 @@ public class TableClientProxy extends Thread implements StudentCloning, WaiterCl
    */
 
    private int studentState;
-
-  /**
-   *  Chef state.
-   */
-
-   private int chefState;
    
    /**
    *  Waiter state.
@@ -183,26 +177,6 @@ public class TableClientProxy extends Thread implements StudentCloning, WaiterCl
 
     public int getWaiterState() {
        return waiterState;
-    }
-    
-    /**
-    *   Set chef state.
-    *
-    *     @param state new chef state
-    */
-    
-    public void setChefState(int state) {
-       chefState = state;
-    }
-    
-    /**
-    *   Get chef state.
-    *
-    *     @return chef state
-    */
-
-    public int getChefState() {
-       return chefState;
     }
     
     /**

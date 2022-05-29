@@ -15,7 +15,6 @@ public interface ChefCloning {
    *
    *     @param state new chef state
    */
-
    public void setChefState(int state);
 
   /**
@@ -23,6 +22,5 @@ public interface ChefCloning {
    *
    *     @return chef state
    */
-
    public int getChefState();
 }

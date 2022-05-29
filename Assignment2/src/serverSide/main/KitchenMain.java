@@ -51,6 +51,7 @@ public class KitchenMain {
 	    	GenericIO.writelnString ("args[0] is not a valid port number!");
 	        System.exit (1);
 	    }
+	    
 	    reposServerName = args[1];
 	    try {
 	    	reposPortNumb = Integer.parseInt (args[2]);

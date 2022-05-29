@@ -11,7 +11,7 @@ import genclass.GenericIO;
  *    Implementation of a client-server model of type 2 (server replication).
  *    Communication is based on a communication channel under the TCP protocol.
  */
-public class KitchenClientProxy extends Thread implements StudentCloning, WaiterCloning, ChefCloning  {
+public class KitchenClientProxy extends Thread implements WaiterCloning, ChefCloning  {
     
     /**
    *  Number of instantiayed threads.
@@ -30,18 +30,6 @@ public class KitchenClientProxy extends Thread implements StudentCloning, Waiter
    */
 
    private KitchenInterface kitchenInter;
-
-  /**
-   *  Student identification.
-   */
-
-   private int studentID = -1;
-
-  /**
-   *  Student state.
-   */
-
-   private int studentState = 0;
 
   /**
    *  Chef state.
@@ -117,46 +105,6 @@ public class KitchenClientProxy extends Thread implements StudentCloning, Waiter
        
        sconi.writeObject(outMessage);                                // send service reply
        sconi.close();                                                // close the communication channel
-    }
-    
-    /**
-    *   Set student id.
-    *
-    *     @param id student id
-    */
-
-    public void setStudentID(int id) {
-       studentID = id;
-    }
-    
-    /**
-    *   Get student id.
-    *
-    *     @return student id
-    */
-
-    public int getStudentID() {
-       return studentID;
-    }
-    
-    /**
-    *   Set student state.
-    *
-    *     @param state new student state
-    */
-
-    public void setStudentState(int state) {
-       studentState = state;
-    }
-    
-    /**
-    *   Get student state.
-    *
-    *     @return student state
-    */
-
-    public int getStudentState() {
-       return studentState;
     }
     
     /**

@@ -333,6 +333,7 @@ public class Table {
 		students[studentID] = student;
 		if(student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
     		students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+    		student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
     		repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 		}
 		//repos.updateStudentSeat(studentID, numberOfStudentsAtTable);
@@ -344,7 +345,7 @@ public class Table {
     	
     	notifyAll();
     	
-    	//while (true) {
+    	do {
 	    	try {
 				wait();
 			} catch (InterruptedException e) {
@@ -352,11 +353,12 @@ public class Table {
 				e.printStackTrace();
 			}
 	    	System.out.println("Student "+studentID+" was waken up");
-	    	if (studentID == studentBeingAnsweredID && presentingTheMenu == true) {
-	    		System.out.println("Student "+studentID+" Can Proceed");
-	    		//break;
-	    	}
-	    //}
+//	    	if (studentID == studentBeingAnsweredID && presentingTheMenu == true) {
+//	    		System.out.println("Student "+studentID+" Can Proceed");
+//	    		//break;
+//	    	}
+	    } while(studentID != studentBeingAnsweredID && presentingTheMenu == false);
+    	
     	System.out.println("Student "+studentID+ " was presented with the menu");
     }
     
@@ -374,6 +376,7 @@ public class Table {
     	
 		if(((TableClientProxy) Thread.currentThread()).getStudentState() != StudentStates.SELECTING_THE_COURSES) {
     		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
+    		student.setStudentState(StudentStates.SELECTING_THE_COURSES);
     		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 		}
     	
@@ -397,6 +400,7 @@ public class Table {
     	    	
 		if(student.getStudentState() != StudentStates.ORGANIZING_THE_ORDER) {
     		students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
+    		student.setStudentState(StudentStates.ORGANIZING_THE_ORDER);
     		repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
 		}
     }
@@ -470,6 +474,7 @@ public class Table {
     	    	
 		if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
     		students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
     		repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
 		} 
     }
@@ -499,6 +504,7 @@ public class Table {
     	
     	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
     		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
     		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
     	}   	
     }
@@ -515,6 +521,7 @@ public class Table {
     	
 		if(student.getStudentState() != StudentStates.ENJOYING_THE_MEAL) {
     		students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
+    		student.setStudentState(StudentStates.ENJOYING_THE_MEAL);
     		repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
 		}
     	
@@ -543,6 +550,7 @@ public class Table {
     	
     	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
     		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
     		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
 		}
     }
@@ -614,7 +622,10 @@ public class Table {
      * 	@return true if all courses have been eaten, false otherwise
      */
     public synchronized boolean haveAllCoursesBeenEaten() {
-    	if(numberOfCoursesEaten == ExecConsts.M) return true;
+    	if(numberOfCoursesEaten == ExecConsts.M) {
+    		//System.out.println("All portions have been served, course "+ numberOfCoursesEaten);
+    		return true;
+    	}
 		else {
     		while(numberOfStudentsServed != ExecConsts.N) {
 	    		try {
@@ -624,7 +635,6 @@ public class Table {
 					e.printStackTrace();
 				}
     		}
-    		System.out.println("All portions have been served, course "+ numberOfCoursesEaten);
 	    	return false;
     	}
     	
@@ -644,6 +654,7 @@ public class Table {
     	if(studentID == lastToArriveID) {
     		if(student.getStudentState() != StudentStates.PAYING_THE_MEAL) {
         		students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
+        		student.setStudentState(StudentStates.PAYING_THE_MEAL);
         		repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
     		}
 	    	return true;

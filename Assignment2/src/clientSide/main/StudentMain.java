@@ -14,14 +14,17 @@ public class StudentMain {
 	    int barServerPortNum = -1;                             // port number for listening to service requests
 	    String tableServerHostName;
 	    int tableServerPortNum = -1;
+	    String genReposServerHostName;
+	    int genReposServerPortNum = -1;
 	    BarStub bar;													// remote reference to the bar
 		TableStub table;
+		GenReposStub genRepos;
 		Student[] students = new Student[ExecConsts.N];	
 	
 		
 		/* getting problem runtime parameters */
 			
-	    if (args.length != 4) {
+	    if (args.length != 6) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
 	    }
@@ -49,11 +52,23 @@ public class StudentMain {
 		    System.exit (1);
 		}
 	    
-		
+	    genReposServerHostName = args[4];
+	    try {
+	    	genReposServerPortNum = Integer.parseInt (args[5]);
+	    } catch (NumberFormatException e) {
+	    	GenericIO.writelnString ("args[7] is not a number!");
+	        System.exit (1);
+	    }
+	    if ((genReposServerPortNum < 4000) || (genReposServerPortNum >= 65536)) {
+	    	GenericIO.writelnString ("args[7] is not a valid port number!");
+	        System.exit (1);
+	    }
+	    
 		//Initialization
 		
 		bar = new BarStub(barServerHostName, barServerPortNum);
 		table = new TableStub(tableServerHostName, tableServerPortNum);
+		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 		
 		for(int i=0; i<ExecConsts.N; i++){
             students[i] = new Student("Student_"+i, i, bar, table);
@@ -77,5 +92,6 @@ public class StudentMain {
 		
 		bar.shutdown();
 		table.shutdown();
+		genRepos.shutdown();
 	}
 }

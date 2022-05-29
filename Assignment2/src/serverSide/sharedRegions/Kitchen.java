@@ -194,7 +194,7 @@ public class Kitchen {
 		KitchenClientProxy waiter = ((KitchenClientProxy) Thread.currentThread());
 		if(waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
 			waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
-			repos.updateChefState(WaiterStates.APPRAISING_SITUATION);
+			repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
 		}
 	}
 
@@ -205,7 +205,7 @@ public class Kitchen {
 		KitchenClientProxy waiter = ((KitchenClientProxy) Thread.currentThread());
 		if(waiter.getWaiterState() != WaiterStates.PLACING_THE_ORDER) {
 			waiter.setWaiterState(WaiterStates.PLACING_THE_ORDER);
-			repos.updateChefState(WaiterStates.PLACING_THE_ORDER);
+			repos.updateWaiterState(WaiterStates.PLACING_THE_ORDER);
 		}
 		
 		notifyAll();

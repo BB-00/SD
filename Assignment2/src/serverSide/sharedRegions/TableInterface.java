@@ -97,8 +97,9 @@ public class TableInterface {
         switch(inMessage.getMsgType()) {
       		case MessageType.REQSC:
       			((TableClientProxy) Thread.currentThread()).setWaiterState(inMessage.getWaiterState());
-      			((TableClientProxy) Thread.currentThread()).setStudentBeingAnswered(inMessage.getStudentBeingAnswered());
-                table.saluteClient(inMessage.getStudentBeingAnswered());
+      			((TableClientProxy) Thread.currentThread()).setStudentBeingAnswered(inMessage.getStudentIDBeingAnswered());
+                int studentID = inMessage.getStudentBeingAnswered();
+      			table.saluteClient(studentID);
                 outMessage = new Message(MessageType.SCDONE,
                 		((TableClientProxy) Thread.currentThread()).getStudentBeingAnswered(),
                         ((TableClientProxy) Thread.currentThread()).getWaiterState());

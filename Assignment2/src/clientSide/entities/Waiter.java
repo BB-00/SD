@@ -54,6 +54,9 @@ public class Waiter extends Thread{
 	 * 	Instantiation of waiter thread
 	 * 
 	 * 	@param waiterState
+	 *  @param kit reference to the kitchen stub
+	 *  @param bar reference to the kitchen stub
+	 *  @param tab reference to the table stub
 	 */
 	
 	public Waiter(String name, KitchenStub kit, BarStub bar, TableStub tab) {

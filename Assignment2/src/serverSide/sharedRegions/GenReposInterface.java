@@ -4,6 +4,7 @@ import clientSide.entities.ChefStates;
 import clientSide.entities.StudentStates;
 import clientSide.entities.WaiterStates;
 import commInfra.*;
+import genclass.GenericIO;
 
 /**
  *  Interface to the General Repository of Information.
@@ -80,11 +81,6 @@ public class GenReposInterface {
      // processing
 
       switch (inMessage.getMsgType ()) { 
-      	case MessageType.SETNFIC:
-      		repos.initSimulation(inMessage.getLogFileName());
-            outMessage = new Message(MessageType.NFICDONE);
-            break;
-            
         case MessageType.SETUSSTATE:
         	repos.updateStudentState(inMessage.getStudentID(), inMessage.getStudentState());
             outMessage = new Message(MessageType.SACK);

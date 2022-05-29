@@ -66,7 +66,7 @@ public class KitchenInterface {
 
 		// Waiter Messages that require type and state verification	
 		case MessageType.REQHNTC: 	// Hand note to chef
-		case MessageType.REQRB: 	// Return to bar
+		case MessageType.REQRTB: 	// Return to bar
 		case MessageType.REQCPOR: 		// Collect portion
 			if(inMessage.getWaiterState() < WaiterStates.APPRAISING_SITUATION || inMessage.getWaiterState() > WaiterStates.RECEIVING_PAYMENT)
 				throw new MessageException ("Invalid Waiter state!", inMessage);
@@ -117,23 +117,11 @@ public class KitchenInterface {
         	 boolean portsDelivered = kitchen.haveAllPortionsBeenDelivered();
         	 outMessage = new Message(MessageType.HAPBDDONE, portsDelivered);
         	 break;
-        	 //((KitchenClientProxy) Thread.currentThread()).setChefState(inMessage.getChefState());
-//             if(kitchen.haveAllPortionsBeenDelivered()) {
-//            	 outMessage= new Message(MessageType.HAPBDDONE,
-//                         ((KitchenClientProxy) Thread.currentThread ()).getChefState());
-//             }
-//             break;
 
          case MessageType.REQHOBC:
         	 boolean orderCompleted = kitchen.hasOrderBeenCompleted();
         	 outMessage = new Message(MessageType.HOBCDONE, orderCompleted);
         	 break;
-//        	 ((KitchenClientProxy) Thread.currentThread()).setChefState(inMessage.getChefState());
-//             if(kitchen.hasOrderBeenCompleted ()) {
-//            	 outMessage= new Message (MessageType.HOBCDONE,
-//                         ((KitchenClientProxy) Thread.currentThread()).getChefState());
-//             }
-//             break;
 
          case MessageType.REQCU:
         	 ((KitchenClientProxy) Thread.currentThread()).setChefState(inMessage.getChefState());
