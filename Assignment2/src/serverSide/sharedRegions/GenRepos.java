@@ -45,7 +45,7 @@ public class GenRepos {
 	public GenRepos(){
 		this.nEntities =  0;
 		
-		this.logFileName = "log.txt";
+		this.logFileName = "log";
 		
 		//set initial states
 		this.studentStates = new int[ExecConsts.N];

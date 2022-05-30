@@ -21,13 +21,11 @@ public class WaiterMain {
 		KitchenStub kitchen;
 		GenReposStub genReposStub; // remote reference to the general repository
 
-		String fileName;
-
 		Waiter waiter;
 
 		/* getting problem runtime parameters */
 
-		if (args.length != 9) {
+		if (args.length != 8) {
 			GenericIO.writelnString("Wrong number of parameters!");
 			System.exit(1);
 		}
@@ -79,8 +77,6 @@ public class WaiterMain {
 			GenericIO.writelnString("args[7] is not a valid port number!");
 			System.exit(1);
 		}
-
-		fileName = args[8];
 
 		// Initialization
 		bar = new BarStub(barServerHostName, barServerPortNum);
