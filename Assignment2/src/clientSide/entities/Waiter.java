@@ -70,7 +70,6 @@ public class Waiter extends Thread{
 	/**
 	 *	Life cycle of the waiter
 	 */
-
 	@Override
 	public void run ()
 	{

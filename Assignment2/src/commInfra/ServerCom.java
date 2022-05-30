@@ -233,24 +233,9 @@ public class ServerCom
 
       try
       { fromClient = in.readObject ();
-	      GenericIO.writelnString("MESSAGE IN:\n"+fromClient.toString());
-		  GenericIO.writelnString();
-//	      if(serverPortNumb == 22169) {						// -------------- DEBUG --------------
-//	    	  GenericIO.writelnString("MESSAGE IN from GenRepos:\n"+fromClient.toString());
-//	    	  GenericIO.writelnString();
-//	      }
-//	      if(serverPortNumb == 22160) {
-//	    	  GenericIO.writelnString("MESSAGE IN from Bar:\n"+fromClient.toString());
-//	    	  GenericIO.writelnString();
-//	      }
-//	      if(serverPortNumb == 22161) {
-//	    	  GenericIO.writelnString("MESSAGE IN from Kitchen:\n"+fromClient.toString());
-//	    	  GenericIO.writelnString();
-//	      }
-//	      if(serverPortNumb == 22162) {
-//	    	  GenericIO.writelnString("MESSAGE IN from Table:\n"+fromClient.toString());
-//	    	  GenericIO.writelnString();
-//	      }
+      		// ---------- DEBUG --------------
+//	      GenericIO.writelnString("MESSAGE IN:\n"+fromClient.toString());
+//		  GenericIO.writelnString();
       }
       catch (InvalidClassException e)
       { GenericIO.writelnString (Thread.currentThread ().getName () +
@@ -284,22 +269,9 @@ public class ServerCom
    {
       try
       { out.writeObject (toClient);
-	      if(serverPortNumb == 22169) { // ---------------- DEBUG ---------------
-			   GenericIO.writelnString("MESSAGE OUT\n"+toClient.toString());
-			   GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22160) {
-	   	  GenericIO.writelnString("MESSAGE OUT\n"+toClient.toString());
-	   	  GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22161) {
-	   	  GenericIO.writelnString("MESSAGE OUT\n"+toClient.toString());
-	   	  GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22162) {
-	   	  GenericIO.writelnString("MESSAGE OUT\n"+toClient.toString());
-	   	  GenericIO.writelnString();
-	     }
+      	//----------------- DEBUG ---------------
+//      	GenericIO.writelnString("MESSAGE OUT\n"+toClient.toString());
+//	   GenericIO.writelnString();
       }
       catch (InvalidClassException e)
       { GenericIO.writelnString (Thread.currentThread ().getName () +

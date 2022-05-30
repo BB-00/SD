@@ -154,8 +154,6 @@ public class Message implements Serializable
 		msgType = type;
 		int entitie = getEntitieFromMessageType(type);
 		
-		System.out.println("Message entitie: "+entitie);
-
 		if(entitie == 1) //Chef message
 			chefState = stateOrId;
 		else if (entitie == 2) //Waiter message
@@ -166,7 +164,6 @@ public class Message implements Serializable
 			else if(msgType == MessageType.REQPO || msgType == MessageType.PODONE || 
 				    msgType == MessageType.REQJT || msgType == MessageType.JTDONE)
 				studentState = stateOrId;
-			System.out.println("Student State: "+studentState);
 		}
 		else if (entitie == 4) {  //Additional message
 			if (msgType == MessageType.GFTADONE)
@@ -185,28 +182,8 @@ public class Message implements Serializable
 				chefState = stateOrId;
 			else if (msgType == MessageType.SETUWS)
 				waiterState = stateOrId;
-//			else if (msgType == MessageType.REQSETNCOURSES) {
-//				if ( stateOrId < 0 || stateOrId  > ExecuteConst.M) {	// Not a valid number of courses
-//					GenericIO.writelnString ("Invalid number of courses");
-//					System.exit (1);
-//				} 
-//				nCourses = stateOrId;
-//			}
-//			else if (msgType == MessageType.REQSETNPORTIONS) {
-//				if ( stateOrId < 0 || stateOrId  > ExecuteConst.N) {	// Not a valid number of portions
-//					GenericIO.writelnString ("Invalid number of portions");
-//					System.exit (1);
-//				}
-//				nPortions = stateOrId;
-//			}
-//			else if (msgType == MessageType.REQUPDSEATSTABLELV){
-//				if ( stateOrId < 0 || stateOrId  >= ExecuteConst.N) {	// Not a valid Student id
-//					GenericIO.writelnString ("Invalid student id");
-//					System.exit (1);
-//				}
 			else
 				studentID = stateOrId;
-//			}
 		}
 		else { 
 			GenericIO.writelnString ("Message type = " + msgType + ": non-implemented instantiation!");
@@ -267,10 +244,6 @@ public class Message implements Serializable
 		}
 		else 
 		{
-//			if ((entity != 3) && msgType != MessageType.REQUPDTSTUST1) {	// Not a Student entity Type Message
-//				GenericIO.writelnString ("Message type = " + msgType + ": non-implemented instantiation on Student!");
-//				System.exit (1);
-//			}
 			studentState = stateOrSeat;
 		}
 		
@@ -321,7 +294,7 @@ public class Message implements Serializable
 		studentState = state;
 		if(msgType == MessageType.SHAEDONE)
 			shouldArrivedEarlier = bValue;
-		else //if (msgType == MessageType.REQUPDTSTUST2)
+		else 
 			hold = bValue;
 	}
 	
@@ -485,7 +458,6 @@ public class Message implements Serializable
 	 */
 	public int getEntitieFromMessageType(int messageType)
 	{
-		///FALTAM AQUI MENSAGENS
 		switch(messageType)
 		{
 			// Chef messages

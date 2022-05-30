@@ -24,23 +24,26 @@ public class BarMain {
 	 *  Main method.
 	 *
 	 *    @param args runtime arguments
-	 *        args[0] - port nunber for listening to service requests
+	 *        args[0] - port number for listening to service requests
 	 *        args[1] - name of the platform where is located the server for the general repository
-	 *        args[2] - port nunber where the server for the general repository is listening to service requests
+	 *        args[2] - port number where the server for the general repository is listening to service requests
+	 *        args[3] - name of the platform where is located the server for the table
+	 *        args[4] - port number where the server for the table is listening to service requests
 	 */
 	public static void main(String[] args) {
-		TableStub table;
+		TableStub table;						// Reference to the table stub
 		
-		Bar bar;                                              // barber shop (service to be rendered)
-	    BarInterface barInterface;                            // interface to the barber shop
-	    GenReposStub genReposStub;                                // stub to the general repository
-	    ServerCom scon, sconi;                                        // communication channels
-	    int portNumb = -1;                                            // port number for listening to service requests
-	    String reposServerName;                                       // name of the platform where is located the server for the general repository
-	    int reposPortNumb = -1;                                       // port nunber where the server for the general repository is listening to service requests
-	    String tableServerName;                                       // name of the platform where is located the server for the general repository
-	    int tablePortNumb = -1;                                       // port nunber where the server for the general repository is listening to service requests
+		Bar bar;                                // Bar (service to be rendered)
+	    BarInterface barInterface;              // interface to the bar
+	    GenReposStub genReposStub;              // stub to the general repository
+	    ServerCom scon, sconi;                  // communication channels
+	    int portNumb = -1;                      // port number for listening to service requests
+	    String reposServerName;                 // name of the platform where is located the server for the general repository
+	    int reposPortNumb = -1;                 // port nunber where the server for the general repository is listening to service requests
+	    String tableServerName;                 // name of the platform where is located the server for the table
+	    int tablePortNumb = -1;                 // port nunber where the server for the table is listening to service requests
 
+	    /* getting problem runtime parameters */
 	    if (args.length != 5) {
 	    	GenericIO.writelnString ("Wrong number of parameters!");
 	        System.exit (1);

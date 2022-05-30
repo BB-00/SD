@@ -4,24 +4,41 @@ import clientSide.entities.Chef;
 import clientSide.stubs.*;
 import genclass.GenericIO;
 
+/**
+ *  Client side of the Restaurant problem (chef).
+ *
+ *	Implementation of a client-server model of type 2 (server replication).
+ *	Communication is based on a communication channel under the TCP protocol.
+ */
 public class ChefMain {
-
+	
+	/**
+	 *  Main method.
+	 *
+	 *    @param args runtime arguments
+	 *        args[0] - name of the platform where is located the bar server
+	 *        args[1] - port number for listening to service requests
+	 *        args[2] - name of the platform where is located the kitchen server
+	 *        args[3] - port number for listening to service requests
+     *		  args[4] - name of the platform where is located the general repository server
+	 *        args[5] - port number for listening to service requests
+	 */
 	public static void main(String[] args) {
 		
-		String barServerHostName;                               // name of the platform where is located the barber shop server
-	    int barServerPortNum = -1;                             // port number for listening to service requests
-	    String kitchenServerHostName;                                 // name of the platform where is located the kitchen server
-	    int kitchenServerPortNum = -1;                               // port number for listening to service requests
-	    String genReposServerHostName;
-	    int genReposServerPortNum = -1;
-	    BarStub bar;													// remote reference to the bar
-		KitchenStub kitchen;
-		GenReposStub  genRepos;
+		String barServerHostName;						// name of the platform where is located the bar server
+		int barServerPortNum = -1; 						// port number for listening to service requests
+		String kitchenServerHostName;					// name of the platform where is located the kitchen server
+		int kitchenServerPortNum = -1; 					// port number for listening to service requests
+		String genReposServerHostName;					// name of the platform where is located the general repository server
+		int genReposServerPortNum = -1;					// port number for listening to service requests
+		BarStub bar;									// remote reference to the bar stub
+		KitchenStub kitchen;							// remote reference to the kitchen stub
+		GenReposStub genRepos; 							// remote reference to the general repository stub
+
+		Chef chef;										// Chef thread
+	
 		
-		Chef chef;
-	
 	    /* getting problem runtime parameters */
-	
 	    if (args.length != 6) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
@@ -64,9 +81,8 @@ public class ChefMain {
 		    System.exit (1);
 		}
 		
+	    
 		//Initialization
-		
-		
 		bar = new BarStub(barServerHostName, barServerPortNum);
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
 		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);

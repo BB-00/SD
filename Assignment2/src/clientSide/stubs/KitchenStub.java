@@ -7,6 +7,13 @@ import clientSide.entities.WaiterStates;
 import genclass.GenericIO;
 import commInfra.*;
 
+/**
+ *  Stub to the Kitchen.
+ *
+ *    It instantiates a remote reference to the barber shop.
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
+ */
 public class KitchenStub {
 	/**
 	 * Name of the platform where is located the kitchen Server
@@ -28,6 +35,11 @@ public class KitchenStub {
 		this.serverPortNum  = serverPortNum;
 	}
 	
+	/**
+	 * 	Operation watch the news
+	 * 
+	 * 	It is called by the chef, he waits for waiter to notify him of the order
+	 */
 	public void watchTheNews() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -46,8 +58,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.WTNDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.WTNDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -64,6 +75,12 @@ public class KitchenStub {
 	    
 	}
 	
+	/**
+	 * 	Operation start presentation
+	 * 
+	 * 	It is called by the chef after waiter has notified him of the order to be prepared 
+	 * 	to signal that preparation of the course has started
+	 */
 	public void startPreparation() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -82,8 +99,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.STPDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.STPDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -99,6 +115,11 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * 	Operation proceed presentation
+	 * 
+	 * 	It is called by the chef when a portion needs to be prepared
+	 */
 	public void proceedToPresentation() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -117,8 +138,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.PTPDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.PTPDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -134,6 +154,11 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation have next portion ready
+	 * 
+	 * It is called by the chef after a portion has been delivered and another one needs to be prepared
+	 */
 	public void haveNextPortionReady() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -152,8 +177,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.HNPRDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.HNPRDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -169,6 +193,11 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * 	Operation continue preparation
+	 * 
+	 * 	It is called by the chef when all portions have been delivered, but the course has not been completed yet
+	 */
 	public void continuePreparation() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -188,7 +217,7 @@ public class KitchenStub {
 	    inMessage = (Message) com.readObject();
 	    
 	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.CPDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.CPDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -204,6 +233,13 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * 	Operation have all portions been delivered
+	 * 
+	 * 	It is called by the chef when he finishes a portion and checks if another one needs to be prepared or not
+	 * 	It is also here were the chef blocks waiting for waiter do deliver the current portion
+	 * 	@return true if all portions have been delivered, false otherwise
+	 */
 	public boolean haveAllPortionsBeenDelivered() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -222,8 +258,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.HAPBDDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.HAPBDDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -234,6 +269,12 @@ public class KitchenStub {
 	    return inMessage.getAllPortionsBeenDelivered();
 	}
 	
+	/**
+	 *	Operation has order been completed
+	 * 
+	 * 	It is called by the chef when he finishes preparing all courses to check if order has been completed or not
+	 * 	@return true if all courses have been completed, false or not
+	 */
 	public boolean hasOrderBeenCompleted() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -252,8 +293,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.HOBCDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.HOBCDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -264,6 +304,11 @@ public class KitchenStub {
 	    return inMessage.getHasOrderBeenCompleted();
 	}
 	
+	/**
+	 * Operation clean up
+	 * 
+	 * It is called by the chef when he finishes the order, to close service
+	 */
 	public void cleanUp() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -282,8 +327,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.CUDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.CUDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -300,9 +344,11 @@ public class KitchenStub {
 	}
 	
 	
-	
-	
-	
+	/**
+	 * Operation return to the bar
+	 * 
+	 * Called by the waiter when he is the kitchen and returns to the bar
+	 */
 	public void returnToBar() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -321,8 +367,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.RTBDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.RTBDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -338,6 +383,11 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation hand note to chef
+	 * 
+	 * Called by the waiter to wake chef up chef to give him the description of the order
+	 */
 	public void handNoteToChef() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -356,8 +406,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.HNTCDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.HNTCDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -373,6 +422,11 @@ public class KitchenStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation collect portion
+	 * 
+	 * Called by the waiter when there is a portion to be delivered. Collect and signal chef that the portion was delivered
+	 */
 	public void collectPortion() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -391,8 +445,7 @@ public class KitchenStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.CPORDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.CPORDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);

@@ -60,7 +60,6 @@ public class Chef extends Thread{
 	/**
 	 * 	Life cycle of the chef
 	 */
-
 	@Override
 	public void run ()
 	{

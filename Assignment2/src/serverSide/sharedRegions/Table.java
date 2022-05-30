@@ -7,6 +7,28 @@ import clientSide.entities.*;
 import clientSide.stubs.*;
 import genclass.GenericIO;
 
+
+/**
+ * 	Table
+ * 
+ *  It is responsible for keeping track of the courses being eaten.
+ *  Implemented as an implicit monitor
+ *	Public methods executed in mutual exclusion
+ *	Synchronization points for the waiter include:
+ *		If saluting a student waiter must wait for him to seat at table and then wait for him to read menu
+ *		Waiter has to wait for first student to arrive to describe him the order
+ *		Waiter blocks waiting for student to pay the bill
+ *	Synchronization points for the student include:	
+ *		Student waits for waiter to bring menu specifically to him
+ *		First student to arrive blocks if everybody has not chosen yet and while companions are not describing their choices
+ *		First student to arrive waits for waiter to come with the pad
+ *		If some student is informing about his choice, then a student must wait for his companion to finish telling his preference
+ *		Students must wait that everybody is served before they can start eating
+ *		When a student finishes his course must wait for his companions to finish
+ *		Student that was last to eat must wait for his companions to woken up before he can signal waiter to bring next course
+ *		Last student to arrive must wait for waiter to bring him the bill	
+ *		
+ */
 public class Table {
 	/**
 	 *   Number of entity groups requesting the shutdown.
@@ -99,14 +121,14 @@ public class Table {
 	private boolean [] studentsThatHaveReadTheMenu;
 	
 	/**
-	 * Reference to General Repositories
+	 * Reference to General Repositories stub
 	 */
 	private final GenReposStub repos;
 		
 	/**
 	 * Table Instantiation
 	 * 
-	 * @param repos
+	 * @param repos reference to the General Repository stub
 	 */
 	public Table(GenReposStub repos) {
 		this.nEntities = 0;
@@ -202,7 +224,8 @@ public class Table {
     	}
     	
     	notifyAll();
-    	System.out.println("Waiter Saluting student "+studentBeingAnsweredID);
+    	// ------------------ DEBUG ----------------
+    	// System.out.println("Waiter Saluting student "+studentBeingAnsweredID);
 
     	while(studentsThatHaveReadTheMenu[studentBeingAnsweredID] == false) {
 	    	try {
@@ -256,7 +279,8 @@ public class Table {
 			}
     	}
     	
-    	System.out.println("Waiter got the order");
+    	// -------------- DEBUG ----------------------
+    	// System.out.println("Waiter got the order");
     	
     }
     
@@ -336,10 +360,10 @@ public class Table {
     		student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
     		repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 		}
-		//repos.updateStudentSeat(studentID, numberOfStudentsAtTable);
 		numberOfStudentsAtTable++;
     	
-    	System.out.println("Student "+studentID+" took a seat!");
+		// ----------------- DEBUG ------------------
+    	// System.out.println("Student "+studentID+" took a seat!");
 
     	studentsSeated[studentID] = true;
     	
@@ -352,14 +376,12 @@ public class Table {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	System.out.println("Student "+studentID+" was waken up");
-//	    	if (studentID == studentBeingAnsweredID && presentingTheMenu == true) {
-//	    		System.out.println("Student "+studentID+" Can Proceed");
-//	    		//break;
-//	    	}
+	    	// --------------------- DEUBG -----------------
+	    	//System.out.println("Student "+studentID+" was waken up");
 	    } while(studentID != studentBeingAnsweredID && presentingTheMenu == false);
     	
-    	System.out.println("Student "+studentID+ " was presented with the menu");
+    	// --------------------- DEUBG -----------------
+    	// System.out.println("Student "+studentID+ " was presented with the menu");
     }
     
     /**
@@ -371,21 +393,18 @@ public class Table {
     	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
     	
     	int studentID = ((TableClientProxy) Thread.currentThread()).getStudentID();
-    	
-    	GenericIO.writelnString("Before: "+((TableClientProxy) Thread.currentThread()).getStudentState()+" - ID: "+student.getStudentID());
-    	
+    	    	
 		if(((TableClientProxy) Thread.currentThread()).getStudentState() != StudentStates.SELECTING_THE_COURSES) {
     		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
     		student.setStudentState(StudentStates.SELECTING_THE_COURSES);
     		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 		}
-    	
-		GenericIO.writelnString("After: "+((TableClientProxy) Thread.currentThread()).getStudentState()+" - ID: "+student.getStudentID());
-		
+    			
     	studentsThatHaveReadTheMenu[studentID] = true;
     	notifyAll();
     	
-    	System.out.println("Student "+studentID+ " read the menu ("+studentBeingAnsweredID+")");
+    	// --------------------- DEUBG -----------------
+    	// System.out.println("Student "+studentID+ " read the menu ("+studentBeingAnsweredID+")");
     }
     
     /**
@@ -458,7 +477,8 @@ public class Table {
 			}
     	}
     	
-    	System.out.println("Student "+firstToArriveID+" described the order");
+    	// --------------------- DEUBG -----------------
+    	// System.out.println("Student "+firstToArriveID+" described the order");
     	takingTheOrder = false;
 
     	notifyAll();
@@ -541,7 +561,9 @@ public class Table {
     	int studentID = student.getStudentID();
     	    	
     	numberOfStudentsThatHasFinishEat++;
-    	System.out.println("Student "+studentID+" finished course "+numberOfCoursesEaten+1+"!");
+    	
+    	// --------------------- DEUBG -----------------
+    	// System.out.println("Student "+studentID+" finished course "+numberOfCoursesEaten+1+"!");
     	
     	if(numberOfStudentsThatHasFinishEat == ExecConsts.N) {
     		numberOfCoursesEaten++;
@@ -609,8 +631,9 @@ public class Table {
 				e.printStackTrace();
 			}
     	}
-	    	
-    	System.out.println("The bill is payed");
+	    
+		// --------------------- DEUBG -----------------
+    	// System.out.println("The bill is payed");
     	notifyAll();
     }
     

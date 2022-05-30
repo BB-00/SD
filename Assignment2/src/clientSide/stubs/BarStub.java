@@ -4,6 +4,13 @@ import clientSide.entities.*;
 import genclass.GenericIO;
 import commInfra.*;
 
+/**
+ *  Stub to the Bar.
+ *
+ *    It instantiates a remote reference to the bar.
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
+ */
 public class BarStub {
 	
 	/**
@@ -27,7 +34,11 @@ public class BarStub {
 		this.serverPortNum  = serverPortNum;
 	}
 	
-	
+	/**
+	 * Operation enter the restaurant
+	 * 
+	 * It is called by the student to signal that he is entering the restaurant
+	 */
 	public void enter() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -39,17 +50,14 @@ public class BarStub {
 	    		Thread.currentThread().sleep((long)(10));
 	    	} catch(InterruptedException e) {}
 	    }
-	    
-	    System.out.println("Connected");
-	    
+	    	    
 	    //MESSAGES
 	    outMessage = new Message (MessageType.REQENT, ((Student) Thread.currentThread()).getStudentID(),((Student) Thread.currentThread()).getStudentState());
 	    	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.ENTDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.ENTDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -71,6 +79,12 @@ public class BarStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation call the waiter
+	 * 
+	 * It is called by the first student to arrive the restaurant to call the waiter to describe the order
+	 *
+	 */
 	public void callWaiter() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -89,8 +103,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.CWDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.CWDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -105,6 +118,13 @@ public class BarStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation signal the waiter
+	 * 
+	 * It is called by the last student to finish eating that next course can be brought 
+	 * signal chef that he can put request in the queue and waiter that he proceed his executing to collect portions
+	 * It is also used by last student to arrive to signal that he wishes to pay the bill
+	 */
 	public void signalWaiter() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -123,8 +143,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.SWDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.SWDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -146,6 +165,11 @@ public class BarStub {
 	    com.close();
 	}
 	
+	/**
+	 * Operation exit the restaurant
+	 * 
+	 * It is called by a student when he leaves the restaurant
+	 */
 	public void exit() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -160,15 +184,11 @@ public class BarStub {
 	    
 	    //MESSAGES
 	    outMessage = new Message(MessageType.REQEXIT, ((Student) Thread.currentThread()).getStudentID(), ((Student) Thread.currentThread()).getStudentState());
-	    
-	    GenericIO.writelnString("##################### StudentID: "+outMessage.getStudentID()+" StudentState: "+outMessage.getStudentState());
-	    GenericIO.writelnString("Thread StudentState: "+((Student) Thread.currentThread()).getStudentState());
-	    
+	    	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.EXITDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.EXITDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -192,7 +212,10 @@ public class BarStub {
 	
 	
 	
-	
+	/**
+	 * Return id of the student whose request is being answered
+	 * @return Id of the student whose request is being answered
+	 */
 	public int getStudentBeingAnswered() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -211,8 +234,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.GSBADONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.GSBADONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -223,7 +245,17 @@ public class BarStub {
 	    return inMessage.getStudentBeingAnswered();
 	}
 	
-	
+	/**
+	 * Operation look Around
+	 * 
+	 * It is called by the waiter, he checks for pending service requests and if not waits for them
+	 * 	@return Character that represents the service to be executed
+	 * 				'e': client has arrived therefore need to be presented with menu
+     * 				'c': waiter will take the order and deliver to the chef
+     * 				'a': portion needs to be collected and delivered
+     * 				's': bill needs to be prepared and presented to the client
+     * 				'g': some student wants to leave and waiter needs to say bye bye
+     */
 	public char lookAround() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -237,16 +269,12 @@ public class BarStub {
 	    }
 	    
 	    //MESSAGES
-	    
 	    outMessage = new Message(MessageType.REQLA);
 	    	    
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
-//	    GenericIO.writelnString("WAITER STATE: "+((Waiter) Thread.currentThread()).getWaiterState());
-//	    GenericIO.writelnString("inMessage WAITER STATE: "+ inMessage.getWaiterState());
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.LADONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.LADONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -257,6 +285,12 @@ public class BarStub {
 	    return inMessage.getRequestType();
 	}
 	
+	/**
+	 * Operation say Goodbye
+	 * 
+	 * It is called by the waiter to say goodbye to a student that's leaving the restaurant
+	 * @return true if there are no more students at the restaurant, false otherwise
+	 */
 	public boolean sayGoodbye() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -275,8 +309,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.SGDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.SGDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -287,6 +320,11 @@ public class BarStub {
 	    return inMessage.getStudentsAtRestaurant();
 	}
 	
+	/**
+	 * Operation prepare the Bill
+	 * 
+	 * It is called the waiter to prepare the bill of the meal eaten by the students
+	 */
 	public void preprareBill() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -305,8 +343,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.PBDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.PBDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);
@@ -324,11 +361,12 @@ public class BarStub {
 	
 	
 	
-	
-	
-	
-	
-	
+	/**
+	 * Operation alert the waiter
+	 * 
+	 * It is called by the chef to alert the waiter that a portion was dished
+	 * 	A request is puted in the queue (chef id will be N+1)
+	 */
 	public void alertWaiter() {
 		ClientCom com;                                                 // communication channel
 	    Message outMessage,                                            // outgoing message
@@ -347,8 +385,7 @@ public class BarStub {
 	    com.writeObject(outMessage);
 	    inMessage = (Message) com.readObject();
 	    
-	    //TODO Message Types - enter
-	    if((inMessage.getMsgType() != MessageType.ALDONE)) { // && (inMessage.getMsgType() != MessageType.FALTA_DAR_NOME_A_ESTA_MERDA)) {
+	    if((inMessage.getMsgType() != MessageType.ALDONE)) {
 	    	GenericIO.writelnString("Thread "+Thread.currentThread().getName()+": Invalid Message Type!");
 	    	GenericIO.writelnString(inMessage.toString());
 	    	System.exit(1);

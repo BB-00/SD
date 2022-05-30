@@ -29,8 +29,8 @@ public class TableMain {
 	 *        args[2] - port nunber where the server for the general repository is listening to service requests
 	 */
 	public static void main(String[] args) {
-		Table table;                                              // barber shop (service to be rendered)
-	    TableInterface tableInterface;                            // interface to the barber shop
+		Table table;                                              // table(service to be rendered)
+	    TableInterface tableInterface;                            // interface to table
 	    GenReposStub genReposStub;                                // stub to the general repository
 	    ServerCom scon, sconi;                                        // communication channels
 	    int portNumb = -1;                                            // port number for listening to service requests

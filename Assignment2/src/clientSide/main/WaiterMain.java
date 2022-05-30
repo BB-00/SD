@@ -4,27 +4,46 @@ import clientSide.entities.Waiter;
 import clientSide.stubs.*;
 import genclass.GenericIO;
 
+/**
+ *  Client side of the Restaurant problem (waiter).
+ *
+ *	Implementation of a client-server model of type 2 (server replication).
+ *	Communication is based on a communication channel under the TCP protocol.
+ */
 public class WaiterMain {
-
+	
+	/**
+	 *  Main method.
+	 *
+	 *    @param args runtime arguments
+	 *        args[0] - name of the platform where is located the bar server
+	 *        args[1] - port number for listening to service requests
+	 *        args[2] - name of the platform where is located the table server
+	 *        args[3] - port number for listening to service requests
+	 *        args[4] - name of the platform where is located the kitchen server
+	 *        args[5] - port number for listening to service requests
+     *		  args[6] - name of the platform where is located the general repository server
+	 *        args[7] - port number for listening to service requests
+	 */
 	public static void main(String[] args) {
 
-		String barServerHostName; // name of the platform where is located the barber shop server
-		int barServerPortNum = -1; // port number for listening to service requests
-		String tableServerHostName;
-		int tableServerPortNum = -1;
-		String kitchenServerHostName; // name of the platform where is located the kitchen server
-		int kitchenServerPortNum = -1; // port number for listening to service requests
-		String genReposServerHostName;
-		int genReposServerPortNum = -1;
-		BarStub bar; // remote reference to the bar
-		TableStub table;
-		KitchenStub kitchen;
-		GenReposStub genReposStub; // remote reference to the general repository
+		String barServerHostName;						// name of the platform where is located the bar server
+		int barServerPortNum = -1; 						// port number for listening to service requests
+		String tableServerHostName;						// name of the platform where is located the table server
+		int tableServerPortNum = -1;					// port number for listening to service requests
+		String kitchenServerHostName;					// name of the platform where is located the kitchen server
+		int kitchenServerPortNum = -1; 					// port number for listening to service requests
+		String genReposServerHostName;					// name of the platform where is located the general repository server
+		int genReposServerPortNum = -1;					// port number for listening to service requests
+		BarStub bar;									// remote reference to the bar stub
+		TableStub table;								// remote reference to the table stub
+		KitchenStub kitchen;							// remote reference to the kitchen stub
+		GenReposStub genRepos; 							// remote reference to the general repository stub
 
-		Waiter waiter;
+		Waiter waiter;									// Waiter thread
 
+		
 		/* getting problem runtime parameters */
-
 		if (args.length != 8) {
 			GenericIO.writelnString("Wrong number of parameters!");
 			System.exit(1);
@@ -78,15 +97,15 @@ public class WaiterMain {
 			System.exit(1);
 		}
 
+		
 		// Initialization
 		bar = new BarStub(barServerHostName, barServerPortNum);
 		table = new TableStub(tableServerHostName, tableServerPortNum);
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
-		genReposStub = new GenReposStub(genReposServerHostName, genReposServerPortNum);
+		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 
 		waiter = new Waiter("Waiter", kitchen, bar, table);
 
-		// genReposStub.initSimulation(fileName);
 
 		// Start of simulation
 		waiter.start();
@@ -101,7 +120,7 @@ public class WaiterMain {
 		bar.shutdown();
 		kitchen.shutdown();
 		table.shutdown();
-		genReposStub.shutdown();
+		genRepos.shutdown();
 	}
 
 }

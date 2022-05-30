@@ -125,7 +125,9 @@ public class Student extends Thread{
 		bar.exit();
 	}
 	
-	
+	/**
+	 * sleep for a random time
+	 */
 	private void walkABit(){
 		try{ 
 			sleep ((long) (1 + 50 * Math.random ()));

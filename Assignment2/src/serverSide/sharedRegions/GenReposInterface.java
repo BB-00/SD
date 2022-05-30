@@ -68,10 +68,6 @@ public class GenReposInterface {
 			break;
 		// verify only message type
 		case MessageType.SETUSSEAT:
-//		case MessageType.REQSETNCOURSES:
-//		case MessageType.REQSETNPORTIONS:
-//		case MessageType.REQUPDSEATSTABLE:
-//		case MessageType.REQUPDSEATSTABLELV:
 		case MessageType.SHUT:
 			break;
 		default:

@@ -193,22 +193,22 @@ public class ClientCom
             
       try
       { fromServer = in.readObject ();
-	      if(serverPortNumb == 22169) {						// -------------- DEBUG --------------
-	    	  GenericIO.writelnString("MESSAGE IN from GenRepos\n"+fromServer.toString());
-	    	  GenericIO.writelnString();
-	      }
-	      if(serverPortNumb == 22160) {
-	    	  GenericIO.writelnString("MESSAGE IN from Bar\n"+fromServer.toString());
-	    	  GenericIO.writelnString();
-	      }
-	      if(serverPortNumb == 22161) {
-	    	  GenericIO.writelnString("MESSAGE IN from Kitchen\n"+fromServer.toString());
-	    	  GenericIO.writelnString();
-	      }
-	      if(serverPortNumb == 22162) {
-	    	  GenericIO.writelnString("MESSAGE IN from Table\n"+fromServer.toString());
-	    	  GenericIO.writelnString();
-	      }
+//	      if(serverPortNumb == 22169) {						// -------------- DEBUG --------------
+//	    	  GenericIO.writelnString("MESSAGE IN from GenRepos\n"+fromServer.toString());
+//	    	  GenericIO.writelnString();
+//	      }
+//	      if(serverPortNumb == 22160) {
+//	    	  GenericIO.writelnString("MESSAGE IN from Bar\n"+fromServer.toString());
+//	    	  GenericIO.writelnString();
+//	      }
+//	      if(serverPortNumb == 22161) {
+//	    	  GenericIO.writelnString("MESSAGE IN from Kitchen\n"+fromServer.toString());
+//	    	  GenericIO.writelnString();
+//	      }
+//	      if(serverPortNumb == 22162) {
+//	    	  GenericIO.writelnString("MESSAGE IN from Table\n"+fromServer.toString());
+//	    	  GenericIO.writelnString();
+//	      }
       
       }
       catch (InvalidClassException e)
@@ -241,40 +241,24 @@ public class ClientCom
 
    public void writeObject (Object toServer)
    {
-//	   if(serverPortNumb == 22169) { // ---------------- DEBUG ---------------
-//		   GenericIO.writelnString("MESSAGE OUT to GenRepos:\n"+toServer.toString());
-//		   GenericIO.writelnString();
-//      }
-//      if(serverPortNumb == 22160) {
-//    	  GenericIO.writelnString("MESSAGE OUT to Bar:\n"+toServer.toString());
-//    	  GenericIO.writelnString();
-//      }
-//      if(serverPortNumb == 22161) {
-//    	  GenericIO.writelnString("MESSAGE OUT to Kitchen:\n"+toServer.toString());
-//    	  GenericIO.writelnString();
-//      }
-//      if(serverPortNumb == 22162) {
-//    	  GenericIO.writelnString("MESSAGE OUT to Table:\n"+toServer.toString());
-//    	  GenericIO.writelnString();
-//      }
       try
       { out.writeObject (toServer);
-	      if(serverPortNumb == 22169) { // ---------------- DEBUG ---------------
-			   GenericIO.writelnString("MESSAGE OUT to GenRepos\n"+toServer.toString());
-			   GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22160) {
-	   	  GenericIO.writelnString("MESSAGE OUT to Bar\n"+toServer.toString());
-	   	  GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22161) {
-	   	  GenericIO.writelnString("MESSAGE OUT to Kitchen\n"+toServer.toString());
-	   	  GenericIO.writelnString();
-	     }
-	     if(serverPortNumb == 22162) {
-	   	  GenericIO.writelnString("MESSAGE OUT to Table\n"+toServer.toString());
-	   	  GenericIO.writelnString();
-	     }
+//	      if(serverPortNumb == 22169) { // ---------------- DEBUG ---------------
+//			   GenericIO.writelnString("MESSAGE OUT to GenRepos\n"+toServer.toString());
+//			   GenericIO.writelnString();
+//	     }
+//	     if(serverPortNumb == 22160) {
+//	   	  GenericIO.writelnString("MESSAGE OUT to Bar\n"+toServer.toString());
+//	   	  GenericIO.writelnString();
+//	     }
+//	     if(serverPortNumb == 22161) {
+//	   	  GenericIO.writelnString("MESSAGE OUT to Kitchen\n"+toServer.toString());
+//	   	  GenericIO.writelnString();
+//	     }
+//	     if(serverPortNumb == 22162) {
+//	   	  GenericIO.writelnString("MESSAGE OUT to Table\n"+toServer.toString());
+//	   	  GenericIO.writelnString();
+//	     }
       }
       catch (InvalidClassException e)
       { GenericIO.writelnString (Thread.currentThread ().getName () +

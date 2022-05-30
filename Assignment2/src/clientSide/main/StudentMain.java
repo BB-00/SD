@@ -5,25 +5,42 @@ import clientSide.stubs.*;
 import commInfra.ExecConsts;
 import genclass.GenericIO;
 
+/**
+ *  Client side of the Restaurant problem (student).
+ *
+ *	Implementation of a client-server model of type 2 (server replication).
+ *	Communication is based on a communication channel under the TCP protocol.
+ */
 public class StudentMain {
-		
+	
+	/**
+	 *  Main method.
+	 *
+	 *    @param args runtime arguments
+	 *        args[0] - name of the platform where is located the bar server
+	 *        args[1] - port number for listening to service requests
+	 *        args[2] - name of the platform where is located the table server
+	 *        args[3] - port number for listening to service requests
+     *		  args[4] - name of the platform where is located the general repository server
+	 *        args[5] - port number for listening to service requests
+	 */
 	public static void main(String[] args) {
 		
 		
-		String barServerHostName;                               // name of the platform where is located the barber shop server
-	    int barServerPortNum = -1;                             // port number for listening to service requests
-	    String tableServerHostName;
-	    int tableServerPortNum = -1;
-	    String genReposServerHostName;
-	    int genReposServerPortNum = -1;
-	    BarStub bar;													// remote reference to the bar
-		TableStub table;
-		GenReposStub genRepos;
-		Student[] students = new Student[ExecConsts.N];	
+		String barServerHostName;						// name of the platform where is located the bar server
+		int barServerPortNum = -1; 						// port number for listening to service requests
+		String tableServerHostName;						// name of the platform where is located the table server
+		int tableServerPortNum = -1;					// port number for listening to service requests
+		String genReposServerHostName;					// name of the platform where is located the general repository server
+		int genReposServerPortNum = -1;					// port number for listening to service requests
+		BarStub bar;									// remote reference to the bar stub
+		TableStub table;								// remote reference to the table stub
+		GenReposStub genRepos; 							// remote reference to the general repository stub
+
+		Student[] students = new Student[ExecConsts.N];	// Student Threads
 	
 		
 		/* getting problem runtime parameters */
-			
 	    if (args.length != 6) {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
@@ -64,8 +81,8 @@ public class StudentMain {
 	        System.exit (1);
 	    }
 	    
+	    
 		//Initialization
-		
 		bar = new BarStub(barServerHostName, barServerPortNum);
 		table = new TableStub(tableServerHostName, tableServerPortNum);
 		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);

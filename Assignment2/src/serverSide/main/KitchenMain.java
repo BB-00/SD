@@ -29,8 +29,8 @@ public class KitchenMain {
 	 *        args[2] - port nunber where the server for the general repository is listening to service requests
 	 */
 	public static void main(String[] args) {
-		Kitchen kitchen;                                              // barber shop (service to be rendered)
-	    KitchenInterface kitchenInterface;                            // interface to the barber shop
+		Kitchen kitchen;                                              // Kitchen (service to be rendered)
+	    KitchenInterface kitchenInterface;                            // interface to the table
 	    GenReposStub genReposStub;                                // stub to the general repository
 	    ServerCom scon, sconi;                                        // communication channels
 	    int portNumb = -1;                                            // port number for listening to service requests

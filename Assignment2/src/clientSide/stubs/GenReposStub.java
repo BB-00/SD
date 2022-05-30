@@ -3,6 +3,13 @@ package clientSide.stubs;
 import commInfra.*;
 import genclass.GenericIO;
 
+/**
+ *  Stub to the General Repository.
+ *
+ *    It instantiates a remote reference to the general repository.
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
+ */
 public class GenReposStub {
 	/**
 	 * Name of the platform where is located the table Server
@@ -25,6 +32,11 @@ public class GenReposStub {
 		this.serverPortNum = serverPortNum;
 	}
 
+	/**
+	 * Write in the logging file the updated student state
+	 * @param id student id
+	 * @param state student state to be set
+	 */
 	public void updateStudentState(int studentID, int studentState) {
 		ClientCom com; // communication channel
 		Message outMessage, // outgoing message
@@ -50,6 +62,11 @@ public class GenReposStub {
 		com.close();
 	}
 
+	/**
+	 * Write in the logging file the updated seats value at the table
+	 * @param id student id to sit
+	 * @param seat seat at the table
+	 */
 	public void updateStudentSeat(int studentID, int studentSeat) {
 		ClientCom com; // communication channel
 		Message outMessage, // outgoing message
@@ -75,6 +92,10 @@ public class GenReposStub {
 		com.close();
 	}
 
+	/**
+	 * Write in the logging file the new waiter state
+	 * @param state waiter state to set
+	 */
 	public void updateWaiterState(int waiterState) {
 		ClientCom com; // communication channel
 		Message outMessage, // outgoing message
@@ -100,6 +121,10 @@ public class GenReposStub {
 		com.close();
 	}
 
+	/**
+	 * Write in the logging file the new chef state
+	 * @param state chef state to set
+	 */
 	public void updateChefState(int chefState) {
 		ClientCom com; // communication channel
 		Message outMessage, // outgoing message
@@ -125,6 +150,11 @@ public class GenReposStub {
 		com.close();
 	}
 
+	/**
+	 *   Operation server shutdown.
+	 *
+	 *   New operation.
+	 */
 	public void shutdown() {
 		ClientCom com; // communication channel
 		Message outMessage, // outgoing message
