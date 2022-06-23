@@ -1,4 +1,0 @@
-Testar Localmente + scripts
-
-Testar Distribuido + scripts
-
