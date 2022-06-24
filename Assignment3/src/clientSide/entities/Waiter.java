@@ -67,24 +67,24 @@ public class Waiter extends Thread{
 			{
 				case 'e':	//Client arriving, needs to be presented with the menu
 					saluteClient(getStudentBeingAnswered());
-					returnBar();
+					tabReturnBar();
 					break;
 				case 'c':	//Order will be described to the waiter
 					getThePad();
 					handNoteToChef();
-					returnToBar();
+					kitReturnToBar();
 					break;
 				case 'a':	//Portions need to be collected and delivered
 					while(!haveAllClientsBeenServed()) {
 						collectPortion();
 						deliverPortion();
 					}
-					returnBar();
+					tabReturnBar();
 					break;
 				case 's':	//Bill needs to be prepared so it can be payed by the student
 					preprareBill();
 					presentBill();
-					returnBar();
+					tabReturnBar();
 					break;
 				case 'g':	//Goodbye needs to be said to a student
 					exit = sayGoodbye();
@@ -129,7 +129,7 @@ public class Waiter extends Thread{
 		return ret.getIntVal();
 	}
 	
-	public void returnBar() { // table
+	public void tabRseturnBar() { // table
 		try {
 			waiterState = table.returnBar();
 		} catch (RemoteException e) {
@@ -156,9 +156,9 @@ public class Waiter extends Thread{
 		}
 	}
 	
-	public void returnToBar() { // kitchen
+	public void kitReturnToBar() { // kitchen
 		try {
-			waiterState = table.returnToBar();
+			waiterState = kitchen.returnToBar();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on returnToBar: " + e.getMessage());
 			System.exit(1);
