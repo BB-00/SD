@@ -1,10 +1,10 @@
 package interfaces;
 
-import commInfra.*;
-import serverSide.main.*;
-import serverSide.entities.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
+import java.rmi.registry.*;
+import java.rmi.*;
+import java.rmi.server.*;
+import serverSide.objects.*;
+import interfaces.*;
 import genclass.GenericIO;
 
 

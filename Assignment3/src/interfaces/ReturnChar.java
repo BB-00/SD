@@ -28,17 +28,16 @@ public class ReturnChar implements Serializable {
 	private int state;
 
 	/**
-   *  ReturnBoolean instantiation.
-   *
-   *     @param val integer identification value
-   *     @param state integer state value
-   */
+	 * ReturnBoolean instantiation.
+	 *
+	 * @param val   integer identification value
+	 * @param state integer state value
+	 */
 
-   public ReturnChar (char val, int state)
-   {
-      this.val = val;
-      this.state = state;
-   }
+	public ReturnChar(char val, int state) {
+		this.val = val;
+		this.state = state;
+	}
 
 	/**
 	 * Getting integer identification value.
