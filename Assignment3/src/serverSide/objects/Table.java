@@ -29,7 +29,7 @@ import genclass.GenericIO;
  *		Last student to arrive must wait for waiter to bring him the bill	
  *		
  */
-public class Table {
+public class Table implements TableInterface {
 	/**
 	 *   Number of entity groups requesting the shutdown.
 	 */
@@ -109,6 +109,11 @@ public class Table {
 	 * Variable to check if waiter is processing the bill
 	 */
 	private boolean processingTheBill;
+
+	/**
+	 * Variable to check which students states
+	 */
+	private final int [] studentsState;
 	
 	/**
 	 * Variable to check which students are seated
@@ -121,16 +126,16 @@ public class Table {
 	private boolean [] studentsThatHaveReadTheMenu;
 	
 	/**
-	 * Reference to General Repositories stub
+	 * Reference to General Repositories Interface
 	 */
-	private final GenReposStub repos;
+	private final GenReposInterface repos;
 		
 	/**
 	 * Table Instantiation
 	 * 
-	 * @param repos reference to the General Repository stub
+	 * @param repos reference to the General Repository Interface
 	 */
-	public Table(GenReposStub repos) {
+	public Table(GenReposInterface repos) {
 		this.nEntities = 0;
 		//Init students threads
 		this.students = new TableClientProxy[ExecConsts.N];
@@ -168,19 +173,22 @@ public class Table {
     /**
      * @return id of the first student to arrive at the restaurant
      */
-    public int getFirstToArrive() { return firstToArriveID; }
+	@Override
+    public int getFirstToArrive() throws RemoteException { return firstToArriveID; }
     
     /**
      * 
      * @return id of the last student to finish eating a meal
      */
-    public int getLastToEat() { return lastToEatID; }
+	@Override
+    public int getLastToEat() throws RemoteException { return lastToEatID; }
     
     /**
      * 
      * @param firstToArrive id of the first student to arrive
      */
-    public void setFirstToArrive(int firstToArrive) {
+	@Override
+    public synchronized void setFirstToArrive (int firstToArrive) throws RemoteException {
     	//System.out.println("Student "+firstToArrive+" was first to arrive!");
     	this.firstToArriveID = firstToArrive; }
     
@@ -188,7 +196,8 @@ public class Table {
      * 
      * @param lastToArrive if of the last student to arrive to the restaurant
      */
-    public void setLastToArrive(int lastToArrive) { this.lastToArriveID = lastToArrive; }
+	@Override
+    public synchronized void setLastToArrive(int lastToArrive) throws RemoteException { this.lastToArriveID = lastToArrive; }
 
     /**
      * 
@@ -202,14 +211,17 @@ public class Table {
      * 
      * It is called by the waiter when a student enters the restaurant
      */
-    public synchronized void saluteClient(int studentIDBeingAnswered) {
-    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized int saluteClient(int studentIDBeingAnswered) throws RemoteException {
+    	
     	studentBeingAnsweredID = studentIDBeingAnswered;
     	
-		if(waiter.getWaiterState() != WaiterStates.PRESENTING_THE_MENU) {
-			waiter.setWaiterState(WaiterStates.PRESENTING_THE_MENU);
-			repos.updateWaiterState(WaiterStates.PRESENTING_THE_MENU);
-		}
+		// if(waiter.getWaiterState() != WaiterStates.PRESENTING_THE_MENU) {
+		// 	waiter.setWaiterState(WaiterStates.PRESENTING_THE_MENU);
+		// 	repos.updateWaiterState(WaiterStates.PRESENTING_THE_MENU);
+		// }
+
+		repos.updateWaiterState(WaiterStates.PRESENTING_THE_MENU);
     	
     	presentingTheMenu = true;
     	
@@ -238,6 +250,8 @@ public class Table {
     	
     	studentBeingAnsweredID = -1;
     	presentingTheMenu  = false;
+
+		return WaiterStates.PRESENTING_THE_MENU;
     }
 
     /**
@@ -245,12 +259,18 @@ public class Table {
      * 
      * It is called by the waiter to change to return to the bar appraising situation
      */
-    public synchronized void returnBar() {
-    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
-    	if(waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
-			waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
-			repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
-		}
+	@Override
+    public synchronized int returnBar() throws RemoteException {
+
+		// if(waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
+		// 	waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
+		// 	repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
+		// }
+
+		repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
+
+		return WaiterStates.APPRAISING_SITUATION;
+
     }
 
     /**
@@ -259,12 +279,14 @@ public class Table {
      * It is called by the waiter when an order is going to be described by the first student to arrive
      * Waiter Blocks waiting for student to describe him the order
      */
-    public synchronized void getThePad() {
-    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
-    	if(waiter.getWaiterState() != WaiterStates.TAKING_THE_ORDER) {
-			waiter.setWaiterState(WaiterStates.TAKING_THE_ORDER);
-			repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
-		}
+	@Override
+    public synchronized int getThePad() throws RemoteException {
+
+		// if(waiter.getWaiterState() != WaiterStates.TAKING_THE_ORDER) {
+		// 	waiter.setWaiterState(WaiterStates.TAKING_THE_ORDER);
+		// 	repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
+		// }
+		repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
     	
     	takingTheOrder = true;
     	
@@ -281,6 +303,8 @@ public class Table {
     	
     	// -------------- DEBUG ----------------------
     	// System.out.println("Waiter got the order");
+
+		return WaiterStates.TAKING_THE_ORDER;
     	
     }
     
@@ -290,7 +314,8 @@ public class Table {
      * Called by the waiter to check if all clients have been served or not
      * @return true if all clients have been served, false otherwise
      */
-    public synchronized boolean haveAllClientsBeenServed() {    	
+	@Override
+    public synchronized boolean haveAllClientsBeenServed() throws RemoteException {    	
     	if(numberOfStudentsServed == ExecConsts.N) {
     		System.out.println("Everyone has been served!");
     		lastToEatID = -1;
@@ -308,7 +333,8 @@ public class Table {
      * 
      * Called by the waiter, when a portion is delivered at the table
      */
-    public synchronized void deliverPortion() {
+	@Override
+    public synchronized void deliverPortion() throws RemoteException {
     	numberOfStudentsServed++; 
     }
     
@@ -317,16 +343,19 @@ public class Table {
      * 
      * Called by the waiter to present the bill to the last student to arrive
      */
-    public synchronized void presentBill() {
-    	TableClientProxy waiter = ((TableClientProxy) Thread.currentThread());
-    	processingTheBill = true;
+	@Override
+    public synchronized int presentBill() throws RemoteException {
+
+		processingTheBill = true;
     	
     	notifyAll();
     	
-    	if(waiter.getWaiterState() != WaiterStates.RECEIVING_PAYMENT) {
-			waiter.setWaiterState(WaiterStates.RECEIVING_PAYMENT);
-			repos.updateWaiterState(WaiterStates.RECEIVING_PAYMENT);
-		}
+    	// if(waiter.getWaiterState() != WaiterStates.RECEIVING_PAYMENT) {
+		// 	waiter.setWaiterState(WaiterStates.RECEIVING_PAYMENT);
+		// 	repos.updateWaiterState(WaiterStates.RECEIVING_PAYMENT);
+		// }
+		repos.updateWaiterState(WaiterStates.RECEIVING_PAYMENT);
+
     	
     	try {
 			wait();
@@ -334,6 +363,8 @@ public class Table {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		return WaiterStates.RECEIVING_PAYMENT;
     	
     }
     
@@ -349,18 +380,10 @@ public class Table {
      * Student comes in the table and sits (blocks) waiting for waiter to bring him the menu
      * Called by the student (inside enter method in the bar)
      */
-    public synchronized void seatAtTable() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized void seatAtTable(int studentID) throws RemoteException {
     	
-    	int studentID = student.getStudentID();
-    	
-		students[studentID] = student;
-		if(student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
-    		students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-    		student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-    		repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-		}
-		numberOfStudentsAtTable++;
+		studentsState[studentID] = StudentStates.TAKING_A_SEAT_AT_THE_TABLE;
     	
 		// ----------------- DEBUG ------------------
     	// System.out.println("Student "+studentID+" took a seat!");
@@ -389,19 +412,22 @@ public class Table {
      * 
      * Called by the student to read a menu, wakes up waiter to signal that he already read the menu
      */
-    public synchronized void readMenu() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
-    	
-    	int studentID = ((TableClientProxy) Thread.currentThread()).getStudentID();
-    	    	
-		if(((TableClientProxy) Thread.currentThread()).getStudentState() != StudentStates.SELECTING_THE_COURSES) {
-    		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
-    		student.setStudentState(StudentStates.SELECTING_THE_COURSES);
-    		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
-		}
+	@Override
+    public synchronized int readMenu(int studentID) throws RemoteException {
+    	    	    	
+		// if(((TableClientProxy) Thread.currentThread()).getStudentState() != StudentStates.SELECTING_THE_COURSES) {
+    	// 	students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
+    	// 	student.setStudentState(StudentStates.SELECTING_THE_COURSES);
+    	// 	repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
+		// }
+		studentsState[studentID] = StudentStates.SELECTING_THE_COURSES;
+		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
+
     			
     	studentsThatHaveReadTheMenu[studentID] = true;
     	notifyAll();
+
+		return studentsState[studentID];
     	
     	// --------------------- DEUBG -----------------
     	// System.out.println("Student "+studentID+ " read the menu ("+studentBeingAnsweredID+")");
@@ -412,16 +438,20 @@ public class Table {
      * 
      * Called by the student to begin the preparation of the order, 
      */
-    public synchronized void prepareOrder() {    	
+	@Override
+    public synchronized int prepareOrder() throws RemoteException {    	
     	numberOfStudentsThatHasChosen++;
-    	
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
-    	    	
-		if(student.getStudentState() != StudentStates.ORGANIZING_THE_ORDER) {
-    		students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
-    		student.setStudentState(StudentStates.ORGANIZING_THE_ORDER);
-    		repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
-		}
+    	    	    	
+		// if(student.getStudentState() != StudentStates.ORGANIZING_THE_ORDER) {
+    	// 	students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
+    	// 	student.setStudentState(StudentStates.ORGANIZING_THE_ORDER);
+    	// 	repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
+		// }
+
+		studentsState[firstToArriveID] = StudentStates.SELECTING_THE_COURSES;
+		repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
+
+		return studentsState[firstToArriveID];
     }
     
     /**
@@ -431,7 +461,8 @@ public class Table {
      * Blocks if not.
      * @return true if has everybody choosen, false otherwise
      */
-    public synchronized boolean everybodyHasChosen() {
+	@Override
+    public synchronized boolean everybodyHasChosen() throws RemoteException {
     	if(numberOfStudentsThatHasChosen == ExecConsts.N) return true;
     	else {
 	    	while(informingCompanion == false) {
@@ -452,7 +483,8 @@ public class Table {
      * 
      * Called by the first student to arrive to add up a companions choice to the order
      */
-    public synchronized void addUpOnesChoices() {
+	@Override
+    public synchronized void addUpOnesChoices() throws RemoteException {
     	numberOfStudentsThatHasChosen++;
     	informingCompanion = false;
 
@@ -466,7 +498,8 @@ public class Table {
      * Blocks waiting for waiter to come with pad
      * Wake waiter up so he can take the order
      */
-    public synchronized void describeOrder() {
+	@Override
+    public synchronized void describeOrder() throws RemoteException {
 
     	while(takingTheOrder == false) {
 	    	try {
@@ -489,14 +522,19 @@ public class Table {
      * 
      * Called by the first student to arrive so he can join his companions while waiting for the courses 
      */
-    public synchronized void joinTalk() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized int joinTalk() throws RemoteException {
     	    	
-		if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
-    		students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
-		} 
+		// if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
+    	// 	students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
+		// } 
+		repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
+		studentsState[firstToArriveID] = StudentStates.CHATTING_WITH_COMPANIONS;
+
+		return studentsState[firstToArriveID];
+
     }
     
     /**
@@ -505,10 +543,9 @@ public class Table {
      * Called by a student to inform the first student to arrive about his preferences 
      * Blocks waiting for courses
      */
-    public synchronized void informCompanion() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized int informCompanion(int studentID) throws RemoteException  {
     	
-    	int studentID = student.getStudentID();
     	    	
     	while(informingCompanion) {
     		try {
@@ -522,11 +559,17 @@ public class Table {
     	informingCompanion = true;
     	notifyAll();
     	
-    	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
-    		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
-    	}   	
+    	// if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
+    	// 	students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+    	// }
+
+		studentsState[studentID] = StudentStates.CHATTING_WITH_COMPANIONS;
+		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+
+		return studentsState[studentID];
+
     }
 
     /**
@@ -534,20 +577,25 @@ public class Table {
      * 
      * Called by the student to start eating the meal (During random time)
      */    
-    public synchronized void startEating() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized int startEating(int studentID) throws RemoteException  {
     	
-    	int studentID = student.getStudentID();
-    	
-		if(student.getStudentState() != StudentStates.ENJOYING_THE_MEAL) {
-    		students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
-    		student.setStudentState(StudentStates.ENJOYING_THE_MEAL);
-    		repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
+		// if(student.getStudentState() != StudentStates.ENJOYING_THE_MEAL) {
+    	// 	students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
+    	// 	student.setStudentState(StudentStates.ENJOYING_THE_MEAL);
+    	// 	repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
+		// }
+
+		synchronized(this){
+			repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
+			studentsState[studentID] = StudentStates.ENJOYING_THE_MEAL;
 		}
     	
         try {
         	Thread.sleep ((long) (1 + 100 * Math.random ()));
         } catch (InterruptedException e) {}
+
+		return studentsState[studentID];
     }
 
 	/**
@@ -555,10 +603,9 @@ public class Table {
      * 
      * Called by the student to signal that he has finished eating his meal
      */
-    public synchronized void endEating() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized int endEating(int studentID) throws RemoteException {
     	
-    	int studentID = student.getStudentID();
     	    	
     	numberOfStudentsThatHasFinishEat++;
     	
@@ -570,11 +617,15 @@ public class Table {
     		lastToEatID = studentID;
     	}
     	
-    	if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
-    		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-    		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
-		}
+    	// if(student.getStudentState() != StudentStates.CHATTING_WITH_COMPANIONS) {
+    	// 	students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	// 	repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+		// }
+		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+		studentsState[studentID] = StudentStates.CHATTING_WITH_COMPANIONS;
+
+		return studentsState[studentID];
     }
     
     /**
@@ -582,8 +633,8 @@ public class Table {
      * 
      * Called by to student to wait for his companions to finish eating
      */
-    public synchronized boolean hasEverybodyFinishedEating() {
-    	int studentID = ((TableClientProxy) Thread.currentThread()).getStudentID();
+	@Override
+    public synchronized boolean hasEverybodyFinishedEating(int studentID) throws RemoteException {
     	
     	if(studentID == lastToEatID) {
     		numberOfStudentsThatHasFinishEat = 0;
@@ -620,7 +671,8 @@ public class Table {
      * Called by the student to pay the bill
      * Student blocks waiting for bill to be presented and signals waiter when it's time to pay it
      */
-    public synchronized void honourBill() {    	
+	@Override
+    public synchronized void honourBill() throws RemoteException {    	
     	
 		
 		while(!processingTheBill) {
@@ -644,7 +696,8 @@ public class Table {
      * 	Student blocks waiting for the course to be served
      * 	@return true if all courses have been eaten, false otherwise
      */
-    public synchronized boolean haveAllCoursesBeenEaten() {
+	@Override
+    public synchronized boolean haveAllCoursesBeenEaten() throws RemoteException {
     	if(numberOfCoursesEaten == ExecConsts.M) {
     		//System.out.println("All portions have been served, course "+ numberOfCoursesEaten);
     		return true;
@@ -669,10 +722,9 @@ public class Table {
      * Called by the student to check wich one was last to arrive
      * @return True if current student was the last to arrive, false otherwise
      */
-    public synchronized boolean shouldHaveArrivedEarlier() {
-    	TableClientProxy student = ((TableClientProxy) Thread.currentThread());
+	@Override
+    public synchronized ReturnBoolean shouldHaveArrivedEarlier(int studentID) throws RemoteException {
     	
-    	int studentID = student.getStudentID();
 		
     	if(studentID == lastToArriveID) {
     		if(student.getStudentState() != StudentStates.PAYING_THE_MEAL) {
@@ -680,9 +732,12 @@ public class Table {
         		student.setStudentState(StudentStates.PAYING_THE_MEAL);
         		repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
     		}
-	    	return true;
+			repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
+			studentsState[studentID] = StudentStates.PAYING_THE_MEAL;
+
+	    	return new ReturnBoolean(true, studentsState[studentID]);
     	}
-    	else return false;
+    	else return new ReturnBoolean(false, studentsState[studentID]);;
     }
     
     /**
@@ -690,7 +745,8 @@ public class Table {
 	 *
 	 *   New operation.
 	 */
-	 public synchronized void shutdown() {
+	@Override
+	 public synchronized void shutdown() throws RemoteException {
 		 nEntities += 1;
 	     if (nEntities >= 2)
 	    	 TableMain.waitConnection = false;
