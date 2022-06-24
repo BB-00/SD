@@ -13,7 +13,7 @@ import genclass.GenericIO;
  *
  *     It provides the functionality to access the Table.
  */
-public interface Table extends Remote{
+public interface TableInterface extends Remote{
 
     /**
      * @return id of the first student to arrive at the restaurant

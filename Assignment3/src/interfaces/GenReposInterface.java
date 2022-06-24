@@ -18,7 +18,7 @@ import commInfra.*;
  * There are no internal synchronisation points.
  */
 
-public interface GenRepos extends Remote {
+public interface GenReposInterface extends Remote {
 
 	/**
 	 * Update Student State

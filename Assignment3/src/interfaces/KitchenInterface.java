@@ -12,7 +12,7 @@ import genclass.GenericIO;
  *
  *     It provides the functionality to access the Kitchen.
  */
-public interface Kitchen extends Remote {
+public interface KitchenInterface extends Remote {
 
 	/**
 	 * 
