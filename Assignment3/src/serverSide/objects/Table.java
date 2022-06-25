@@ -36,11 +36,6 @@ public class Table implements TableInterface {
 	private int nEntities;
 	
 	/**
-	 * Array of Students Threads
-	 */
-	private final TableClientProxy [] students;
-	
-	/**
 	 * number of Students that are seated at the table
 	 */
 	private int numberOfStudentsAtTable;
@@ -137,11 +132,7 @@ public class Table implements TableInterface {
 	 */
 	public Table(GenReposInterface repos) {
 		this.nEntities = 0;
-		//Init students threads
-		this.students = new TableClientProxy[ExecConsts.N];
-		for(int i=0 ; i<ExecConsts.N ; i++) {
-			this.students[i] = null;
-		}
+		
 		
 		this.numberOfStudentsThatHasChosen = 0;
 		this.numberOfStudentsThatHasFinishEat = 0;
@@ -159,11 +150,13 @@ public class Table implements TableInterface {
 		
 		this.studentsSeated = new boolean[ExecConsts.N];
 		this.studentsThatHaveReadTheMenu = new boolean[ExecConsts.N];
+		this.studentsState = new int[ExecConsts.N];
 		
 		for(int i=0 ; i<ExecConsts.N ; i++)
     	{
     		this.studentsSeated[i] = false;
     		this.studentsThatHaveReadTheMenu[i] = false;
+			this.studentsState[i] = -1;
     	}
 		
 		this.repos = repos;		
@@ -727,11 +720,11 @@ public class Table implements TableInterface {
     	
 		
     	if(studentID == lastToArriveID) {
-    		if(student.getStudentState() != StudentStates.PAYING_THE_MEAL) {
-        		students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
-        		student.setStudentState(StudentStates.PAYING_THE_MEAL);
-        		repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
-    		}
+    		// if(student.getStudentState() != StudentStates.PAYING_THE_MEAL) {
+        	// 	students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
+        	// 	student.setStudentState(StudentStates.PAYING_THE_MEAL);
+        	// 	repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
+    		// }
 			repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
 			studentsState[studentID] = StudentStates.PAYING_THE_MEAL;
 
