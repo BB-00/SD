@@ -83,10 +83,10 @@ public class BarMain {
 		/* get a remote reference to the general repository */
 
 		String nameEntryGeneralRepos = "GeneralRepository"; // public name of the general repository object
-		GeneralReposInterface reposStub = null; // remote reference to the general repository object
+		GenReposInterface reposStub = null; // remote reference to the general repository object
 
 		try {
-			reposStub = (GeneralReposInterface) registry.lookup(nameEntryGeneralRepos);
+			reposStub = (GenReposInterface) registry.lookup(nameEntryGeneralRepos);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("GeneralRepos lookup exception: " + e.getMessage());
 			e.printStackTrace();

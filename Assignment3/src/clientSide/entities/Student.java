@@ -39,10 +39,10 @@ public class Student extends Thread {
 	 * @param reference to bar stub
 	 * @param reference to table stub
 	 */
-	public Student(String name, int studentID, BarInterface bar, TableInterface table) {
+	public Student(String name, int studentID, int studentState, BarInterface bar, TableInterface table) {
 		super(name);
 		this.studentID = studentID;
-		this.studentState = StudentStates.GOING_TO_THE_RESTAURANT;
+		this.studentState = studentState;
 		this.bar = bar;
 		this.table = table;
 	}
@@ -107,7 +107,7 @@ public class Student extends Thread {
 
 	public void enter() { // bar
 		try {
-			studentState = bar.enter();
+			studentState = bar.enter(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on enter: " + e.getMessage());
 			System.exit(1);
@@ -116,7 +116,7 @@ public class Student extends Thread {
 
 	public void readMenu() { // table
 		try {
-			studentState = table.readMenu();
+			studentState = table.readMenu(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on readMenu: " + e.getMessage());
 			System.exit(1);
@@ -124,17 +124,20 @@ public class Student extends Thread {
 	}
 
 	public int getFirstToArrive() { // table
-		ReturnInt ret = null; // return value
-
+		int firstToArrive=-1;
+		
 		try {
-			ret = table.getFirstToArrive();
+			firstToArrive = table.getFirstToArrive();
 		} catch (RemoteException e) {
-			GenericIO
-					.writelnString("Student " + studentID + " remote exception on getFirstToArrive: " + e.getMessage());
+			GenericIO.writelnString("Student " + studentID + " remote exception on getFirstToArrive: " + e.getMessage());
 			System.exit(1);
 		}
-		studentState = ret.getIntStateVal();
-		return ret.getIntVal();
+		if (firstToArrive == -1)
+		{			
+			GenericIO.writelnString("Invalid id received in getFirstToArrive");
+			System.exit(1);	
+		}
+		return firstToArrive;
 	}
 
 	public void prepareOrder() { // table
@@ -148,7 +151,7 @@ public class Student extends Thread {
 
 	public void addUpOnesChoices() { // table
 		try {
-			studentState = table.addUpOnesChoices();
+			table.addUpOnesChoices();
 		} catch (RemoteException e) {
 			GenericIO
 					.writelnString("Student " + studentID + " remote exception on addUpOnesChoices: " + e.getMessage());
@@ -170,7 +173,7 @@ public class Student extends Thread {
 
 	public void callWaiter() { // bar
 		try {
-			studentState = bar.callWaiter();
+			bar.callWaiter(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on callWaiter: " + e.getMessage());
 			System.exit(1);
@@ -179,7 +182,7 @@ public class Student extends Thread {
 
 	public void describeOrder() { // table
 		try {
-			studentState = table.describeOrder();
+			table.describeOrder();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on describeOrder: " + e.getMessage());
 			System.exit(1);
@@ -197,7 +200,7 @@ public class Student extends Thread {
 
 	public void informCompanion() { // table
 		try {
-			studentState = table.informCompanion();
+			studentState = table.informCompanion(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on informCompanion: " + e.getMessage());
 			System.exit(1);
@@ -218,7 +221,7 @@ public class Student extends Thread {
 
 	public void startEating() { // table
 		try {
-			studentState = table.startEating();
+			studentState = table.startEating(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on startEating: " + e.getMessage());
 			System.exit(1);
@@ -227,7 +230,7 @@ public class Student extends Thread {
 
 	public void endEating() { // table
 		try {
-			studentState = table.endEating();
+			studentState = table.endEating(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on endEating: " + e.getMessage());
 			System.exit(1);
@@ -238,7 +241,7 @@ public class Student extends Thread {
 		boolean ret = false; // return value
 
 		try {
-			ret = table.hasEverybodyFinishedEating();
+			ret = table.hasEverybodyFinishedEating(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on hasEverybodyFinishedEating: " + e.getMessage());
 			System.exit(1);
@@ -247,7 +250,7 @@ public class Student extends Thread {
 	}
 
 	public int getLastToEat() { // table
-		ReturnInt ret = null; // return value
+		int ret = -1; // return value
 
 		try {
 			ret = table.getLastToEat();
@@ -256,13 +259,12 @@ public class Student extends Thread {
 					.writelnString("Student " + studentID + " remote exception on getLastToEat: " + e.getMessage());
 			System.exit(1);
 		}
-		studentState = ret.getIntStateVal();
-		return ret.getIntVal();
+		return ret;
 	}
 
 	public void signalWaiter() { // bar
 		try {
-			studentState = bar.signalWaiter();
+			bar.signalWaiter(studentID, studentState);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on signalWaiter: " + e.getMessage());
 			System.exit(1);
@@ -270,20 +272,21 @@ public class Student extends Thread {
 	}
 
 	public boolean shouldHaveArrivedEarlier() { // table
-		boolean ret = false; // return value
+		ReturnBoolean ret = null; // return value
 
 		try {
-			ret = table.shouldHaveArrivedEarlier();
+			ret = table.shouldHaveArrivedEarlier(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on shouldHaveArrivedEarlier: " + e.getMessage());
 			System.exit(1);
 		}
-		return ret;
+		studentState = ret.getIntStateVal();
+		return ret.getBooleanVal();
 	}
 
 	public void honourBill() { // table
 		try {
-			studentState = table.honourBill();
+			table.honourBill();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on honourBill: " + e.getMessage());
 			System.exit(1);
@@ -292,7 +295,7 @@ public class Student extends Thread {
 
 	public void exit() { // bar
 		try {
-			studentState = bar.exit();
+			studentState = bar.exit(studentID);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Student " + studentID + " remote exception on exit: " + e.getMessage());
 			System.exit(1);

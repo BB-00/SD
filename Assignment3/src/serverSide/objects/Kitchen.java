@@ -2,6 +2,7 @@ package serverSide.objects;
 
 import java.rmi.RemoteException;
 import clientSide.entities.*;
+import commInfra.ExecConsts;
 import interfaces.*;
 import serverSide.main.*;
 
@@ -16,7 +17,7 @@ import serverSide.main.*;
  * Waiter has to wait for portions from the chef
  *
  */
-public class Kitchen {
+public class Kitchen implements KitchenInterface {
 	/**
 	 * Number of entity groups requesting the shutdown.
 	 */
@@ -68,10 +69,10 @@ public class Kitchen {
 	@Override
 	public synchronized int watchTheNews() throws RemoteException {
 		// if (chef.getChefState() != ChefStates.WAITING_FOR_AN_ORDER) {
-		// 	chef.setChefState(ChefStates.WAITING_FOR_AN_ORDER);
-		// 	repos.updateChefState(ChefStates.WAITING_FOR_AN_ORDER);
+		// chef.setChefState(ChefStates.WAITING_FOR_AN_ORDER);
+		// repos.updateChefState(ChefStates.WAITING_FOR_AN_ORDER);
 		// }
-		repos.updateChefState(ChefStates.WAITING_FOR_AN_ORDER); 
+		repos.updateChefState(ChefStates.WAITING_FOR_AN_ORDER);
 
 		try {
 			wait();
@@ -79,7 +80,7 @@ public class Kitchen {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return ChefStates.WAITING_FOR_AN_ORDER;
 	}
 
@@ -91,11 +92,10 @@ public class Kitchen {
 	public synchronized int startPreparation() throws RemoteException {
 
 		// if (chef.getChefState() != ChefStates.PREPARING_THE_COURSE) {
-		// 	chef.setChefState(ChefStates.PREPARING_THE_COURSE);
-		// 	repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
+		// chef.setChefState(ChefStates.PREPARING_THE_COURSE);
+		// repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
 		// }
 		repos.updateChefState(ChefStates.PREPARING_THE_COURSE); // setnPortions
-
 
 		notifyAll();
 
@@ -109,11 +109,10 @@ public class Kitchen {
 	@Override
 	public synchronized int proceedToPresentation() throws RemoteException {
 		// if (chef.getChefState() != ChefStates.DISHING_THE_PORTIONS) {
-		// 	chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
-		// 	repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
+		// chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
+		// repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
 		// }
 		repos.updateChefState(ChefStates.DISHING_THE_PORTIONS); // setnPortions
-
 
 		numberOfPortionsCooked++;
 
@@ -144,7 +143,7 @@ public class Kitchen {
 
 		notifyAll();
 
-		return ChefStates.DELIVERING_THE_PORTIONS
+		return ChefStates.DELIVERING_THE_PORTIONS;
 	}
 
 	/**
@@ -154,8 +153,8 @@ public class Kitchen {
 	@Override
 	public synchronized int continuePreparation() throws RemoteException {
 		// if (chef.getChefState() != ChefStates.PREPARING_THE_COURSE) {
-		// 	chef.setChefState(ChefStates.PREPARING_THE_COURSE);
-		// 	repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
+		// chef.setChefState(ChefStates.PREPARING_THE_COURSE);
+		// repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
 		// }
 
 		repos.updateChefState(ChefStates.PREPARING_THE_COURSE); // setnPortions
@@ -211,11 +210,10 @@ public class Kitchen {
 	@Override
 	public synchronized int cleanUp() throws RemoteException {
 		// if (chef.getChefState() != ChefStates.CLOSING_SERVICE) {
-		// 	chef.setChefState(ChefStates.CLOSING_SERVICE);
-		// 	repos.updateChefState(ChefStates.CLOSING_SERVICE);
+		// chef.setChefState(ChefStates.CLOSING_SERVICE);
+		// repos.updateChefState(ChefStates.CLOSING_SERVICE);
 		// }
 		repos.updateChefState(ChefStates.CLOSING_SERVICE);
-
 
 		// ---------------- DEBUG -----------------
 		// System.out.println("Chef has closed Service!");
@@ -234,8 +232,8 @@ public class Kitchen {
 	@Override
 	public synchronized int returnToBar() throws RemoteException {
 		// if (waiter.getWaiterState() != WaiterStates.APPRAISING_SITUATION) {
-		// 	waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
-		// 	repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
+		// waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
+		// repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
 		// }
 		repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
 		return WaiterStates.APPRAISING_SITUATION;
@@ -248,11 +246,10 @@ public class Kitchen {
 	@Override
 	public synchronized int handNoteToChef() throws RemoteException {
 		// if (waiter.getWaiterState() != WaiterStates.PLACING_THE_ORDER) {
-		// 	waiter.setWaiterState(WaiterStates.PLACING_THE_ORDER);
-		// 	repos.updateWaiterState(WaiterStates.PLACING_THE_ORDER);
+		// waiter.setWaiterState(WaiterStates.PLACING_THE_ORDER);
+		// repos.updateWaiterState(WaiterStates.PLACING_THE_ORDER);
 		// }
 		repos.updateWaiterState(WaiterStates.PLACING_THE_ORDER);
-
 
 		notifyAll();
 
@@ -274,11 +271,10 @@ public class Kitchen {
 	@Override
 	public synchronized int collectPortion() throws RemoteException {
 		// if (waiter.getWaiterState() != WaiterStates.WAITING_FOR_PORTION) {
-		// 	waiter.setWaiterState(WaiterStates.WAITING_FOR_PORTION);
-		// 	repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
+		// waiter.setWaiterState(WaiterStates.WAITING_FOR_PORTION);
+		// repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
 		// }
 		repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
-
 
 		while (numberOfPortionsCooked == 0) {
 			try {
@@ -309,7 +305,7 @@ public class Kitchen {
 	public synchronized void shutdown() throws RemoteException {
 		nEntities += 1;
 		if (nEntities >= 2)
-			KitchenMain.waitConnection = false;
+			KitchenMain.shutdown();
 		notifyAll();
 	}
 

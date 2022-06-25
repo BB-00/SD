@@ -7,9 +7,7 @@ import genclass.GenericIO;
 import genclass.TextFile;
 import interfaces.*;
 import serverSide.main.*;
-
-
-
+import commInfra.ExecConsts;
 
 /**
  * General Repository
@@ -261,6 +259,6 @@ public class GenRepos implements GenReposInterface {
 	public synchronized void shutdown() {
 		nEntities += 1;
 		if (nEntities >= 3)
-			GenReposMain.waitConnection = false;
+			GenReposMain.shutdown();
 	}
 }

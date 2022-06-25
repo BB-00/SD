@@ -40,7 +40,7 @@ public interface GenReposInterface extends Remote {
 	 * @param studentID
 	 * @return number of seat
 	 */
-	public ReturnInt getStudentSeat(int studentSeat) throws RemoteException;
+	public int getStudentSeat(int studentSeat) throws RemoteException;
 
 	/**
 	 * Update Waiter State

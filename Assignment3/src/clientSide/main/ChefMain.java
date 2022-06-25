@@ -66,7 +66,7 @@ public class ChefMain {
 		}
 
 		try {
-			reposStub = (GeneralReposInterface) registry.lookup(nameEntryGeneralRepos);
+			reposStub = (GenReposInterface) registry.lookup(nameEntryGeneralRepos);
 		} catch( RemoteException e ) {
 			GenericIO.writelnString ("General Repository lookup exception: " + e.getMessage ());
 	        e.printStackTrace ();
@@ -101,7 +101,7 @@ public class ChefMain {
 	        System.exit (1);			
 		}
 
-        chef = new Chef("chef", kitchen, bar);
+        chef = new Chef("chef", ChefStates.WAITING_FOR_AN_ORDER, kitchen, bar);
 		
 		/* start of the simulation */
 		chef.start();

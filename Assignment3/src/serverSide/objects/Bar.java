@@ -58,7 +58,7 @@ public class Bar implements BarInterface {
 	/**
 	 * Variable to check which students states
 	 */
-	private final int [] studentsState;
+	private final int[] studentsState;
 
 	/**
 	 * Array of booleans to keep track of the students which the waiter has already
@@ -75,7 +75,7 @@ public class Bar implements BarInterface {
 	 * Bar instantiation
 	 * 
 	 * @param repos reference to the general repository to the table stub
-	 * @param tab referecen the table stub
+	 * @param tab   referecen the table stub
 	 */
 	public Bar(GenReposInterface repos, TableInterface tab) {
 		this.nEntities = 0;
@@ -95,7 +95,7 @@ public class Bar implements BarInterface {
 
 		this.studentsState = new int[ExecConsts.N];
 		this.studentsGreeted = new boolean[ExecConsts.N];
-		for (int i = 0; i < ExecConsts.N; i++){
+		for (int i = 0; i < ExecConsts.N; i++) {
 			this.studentsGreeted[i] = false;
 			this.studentsState[i] = StudentStates.GOING_TO_THE_RESTAURANT;
 		}
@@ -127,9 +127,9 @@ public class Bar implements BarInterface {
 		synchronized (this) {
 
 			// if (student.getStudentState() != StudentStates.GOING_TO_THE_RESTAURANT) {
-			// 	students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
-			// 	student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
-			// 	repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
+			// students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			// student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			// repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 			// }
 			repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 			studentsState[studentID] = StudentStates.GOING_TO_THE_RESTAURANT;
@@ -151,9 +151,10 @@ public class Bar implements BarInterface {
 			numberOfPendingRequests++;
 
 			// if (student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
-			// 	students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			// 	student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			// 	repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			// students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			// student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			// repos.updateStudentState(studentID,
+			// StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 			// }
 			studentsState[studentID] = StudentStates.TAKING_A_SEAT_AT_THE_TABLE;
 			repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
@@ -238,13 +239,12 @@ public class Bar implements BarInterface {
 		repos.updateStudentSeat(studentID, -1);
 
 		// if (student.getStudentState() != StudentStates.GOING_HOME) {
-		// 	students[studentID].setStudentState(StudentStates.GOING_HOME);
-		// 	student.setStudentState(StudentStates.GOING_HOME);
-		// 	repos.updateStudentState(studentID, StudentStates.GOING_HOME);
+		// students[studentID].setStudentState(StudentStates.GOING_HOME);
+		// student.setStudentState(StudentStates.GOING_HOME);
+		// repos.updateStudentState(studentID, StudentStates.GOING_HOME);
 		// }
 		studentsState[studentID] = StudentStates.GOING_HOME;
 		repos.updateStudentState(studentID, StudentStates.GOING_HOME);
-
 
 		notifyAll();
 
@@ -333,8 +333,8 @@ public class Bar implements BarInterface {
 	@Override
 	public synchronized int preprareBill() throws RemoteException {
 		// if (waiter.getWaiterState() != WaiterStates.PROCESSING_THE_BILL) {
-		// 	waiter.setWaiterState(WaiterStates.PROCESSING_THE_BILL);
-		// 	repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
+		// waiter.setWaiterState(WaiterStates.PROCESSING_THE_BILL);
+		// repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
 		// }
 
 		repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
@@ -379,11 +379,10 @@ public class Bar implements BarInterface {
 		courseFinished = false;
 
 		// if (chef.getChefState() != ChefStates.DELIVERING_THE_PORTIONS) {
-		// 	chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
-		// 	repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
+		// chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
+		// repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
 		// }
 		repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
-
 
 		notifyAll();
 
@@ -399,7 +398,7 @@ public class Bar implements BarInterface {
 	public synchronized void shutdown() throws RemoteException {
 		nEntities += 1;
 		if (nEntities >= 3)
-			BarMain.waitConnection = false;
+			BarMain.shutdown();
 		notifyAll();
 	}
 }

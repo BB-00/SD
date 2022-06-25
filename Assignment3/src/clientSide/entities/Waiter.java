@@ -2,7 +2,7 @@ package clientSide.entities;
 
 import java.rmi.*;
 import interfaces.*;
-import genclass.GenericIO.*;
+import genclass.GenericIO;
 
 /**
  *   Waiter thread.
@@ -43,9 +43,9 @@ public class Waiter extends Thread{
 	 *  @param tab reference to the table stub
 	 */
 	
-	public Waiter(String name, KitchenInterface kit, BarInterface bar, TableInterface tab) {
+	public Waiter(String name, int waiterState, KitchenInterface kit, BarInterface bar, TableInterface tab) {
 		super(name);
-		this.waiterState = WaiterStates.APPRAISING_SITUATION;
+		this.waiterState = waiterState;
 		this.kitchen = kit;
 		this.bar = bar;
 		this.table = tab;
@@ -67,24 +67,24 @@ public class Waiter extends Thread{
 			{
 				case 'e':	//Client arriving, needs to be presented with the menu
 					saluteClient(getStudentBeingAnswered());
-					tabReturnBar();
+					returnBar();
 					break;
 				case 'c':	//Order will be described to the waiter
 					getThePad();
 					handNoteToChef();
-					kitReturnToBar();
+					returnToBar();
 					break;
 				case 'a':	//Portions need to be collected and delivered
 					while(!haveAllClientsBeenServed()) {
 						collectPortion();
 						deliverPortion();
 					}
-					tabReturnBar();
+					returnBar();
 					break;
 				case 's':	//Bill needs to be prepared so it can be payed by the student
 					preprareBill();
 					presentBill();
-					tabReturnBar();
+					returnBar();
 					break;
 				case 'g':	//Goodbye needs to be said to a student
 					exit = sayGoodbye();
@@ -95,16 +95,20 @@ public class Waiter extends Thread{
 	}
 	
 	public char lookAround() { // bar
-		ReturnChar ret = null; // return value
+		char c = '\0'; // return value
 
 		try {
-			ret = bar.lookAround();
+			c = bar.lookAround();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on lookAround: " + e.getMessage());
 			System.exit(1);
 		}
-		waiterState = ret.getIntStateVal();
-		return ret.getCharVal();
+		if(c!='e' && c!='c' && c!='a' && c!='s' && c!='g')
+		{
+			GenericIO.writelnString("Invalid service type!");
+			System.exit(1);			
+		}
+		return c;
 	}
 	
 	public void saluteClient(int studentID) { // table
@@ -117,7 +121,7 @@ public class Waiter extends Thread{
 	}
 	
 	public int getStudentBeingAnswered() { // bar
-		ReturnInt ret = null; // return value
+		int ret = -1; // return value
 
 		try {
 			ret = bar.getStudentBeingAnswered();
@@ -125,11 +129,15 @@ public class Waiter extends Thread{
 			GenericIO.writelnString("Waiter remote exception on getStudentBeingAnswered: " + e.getMessage());
 			System.exit(1);
 		}
-		waiterState = ret.getIntStateVal();
-		return ret.getIntVal();
+		if(ret == -1)
+		{
+			GenericIO.writelnString("Invalid student id!");
+			System.exit(1);			
+		}
+		return ret;
 	}
 	
-	public void tabRseturnBar() { // table
+	public void returnBar() { // table
 		try {
 			waiterState = table.returnBar();
 		} catch (RemoteException e) {
@@ -149,14 +157,14 @@ public class Waiter extends Thread{
 	
 	public void handNoteToChef() { // kitchen
 		try {
-			waiterState = table.handNoteToChef();
+			waiterState = kitchen.handNoteToChef();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on handNoteToChef: " + e.getMessage());
 			System.exit(1);
 		}
 	}
 	
-	public void kitReturnToBar() { // kitchen
+	public void returnToBar() { // kitchen
 		try {
 			waiterState = kitchen.returnToBar();
 		} catch (RemoteException e) {
@@ -179,7 +187,7 @@ public class Waiter extends Thread{
 	
 	public void collectPortion() { // kitchen
 		try {
-			waiterState = table.collectPortion();
+			waiterState = kitchen.collectPortion();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on collectPortion: " + e.getMessage());
 			System.exit(1);
@@ -188,7 +196,7 @@ public class Waiter extends Thread{
 	
 	public void deliverPortion() { // table
 		try {
-			waiterState = table.deliverPortion();
+			table.deliverPortion();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on deliverPortion: " + e.getMessage());
 			System.exit(1);
@@ -197,7 +205,7 @@ public class Waiter extends Thread{
 	
 	public void preprareBill() { // bar
 		try {
-			waiterState = table.preprareBill();
+			waiterState = bar.preprareBill();
 		} catch (RemoteException e) {
 			GenericIO.writelnString("Waiter remote exception on preprareBill: " + e.getMessage());
 			System.exit(1);

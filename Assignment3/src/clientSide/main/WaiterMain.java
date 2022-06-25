@@ -1,9 +1,10 @@
 package clientSide.main;
 
-import java.rmi.*;
-import clientSide.entities.Waiter;
 import genclass.GenericIO;
 import interfaces.*;
+import clientSide.entities.*;
+import java.rmi.registry.*;
+import java.rmi.*;
 
 /**
  *    Client side of the Restaurant problem (waiter).
@@ -54,7 +55,7 @@ public class WaiterMain {
 		String nameEntryBar = "Bar";						//Public name of the Bar object
         String nameEntryKitchen = "Kitchen";				//Public name of the Kitchen object 
 		GenReposInterface reposStub = null;				    //Remote reference to the General Repository object
-        KitchenInterface kitStub = null;					//Remote reference for the Kitchen object
+        KitchenInterface kitchen = null;					//Remote reference for the Kitchen object
 		TableInterface table = null;					    //Remote reference for the Table object
 		BarInterface bar = null;						    //Remote reference for the Bar object
 		Registry registry = null;							//Remote reference for registration in the RMI Registry service
@@ -69,7 +70,7 @@ public class WaiterMain {
 		}
 
 		try {
-			reposStub = (GeneralReposInterface) registry.lookup(nameEntryGeneralRepos);
+			reposStub = (GenReposInterface) registry.lookup(nameEntryGeneralRepos);
 		} catch( RemoteException e ) {
 			GenericIO.writelnString ("General Repository lookup exception: " + e.getMessage ());
 	        e.printStackTrace ();
@@ -116,7 +117,7 @@ public class WaiterMain {
 	        System.exit (1);			
 		}
 
-        waiter = new Chef("waiter", kitchen, bar, table);
+        waiter = new Waiter("waiter", WaiterStates.APPRAISING_SITUATION, kitchen, bar, table);
 		
 		/* start of the simulation */
 		waiter.start();

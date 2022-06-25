@@ -69,7 +69,7 @@ public class KitchenMain {
 		/* get a remote reference to the general repository object */
 
 		String nameEntryGeneralRepos = "GeneralRepository"; // public name of the general repository object
-		GeneralReposInterface reposStub = null; // remote reference to the general repository object
+		GenReposInterface reposStub = null; // remote reference to the general repository object
 		Registry registry = null; // remote reference for registration in the RMI registry service
 
 		try {
@@ -82,7 +82,7 @@ public class KitchenMain {
 		GenericIO.writelnString("RMI registry was created!");
 
 		try {
-			reposStub = (GeneralReposInterface) registry.lookup(nameEntryGeneralRepos);
+			reposStub = (GenReposInterface) registry.lookup(nameEntryGeneralRepos);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("GeneralRepos lookup exception: " + e.getMessage());
 			e.printStackTrace();

@@ -1,11 +1,6 @@
 package interfaces;
 
-import java.rmi.registry.*;
 import java.rmi.*;
-import java.rmi.server.*;
-import serverSide.objects.*;
-import interfaces.*;
-import genclass.GenericIO;
 
 /**
  *   Operational interface of a remote object of type Bar.
@@ -13,6 +8,14 @@ import genclass.GenericIO;
  *     It provides the functionality to access the Bar.
  */
 public interface BarInterface extends Remote {
+	/**
+	 * @return ID of the student whose request is being answered
+	 */
+	public int getStudentBeingAnswered() throws RemoteException;
+
+	
+	public int getNumberOfStudentsAtRestaurant() throws RemoteException;
+	
 	/**
 	 * 
 	 * Student Operations
@@ -23,13 +26,13 @@ public interface BarInterface extends Remote {
 	 * Operation Enter, is called by the students to signal that he as entered in
 	 * the restaurant
 	 */
-	public void enter() throws RemoteException;
+	public int enter(int studentID) throws RemoteException;
 
 	/**
 	 * Operation call The Waiter, called by the student who arrived first, to call
 	 * the waiter
 	 */
-	public void callWaiter() throws RemoteException;
+	public void callWaiter(int studentID) throws RemoteException;
 
 	/**
 	 * Operation signal the waiter
@@ -37,12 +40,12 @@ public interface BarInterface extends Remote {
 	 * It is called by the last student to finish eating to signal waiter to bring
 	 * next course
 	 */
-	public void signalWaiter() throws RemoteException;
+	public void signalWaiter(int studentID, int studentState) throws RemoteException;
 
 	/**
 	 * Operation Exit, called by the students when they want to leave
 	 */
-	public void exit() throws RemoteException;
+	public int exit(int studentID) throws RemoteException;
 
 	/**
 	 * 
@@ -61,21 +64,21 @@ public interface BarInterface extends Remote {
 	 *         to the client 'g': some student wants to leave and waiter needs to
 	 *         say bye bye
 	 */
-	public ReturnChar lookAround() throws RemoteException;
+	public char lookAround() throws RemoteException;
 
 	/**
 	 * Operation Say GoodBye, called by the waiter, to say goodbye to the students
 	 * 
 	 * @return true if there are no more students at the restaurant, false otherwise
 	 */
-	public ReturnBoolean sayGoodbye() throws RemoteException;
+	public boolean sayGoodbye() throws RemoteException;
 
 	/**
 	 * Operation prepare the Bill
 	 * 
 	 * It is called the waiter to prepare the bill of the meal eaten by the students
 	 */
-	public void preprareBill() throws RemoteException;
+	public int preprareBill() throws RemoteException;
 
 	/**
 	 * 
@@ -89,7 +92,7 @@ public interface BarInterface extends Remote {
 	 * It is called by the chef to alert the waiter that a portion was dished For
 	 * requests the chef id will be N+1
 	 */
-	public void alertWaiter() throws RemoteException;
+	public int alertWaiter() throws RemoteException;
 
 	/**
 	 * Operation server shutdown.

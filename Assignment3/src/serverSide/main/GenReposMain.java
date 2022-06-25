@@ -68,11 +68,11 @@ public class GenReposMain {
 
 		/* instantiate a general repository object */
 
-		GeneralRepos repos = new GeneralRepos(); // general repository object
-		GeneralReposInterface reposStub = null; // remote reference to the general repository object
+		GenRepos repos = new GenRepos(); // general repository object
+		GenReposInterface reposStub = null; // remote reference to the general repository object
 
 		try {
-			reposStub = (GeneralReposInterface) UnicastRemoteObject.exportObject(repos, portNumb);
+			reposStub = (GenReposInterface) UnicastRemoteObject.exportObject(repos, portNumb);
 		} catch (RemoteException e) {
 			GenericIO.writelnString("General Repository stub generation exception: " + e.getMessage());
 			e.printStackTrace();
