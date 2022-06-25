@@ -157,8 +157,8 @@ public class Bar implements BarInterface {
 			// StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 			// }
 			studentsState[studentID] = StudentStates.TAKING_A_SEAT_AT_THE_TABLE;
-			repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			repos.updateStudentSeat(numberOfStudentsAtRestaurant - 1, studentID);
+			//repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			repos.updateStudentSeatAndState(studentID, numberOfStudentsAtRestaurant - 1, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
 			notifyAll();
 		}
@@ -236,7 +236,7 @@ public class Bar implements BarInterface {
 
 		numberOfPendingRequests++;
 
-		repos.updateStudentSeat(studentID, -1);
+		//repos.updateStudentSeat(studentID, -1);
 
 		// if (student.getStudentState() != StudentStates.GOING_HOME) {
 		// students[studentID].setStudentState(StudentStates.GOING_HOME);
@@ -317,8 +317,11 @@ public class Bar implements BarInterface {
 
 		// Update number of students at the restaurant
 		numberOfStudentsAtRestaurant--;
+		repos.updateStudentSeatAndState(studentBeingAnswered, -1, studentsState[studentBeingAnswered]);
 		studentBeingAnswered = -1;
 
+		repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
+		
 		if (numberOfStudentsAtRestaurant == 0)
 			return true;
 		return false;

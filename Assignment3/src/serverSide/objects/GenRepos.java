@@ -48,6 +48,16 @@ public class GenRepos implements GenReposInterface {
 	 * State of the Chef
 	 */
 	private int chefState;
+	
+	/**
+	 *	Number of courses delivered (not sure)
+	 */
+	private int nCourse = 0;
+	
+	/**
+	 * 	Number of Portions delivered (not sure)
+	 */
+	private int nPortion = 0;
 
 	/**
 	 * Instantiation of a general repository object.
@@ -66,6 +76,9 @@ public class GenRepos implements GenReposInterface {
 		}
 		this.waiterState = WaiterStates.APPRAISING_SITUATION;
 		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
+		
+		this.nCourse = 0;
+		this.nPortion = 0;
 
 		reportInitialStatus();
 	}
@@ -76,7 +89,8 @@ public class GenRepos implements GenReposInterface {
 	 * @param studentID
 	 * @param studentState
 	 */
-	public synchronized void updateStudentState(int studentID, int studentState) {
+	@Override
+	public synchronized void updateStudentState(int studentID, int studentState) throws RemoteException {
 		studentStates[studentID] = studentState;
 		reportStatus();
 	}
@@ -87,10 +101,25 @@ public class GenRepos implements GenReposInterface {
 	 * @param studentID
 	 * @param studentSeat
 	 */
-	public synchronized void updateStudentSeat(int studentID, int studentSeat) {
+	@Override
+	public synchronized void updateStudentSeat(int studentID, int studentSeat) throws RemoteException {
 		seats[studentID] = studentSeat;
 		reportStatus();
 	}
+	
+	/**
+	 * Set Student Seat
+	 * 
+	 * @param studentID
+	 * @param studentSeat
+	 */
+	@Override
+	public synchronized void updateStudentSeatAndState(int studentID, int studentSeat, int studentState) throws RemoteException {
+		studentStates[studentID] = studentState;
+		seats[studentSeat] = studentID;
+		reportStatus();
+	}
+	
 
 	/**
 	 * Get Student Seat
@@ -98,7 +127,8 @@ public class GenRepos implements GenReposInterface {
 	 * @param studentID
 	 * @return number of seat
 	 */
-	public synchronized int getStudentSeat(int studentSeat) {
+	@Override
+	public synchronized int getStudentSeat(int studentSeat) throws RemoteException {
 		for (int i = 0; i < seats.length; i++) {
 			if (seats[i] == studentSeat) {
 				return i;
@@ -112,7 +142,8 @@ public class GenRepos implements GenReposInterface {
 	 * 
 	 * @param newWaiterState
 	 */
-	public synchronized void updateWaiterState(int waiterState) {
+	@Override
+	public synchronized void updateWaiterState(int waiterState) throws RemoteException {
 		this.waiterState = waiterState;
 		reportStatus();
 	}
@@ -122,8 +153,49 @@ public class GenRepos implements GenReposInterface {
 	 * 
 	 * @param newChefState
 	 */
-	public synchronized void updateChefState(int chefState) {
+	@Override
+	public synchronized void updateChefState(int chefState) throws RemoteException {
 		this.chefState = chefState;
+		reportStatus();
+	}
+	
+	/**
+	 * Set variable nCourses and report status in the logging file
+	 * @param value nCourses value to set
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 */
+	@Override
+	public synchronized void updateCourse(int nCourse, int chefState) throws RemoteException {
+		this.chefState = chefState;
+		this.nCourse = nCourse;
+		reportStatus();
+	}
+	
+	/**
+	 * Write the portion value in the logging file
+	 * @param value nPortions value to set
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 */
+	@Override
+	public synchronized void updatePortion(int nPortion, int chefState) throws RemoteException {
+		this.chefState = chefState;
+		this.nPortion = nPortion;
+		reportStatus();
+	}
+	
+	/**
+	 * Update the chef state, the nPortion and nCourse values
+	 * 
+	 * @param nPortion number of the portion to be set
+	 * @param nCourse number of the course to be set
+	 * @param chefState chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 */
+	@Override
+	public synchronized void updatePortionAndCourse(int nPortion, int nCourse, int chefState) throws RemoteException {
+		this.chefState = chefState;
+		this.nPortion = nPortion;
+		this.nCourse = nCourse;
 		reportStatus();
 	}
 
@@ -233,7 +305,7 @@ public class GenRepos implements GenReposInterface {
 			}
 		}
 
-		lineStatus += ExecConsts.M + "\t\t" + ExecConsts.N + "\t";
+		lineStatus += this.nCourse + "\t\t" + this.nPortion + "\t";
 
 		for (int i = 0; i < ExecConsts.N; i++) {
 			lineStatus += "\t";

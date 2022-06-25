@@ -33,6 +33,8 @@ public interface GenReposInterface extends Remote {
 	 * @param studentSeat
 	 */
 	public void updateStudentSeat(int studentID, int studentSeat) throws RemoteException;
+	
+	public void updateStudentSeatAndState(int studentID, int studentSeat, int studentState) throws RemoteException;
 
 	/**
 	 * Get Student Seat
@@ -55,6 +57,12 @@ public interface GenReposInterface extends Remote {
 	 * @param newChefState
 	 */
 	public void updateChefState(int chefState) throws RemoteException;
+	
+	public void updateCourse(int nCourse, int chefState) throws RemoteException;
+	
+	public void updatePortion(int nPortion, int chefState) throws RemoteException;
+	
+	public void updatePortionAndCourse(int nPortion, int nCourse, int chefState) throws RemoteException;
 
 	/**
 	 * Operation server shutdown.

@@ -32,6 +32,11 @@ public class Kitchen implements KitchenInterface {
 	 * Number of portions that have been served, in each course;
 	 */
 	private int numberOfPortionsServed;
+	
+	/**
+	 * Number of portions prepared by the chef
+	 */
+	private int numberOfPortionsPrepared;
 
 	/**
 	 * Number of courses that have been served
@@ -53,6 +58,7 @@ public class Kitchen implements KitchenInterface {
 		this.numberOfCoursesServed = 0;
 		this.numberOfPortionsCooked = 0;
 		this.numberOfPortionsServed = 0;
+		this.numberOfPortionsPrepared = 0;
 		this.repos = rep;
 	}
 
@@ -95,7 +101,7 @@ public class Kitchen implements KitchenInterface {
 		// chef.setChefState(ChefStates.PREPARING_THE_COURSE);
 		// repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
 		// }
-		repos.updateChefState(ChefStates.PREPARING_THE_COURSE); // setnPortions
+		repos.updateCourse(numberOfCoursesServed+1, ChefStates.PREPARING_THE_COURSE);
 
 		notifyAll();
 
@@ -112,7 +118,8 @@ public class Kitchen implements KitchenInterface {
 		// chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
 		// repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
 		// }
-		repos.updateChefState(ChefStates.DISHING_THE_PORTIONS); // setnPortions
+		numberOfPortionsPrepared++;
+		repos.updatePortion(numberOfPortionsPrepared, ChefStates.DISHING_THE_PORTIONS);
 
 		numberOfPortionsCooked++;
 
@@ -129,7 +136,8 @@ public class Kitchen implements KitchenInterface {
 		// 	chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
 		// 	repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
 		// }
-		repos.updateChefState(ChefStates.DISHING_THE_PORTIONS); // setnPortions
+		numberOfPortionsPrepared++;
+		repos.updatePortion(numberOfPortionsPrepared, ChefStates.DISHING_THE_PORTIONS); // setnPortions
 
 
 		numberOfPortionsCooked++;
@@ -156,8 +164,8 @@ public class Kitchen implements KitchenInterface {
 		// chef.setChefState(ChefStates.PREPARING_THE_COURSE);
 		// repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
 		// }
-
-		repos.updateChefState(ChefStates.PREPARING_THE_COURSE); // setnPortions
+		numberOfPortionsPrepared = 0;
+		repos.updatePortionAndCourse(numberOfPortionsPrepared, numberOfCoursesServed+1, ChefStates.PREPARING_THE_COURSE); // setnPortions
 
 		return ChefStates.PREPARING_THE_COURSE;
 
@@ -274,7 +282,7 @@ public class Kitchen implements KitchenInterface {
 		// waiter.setWaiterState(WaiterStates.WAITING_FOR_PORTION);
 		// repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
 		// }
-		repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
+		repos.updateWaiterState(WaiterStates.WAITING_FOR_PORTION);
 
 		while (numberOfPortionsCooked == 0) {
 			try {
