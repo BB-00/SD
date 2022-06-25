@@ -1,6 +1,6 @@
 rm -rf dir*/*/
 echo "Compiling source code."
-javac -cp genclass.jar */*.java */*/*.java
+javac -cp -source 8 -target 8 genclass.jar */*.java */*/*.java
 echo "Distributing intermediate code to the different execution environments."
 echo "  RMI registry"
 rm -rf dirRMIRegistry/interfaces dirRMIRegistry/commInfra
@@ -67,13 +67,13 @@ cp clientSide/entities/Waiter.class clientSide/entities/WaiterStates.class dirWa
 cp interfaces/*.class dirWaiter/interfaces
 cp commInfra/*.class dirWaiter/commInfra
 echo "  Student"
-rm -rf dirStudent/serverSide dirStudent/clientSide dirStudent/interfaces dirStudent/commInfra
-mkdir -p dirStudent/clientSide dirStudent/clientSide/main dirStudent/clientSide/entities \
-         dirStudent/interfaces dirStudent/commInfra
-cp clientSide/main/StudentMain.class dirStudent/clientSide/main
-cp clientSide/entities/Student.class clientSide/entities/StudentStates.class dirStudent/clientSide/entities
-cp interfaces/*.class dirStudent/interfaces
-cp commInfra/*.class dirStudent/commInfra
+rm -rf dirStudents/serverSide dirStudents/clientSide dirStudents/interfaces dirStudents/commInfra
+mkdir -p dirStudents/clientSide dirStudents/clientSide/main dirStudents/clientSide/entities \
+         dirStudents/interfaces dirStudents/commInfra
+cp clientSide/main/StudentMain.class dirStudents/clientSide/main
+cp clientSide/entities/Student.class clientSide/entities/StudentStates.class dirStudents/clientSide/entities
+cp interfaces/*.class dirStudents/interfaces
+cp commInfra/*.class dirStudents/commInfra
 echo "Compressing execution environments."
 echo "  Genclass"
 rm -f genclass.zip
@@ -103,8 +103,8 @@ echo "  Waiter"
 rm -f  dirWaiter.zip
 zip -rq dirWaiter.zip dirWaiter
 echo "  Student"
-rm -f  dirStudent.zip
-zip -rq dirStudent.zip dirStudent
+rm -f  dirStudents.zip
+zip -rq dirStudents.zip dirStudents
 echo "Deploying and decompressing execution environments."
 mkdir -p ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 rm -rf ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/*
@@ -116,7 +116,7 @@ cp dirKitchen.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 cp dirTable.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 cp dirChef.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 cp dirWaiter.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
-cp dirStudent.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
+cp dirStudents.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 cp dirRMIRegistry.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 cd ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant
 unzip -q genclass.zip
@@ -127,13 +127,13 @@ unzip -q dirKitchen.zip
 unzip -q dirTable.zip
 unzip -q dirWaiter.zip
 unzip -q dirChef.zip
-unzip -q dirStudent.zip
+unzip -q dirStudents.zip
 unzip -q dirRMIRegistry.zip
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirBar
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirKitchen
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirTable
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirWaiter
-cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirStudent
+cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirStudents
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirChef
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirGenRepos
 cp genclass.zip ~/Documents/Ano4/SD/Praticas/SD/Assignment3/test/Restaurant/dirRegistry
@@ -148,7 +148,7 @@ cd ../dirChef
 unzip -q genclass.zip
 cd ../dirWaiter
 unzip -q genclass.zip
-cd ../dirStudent
+cd ../dirStudents
 unzip -q genclass.zip
 cd ../dirGenRepos
 unzip -q genclass.zip
