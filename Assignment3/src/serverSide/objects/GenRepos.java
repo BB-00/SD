@@ -1,13 +1,15 @@
 package serverSide.objects;
 
+import clientSide.entities.*;
+import java.util.Objects;
+import java.rmi.RemoteException;
 import genclass.GenericIO;
 import genclass.TextFile;
-import java.util.Objects;
-import java.util.Arrays;
-
+import interfaces.*;
 import serverSide.main.*;
-import clientSide.entities.*;
-import commInfra.*;
+
+
+
 
 /**
  * General Repository
@@ -18,7 +20,7 @@ import commInfra.*;
  * There are no internal synchronisation points.
  */
 
-public class GenRepos {
+public class GenRepos implements GenReposInterface {
 	/**
 	 * Number of entity groups requesting the shutdown.
 	 */
