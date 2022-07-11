@@ -4,82 +4,81 @@ import sharedRegions.Bar;
 import sharedRegions.Kitchen;
 
 /**
- *   Chef thread.
+ * Chef thread.
  *
- *   Used to simulate the Chef life cycle.
+ * Used to simulate the Chef life cycle.
  */
-public class Chef extends Thread{
-	
+public class Chef extends Thread {
+
 	/**
-	 *	Chef state 
+	 * Chef state
 	 */
 	private int chefState;
-	
+
 	/**
 	 * Reference to the kitchen
 	 */
 	private final Kitchen kitchen;
-	
+
 	/**
 	 * Reference to the bar
 	 */
 	private final Bar bar;
-	
-	
-	
+
 	/**
-	 * 	@param chef state
+	 * Set Chef State
+	 * 
+	 * @param chef state
 	 */
 	public void setChefState(int state) {
 		chefState = state;
 	}
-	
-	/**
-	 * 	@return chef state
-	 */
 
-	public int getChefState()
-	{
+	/**
+	 * @return chef state
+	 */
+	public int getChefState() {
 		return chefState;
 	}
-	
+
 	/**
-	 * 	Instantiation of chef thread
+	 * Instantiation of chef thread
 	 * 
-	 * 	@param chefState
+	 * @param name thread name
+	 * @param kit  reference to the kitchen stub
+	 * @param bar  reference to the bar stub
 	 */
-	public Chef(String name, Kitchen kit, Bar bar) {
+	public Chef(String name, int chefState, Kitchen kit, Bar bar) {
 		super(name);
-		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
+		this.chefState = chefState;
 		this.kitchen = kit;
 		this.bar = bar;
 	}
 
 	/**
-	 * 	Life cycle of the chef
+	 * Life cycle of the chef
 	 */
-
 	@Override
-	public void run ()
-	{
+	public void run() {
 		boolean firstCourse = true;
-		
+
 		kitchen.watchTheNews();
 		kitchen.startPreparation();
 		do {
-			if(!firstCourse) kitchen.continuePreparation();
-			else firstCourse = false;
-			
+			if (!firstCourse)
+				kitchen.continuePreparation();
+			else
+				firstCourse = false;
+
 			kitchen.proceedToPresentation();
 			bar.alertWaiter();
-			
-			while(!kitchen.haveAllPortionsBeenDelivered()) {
+
+			while (!kitchen.haveAllPortionsBeenDelivered()) {
 				kitchen.haveNextPortionReady();
-				//this.bar.alertWaiter();
 			}
-				
-		} while(!kitchen.hasOrderBeenCompleted());
-		
+
+		} while (!kitchen.hasOrderBeenCompleted());
+
 		kitchen.cleanUp();
 	}
 }
