@@ -60,14 +60,14 @@ public class Bar {
 	/**
 	 * Reference to the table
 	 */
-	private final Table tab;
+	private final Table table;
 
 	/**
 	 * Bar instantiation
 	 * 
 	 * @param repos reference to the general repository
 	 */
-	public Bar(GenRepos repos, Table tab) {
+	public Bar(GenRepos repos, Table table) {
 		// Initizalization of students thread
 		students = new Student[ExecConsts.N];
 		for (int i = 0; i < ExecConsts.N; i++)
@@ -81,7 +81,7 @@ public class Bar {
 			System.exit(1);
 		}
 
-		this.tab = tab;
+		this.table = table;
 		this.repos = repos;
 		this.courseFinished = true;
 		this.studentBeingAnswered = -1;
@@ -129,9 +129,9 @@ public class Bar {
 			numberOfStudentsAtRestaurant++;
 
 			if (numberOfStudentsAtRestaurant == 1)
-				tab.setFirstToArrive(studentID);
+				table.setFirstToArrive(studentID);
 			else if (numberOfStudentsAtRestaurant == ExecConsts.N)
-				tab.setLastToArrive(studentID);
+				table.setLastToArrive(studentID);
 
 			Request request = new Request(studentID, 'e');
 			try {
@@ -147,7 +147,7 @@ public class Bar {
 			notifyAll();
 		}
 
-		tab.seatAtTable();
+		table.seatAtTable();
 
 	}
 

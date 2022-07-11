@@ -97,7 +97,7 @@ public class GenRepos {
 	/**
 	 * Get Student Seat
 	 * 
-	 * @param studentID
+	 * @param studentSeat
 	 * @return number of seat
 	 */
 	public synchronized int getStudentSeat(int studentSeat) {
@@ -125,7 +125,7 @@ public class GenRepos {
 	/**
 	 * Update seats when a student leaves
 	 * 
-	 * @param id student id to leave table
+	 * @param studentID student id to leave table
 	 */
 	public synchronized void updateSeatsAtLeaving(int studentID) {
 		int seat = 0;

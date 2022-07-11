@@ -45,12 +45,12 @@ public class Kitchen {
 	 * 
 	 * @param repos
 	 */
-	public Kitchen(GenRepos rep) {
+	public Kitchen(GenRepos repos) {
 		this.numberOfCoursesServed = 0;
 		this.numberOfPortionsCooked = 0;
 		this.numberOfPortionsPrepared = 0;
 		this.numberOfPortionsServed = 0;
-		this.repos = rep;
+		this.repos = repos;
 	}
 
 	/**

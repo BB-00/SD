@@ -34,9 +34,10 @@ public class Student extends Thread {
 	/**
 	 * Instatiation of a student thread
 	 * 
-	 * @param studentId student id
-	 * @param reference to bar
-	 * @param reference to table
+	 * @param studentID, student id
+	 * @param studentState, student state
+	 * @param bar, reference to bar
+	 * @param table, reference to table
 	 */
 	public Student(String name, int studentID, int studentState, Bar bar, Table table) {
 		super(name);
@@ -49,7 +50,7 @@ public class Student extends Thread {
 	/**
 	 * Set the studentID
 	 * 
-	 * @param studentID
+	 * @param id, student id
 	 */
 	public void setStudentID(int id) {
 		studentID = id;
@@ -65,7 +66,7 @@ public class Student extends Thread {
 	/**
 	 * Set the student state
 	 * 
-	 * @param studentState
+	 * @param state, student state
 	 */
 	public void setStudentState(int state) {
 		studentState = state;

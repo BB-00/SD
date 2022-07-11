@@ -29,7 +29,7 @@ public class Waiter extends Thread {
 	private int waiterState;
 
 	/**
-	 * @param waiter state
+	 * @param state, waiter state
 	 */
 	public void setWaiterState(int state) {
 		waiterState = state;
@@ -46,13 +46,15 @@ public class Waiter extends Thread {
 	 * Instantiation of waiter thread
 	 * 
 	 * @param waiterState
+	 * @param kitchen, reference to bar
+	 * @param table reference to table
 	 */
-	public Waiter(String name, int waiterState, Kitchen kit, Bar bar, Table tab) {
+	public Waiter(String name, int waiterState, Kitchen kitchen, Bar bar, Table table) {
 		super(name);
 		this.waiterState = waiterState;
-		this.kitchen = kit;
+		this.kitchen = kitchen;
 		this.bar = bar;
-		this.table = tab;
+		this.table = table;
 	}
 
 	/**
