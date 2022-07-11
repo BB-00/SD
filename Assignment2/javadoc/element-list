@@ -1,7 +1,0 @@
-clientSide.entities
-clientSide.main
-clientSide.stubs
-commInfra
-serverSide.entities
-serverSide.main
-serverSide.sharedRegions
