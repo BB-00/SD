@@ -23,9 +23,9 @@
 hs_err_pid*
 /.metadata/
 
-.classpath
-.project
+*/.classpath
+*/.project
 
-/javadoc/
-/bin/
-/.settings/
+*/javadoc/
+*/bin/
+*/.settings/
