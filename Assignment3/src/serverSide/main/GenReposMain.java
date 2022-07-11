@@ -84,7 +84,7 @@ public class GenReposMain {
 
 		String nameEntryBase = "RegisterHandler"; // public name of the object that enables the registration
 		// of other remote objects
-		String nameEntryObject = "GeneralRepository"; // public name of the object general repository
+		String nameEntryObject = "GenRepos"; // public name of the object general repository
 		Registry registry = null; // remote reference for registration in the RMI registry service
 		Register reg = null; // remote reference to the object that enables the registration
 		// of other remote objects
@@ -128,15 +128,15 @@ public class GenReposMain {
 		GenericIO.writelnString("General Repository is in operation!");
 		try {
 			while (!end)
-				synchronized (Class.forName("serverSide.main.ServerRestaurantGeneralRepos")) {
+				synchronized (Class.forName("serverSide.main.GenReposMain")) {
 					try {
-						(Class.forName("serverSide.main.ServerRestaurantGeneralRepos")).wait();
+						(Class.forName("serverSide.main.GenReposMain")).wait();
 					} catch (InterruptedException e) {
 						GenericIO.writelnString("General Repository main thread was interrupted!");
 					}
 				}
 		} catch (ClassNotFoundException e) {
-			GenericIO.writelnString("The data type ServerRestaurantGeneralRepos was not found (blocking)!");
+			GenericIO.writelnString("The data type GenReposMain was not found (blocking)!");
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -177,11 +177,11 @@ public class GenReposMain {
 	public static void shutdown() {
 		end = true;
 		try {
-			synchronized (Class.forName("serverSide.main.ServerRestaurantGeneralRepos")) {
-				(Class.forName("serverSide.main.ServerRestaurantGeneralRepos")).notify();
+			synchronized (Class.forName("serverSide.main.GenReposMain")) {
+				(Class.forName("serverSide.main.GenReposMain")).notify();
 			}
 		} catch (ClassNotFoundException e) {
-			GenericIO.writelnString("The data type ServerRestaurantGeneralRepos was not found (waking up)!");
+			GenericIO.writelnString("The data type GeneposMain was not found (waking up)!");
 			e.printStackTrace();
 			System.exit(1);
 		}

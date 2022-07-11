@@ -50,7 +50,6 @@ public class Student extends Thread {
 	/**
 	 * Life cycle of the student
 	 */
-
 	@Override
 	public void run() {
 		walkABit();
@@ -67,25 +66,17 @@ public class Student extends Thread {
 			joinTalk();
 		} else
 			informCompanion();
-		// do{
-		// this.table.startEating();
-		// this.table.endEating();
-		// while(!this.table.hasEverybodyFinishedEating());
-		// if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
-		// }while(!this.table.haveAllCoursesBeenEaten());
 
 		int coursesEatenNum = 0;
 		while (!haveAllCoursesBeenEaten()) {
-			// if(table.haveAllClientsBeenServed()){
 			startEating();
 			endEating();
 			coursesEatenNum++;
 
-			while (!hasEverybodyFinishedEating())
-				;
+			while (!hasEverybodyFinishedEating());
+			
 			if (studentID == getLastToEat() && coursesEatenNum != ExecConsts.M)
 				signalWaiter();
-			// }
 		}
 
 		if (shouldHaveArrivedEarlier()) {
@@ -96,7 +87,7 @@ public class Student extends Thread {
 	}
 
 	/**
-	 * sleep for a random time
+	 * Sleep for a random time Internal operation.
 	 */
 	private void walkABit() {
 		try {
@@ -105,6 +96,10 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation enter the restaurant Remote operation. It is called by the student
+	 * to signal that he is entering the restaurant
+	 */
 	public void enter() { // bar
 		try {
 			studentState = bar.enter(studentID);
@@ -114,6 +109,10 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation read the menu Remote Operation. Called by the student to read a
+	 * menu, wakes up waiter to signal that he already read the menu
+	 */
 	public void readMenu() { // table
 		try {
 			studentState = table.readMenu(studentID);
@@ -123,23 +122,32 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Obtain id of the first student to arrive Remote operation.
+	 * 
+	 * @return id of the first student to arrive at the restaurant
+	 */
 	public int getFirstToArrive() { // table
-		int firstToArrive=-1;
-		
+		int firstToArrive = -1;
+
 		try {
 			firstToArrive = table.getFirstToArrive();
 		} catch (RemoteException e) {
-			GenericIO.writelnString("Student " + studentID + " remote exception on getFirstToArrive: " + e.getMessage());
+			GenericIO
+					.writelnString("Student " + studentID + " remote exception on getFirstToArrive: " + e.getMessage());
 			System.exit(1);
 		}
-		if (firstToArrive == -1)
-		{			
+		if (firstToArrive == -1) {
 			GenericIO.writelnString("Invalid id received in getFirstToArrive");
-			System.exit(1);	
+			System.exit(1);
 		}
 		return firstToArrive;
 	}
 
+	/**
+	 * Operation prepare the order Remote operation. Called by the student to begin
+	 * the preparation of the order (options of his companions)
+	 */
 	public void prepareOrder() { // table
 		try {
 			studentState = table.prepareOrder();
@@ -149,6 +157,10 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation add up ones choices Remote operation. Called by the first student
+	 * to arrive to add up a companions choice to the order
+	 */
 	public void addUpOnesChoices() { // table
 		try {
 			table.addUpOnesChoices();
@@ -159,18 +171,31 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation everybody has chosen Remote operation. Called by the first student
+	 * to arrive to check if all his companions have choose or not Blocks if not
+	 * waiting to be waker up be a companion to give him his preference
+	 * 
+	 * @return true if everybody choose their course choice, false otherwise
+	 */
 	public boolean everybodyHasChosen() { // table
 		boolean ret = false; // return value
 
 		try {
 			ret = table.everybodyHasChosen();
 		} catch (RemoteException e) {
-			GenericIO.writelnString("Student " + studentID + " remote exception on everybodyHasChosen: " + e.getMessage());
+			GenericIO.writelnString(
+					"Student " + studentID + " remote exception on everybodyHasChosen: " + e.getMessage());
 			System.exit(1);
 		}
 		return ret;
 	}
 
+	/**
+	 * Operation call the waiter Remote operation. It is called by the first student
+	 * to arrive the restaurant to call the waiter to describe the order
+	 *
+	 */
 	public void callWaiter() { // bar
 		try {
 			bar.callWaiter(studentID);
@@ -180,6 +205,11 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation describe the order Remote operation. Called by the first student to
+	 * arrive to describe the order to the waiter Blocks waiting for waiter to come
+	 * with pad Wake waiter up so he can take the order
+	 */
 	public void describeOrder() { // table
 		try {
 			table.describeOrder();
@@ -189,6 +219,11 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation join the talk Remote operation. Called by the first student to
+	 * arrive so he can join his companions while waiting for the courses to be
+	 * delivered
+	 */
 	public void joinTalk() { // table
 		try {
 			studentState = table.joinTalk();
@@ -198,6 +233,11 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation inform companion Remote Operation. Called by a student to inform
+	 * the first student to arrive about their preferences Blocks if someone else is
+	 * informing at the same time
+	 */
 	public void informCompanion() { // table
 		try {
 			studentState = table.informCompanion(studentID);
@@ -207,18 +247,30 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation have all courses been eaten Remote operation. Called by the student
+	 * to check if there are more courses to be eaten Student blocks waiting for the
+	 * course to be served
+	 * 
+	 * @return true if all courses have been eaten, false otherwise
+	 */
 	public boolean haveAllCoursesBeenEaten() { // table
 		boolean ret = false; // return value
 
 		try {
 			ret = table.haveAllCoursesBeenEaten();
 		} catch (RemoteException e) {
-			GenericIO.writelnString("Student " + studentID + " remote exception on haveAllCoursesBeenEaten: " + e.getMessage());
+			GenericIO.writelnString(
+					"Student " + studentID + " remote exception on haveAllCoursesBeenEaten: " + e.getMessage());
 			System.exit(1);
 		}
 		return ret;
 	}
 
+	/**
+	 * Operation start eating Remote operation. Called by the student to start
+	 * eating the meal (During random time)
+	 */
 	public void startEating() { // table
 		try {
 			studentState = table.startEating(studentID);
@@ -228,6 +280,10 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation end eating Remote operation. Called by the student to signal that
+	 * he has finished eating his meal
+	 */
 	public void endEating() { // table
 		try {
 			studentState = table.endEating(studentID);
@@ -237,31 +293,49 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation has everybody finished eating Remote operation. Called by the
+	 * student to wait for his companions to finish eating
+	 * 
+	 * @return true if everybody has finished eating, false otherwise
+	 */
 	public boolean hasEverybodyFinishedEating() { // table
 		boolean ret = false; // return value
 
 		try {
 			ret = table.hasEverybodyFinishedEating(studentID);
 		} catch (RemoteException e) {
-			GenericIO.writelnString("Student " + studentID + " remote exception on hasEverybodyFinishedEating: " + e.getMessage());
+			GenericIO.writelnString(
+					"Student " + studentID + " remote exception on hasEverybodyFinishedEating: " + e.getMessage());
 			System.exit(1);
 		}
 		return ret;
 	}
 
+	/**
+	 * Obtain id of the last student to arrive Remote operation.
+	 * 
+	 * @return id of the last student to finish eating a meal
+	 */
 	public int getLastToEat() { // table
 		int ret = -1; // return value
 
 		try {
 			ret = table.getLastToEat();
 		} catch (RemoteException e) {
-			GenericIO
-					.writelnString("Student " + studentID + " remote exception on getLastToEat: " + e.getMessage());
+			GenericIO.writelnString("Student " + studentID + " remote exception on getLastToEat: " + e.getMessage());
 			System.exit(1);
 		}
 		return ret;
 	}
 
+	/**
+	 * Operation signal the waiter Remote operation. It is called by the last
+	 * student to finish eating that next course can be brought signal chef that he
+	 * can put request in the queue and waiter that he proceed his executing to
+	 * collect portions It is also used by last student to arrive to signal that he
+	 * wishes to pay the bill
+	 */
 	public void signalWaiter() { // bar
 		try {
 			bar.signalWaiter(studentID, studentState);
@@ -271,19 +345,31 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation should have arrived earlier Remote operation. Called by the student
+	 * to check which one was last to arrive
+	 * 
+	 * @return True if current student was the last to arrive, false otherwise
+	 */
 	public boolean shouldHaveArrivedEarlier() { // table
 		ReturnBoolean ret = null; // return value
 
 		try {
 			ret = table.shouldHaveArrivedEarlier(studentID);
 		} catch (RemoteException e) {
-			GenericIO.writelnString("Student " + studentID + " remote exception on shouldHaveArrivedEarlier: " + e.getMessage());
+			GenericIO.writelnString(
+					"Student " + studentID + " remote exception on shouldHaveArrivedEarlier: " + e.getMessage());
 			System.exit(1);
 		}
 		studentState = ret.getIntStateVal();
 		return ret.getBooleanVal();
 	}
 
+	/**
+	 * Operation honour the bill Remote operation. Called by the student to pay the
+	 * bill Student blocks waiting for bill to be presented and signals waiter when
+	 * it's time to pay it
+	 */
 	public void honourBill() { // table
 		try {
 			table.honourBill();
@@ -293,6 +379,10 @@ public class Student extends Thread {
 		}
 	}
 
+	/**
+	 * Operation exit the restaurant Remote operation. It is called by a student
+	 * when he leaves the restaurant
+	 */
 	public void exit() { // bar
 		try {
 			studentState = bar.exit(studentID);

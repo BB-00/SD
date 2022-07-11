@@ -68,7 +68,7 @@ public class KitchenMain {
 
 		/* get a remote reference to the general repository object */
 
-		String nameEntryGeneralRepos = "GeneralRepository"; // public name of the general repository object
+		String nameEntryGeneralRepos = "GenRepos"; // public name of the general repository object
 		GenReposInterface reposStub = null; // remote reference to the general repository object
 		Registry registry = null; // remote reference for registration in the RMI registry service
 
@@ -145,9 +145,9 @@ public class KitchenMain {
 		GenericIO.writelnString("Kitchen is in operation!");
 		try {
 			while (!end)
-				synchronized (Class.forName("serverSide.main.ServerRestaurantKitchen")) {
+				synchronized (Class.forName("serverSide.main.KitchenMain")) {
 					try {
-						(Class.forName("serverSide.main.ServerRestaurantKitchen")).wait();
+						(Class.forName("serverSide.main.KitchenMain")).wait();
 					} catch (InterruptedException e) {
 						GenericIO.writelnString("Kitchen main thread was interrupted!");
 					}
@@ -194,11 +194,11 @@ public class KitchenMain {
 	public static void shutdown() {
 		end = true;
 		try {
-			synchronized (Class.forName("serverSide.main.ServerRestaurantKitchen")) {
-				(Class.forName("serverSide.main.ServerRestaurantKitchen")).notify();
+			synchronized (Class.forName("serverSide.main.KitchenMain")) {
+				(Class.forName("serverSide.main.KitchenMain")).notify();
 			}
 		} catch (ClassNotFoundException e) {
-			GenericIO.writelnString("The data type ServerRestaurantKitchen was not found (waking up)!");
+			GenericIO.writelnString("The data type KitchenMain was not found (waking up)!");
 			e.printStackTrace();
 			System.exit(1);
 		}

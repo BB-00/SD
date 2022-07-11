@@ -82,7 +82,7 @@ public class BarMain {
 
 		/* get a remote reference to the general repository */
 
-		String nameEntryGeneralRepos = "GeneralRepository"; // public name of the general repository object
+		String nameEntryGeneralRepos = "GenRepos"; // public name of the general repository object
 		GenReposInterface reposStub = null; // remote reference to the general repository object
 
 		try {
@@ -166,9 +166,9 @@ public class BarMain {
 		GenericIO.writelnString("Bar is in operation!");
 		try {
 			while (!end)
-				synchronized (Class.forName("serverSide.main.ServerRestaurantBar")) {
+				synchronized (Class.forName("serverSide.main.BarMain")) {
 					try {
-						(Class.forName("serverSide.main.ServerRestaurantBar")).wait();
+						(Class.forName("serverSide.main.BarMain")).wait();
 					} catch (InterruptedException e) {
 						GenericIO.writelnString("Bar main thread was interrupted!");
 					}
@@ -215,8 +215,8 @@ public class BarMain {
 	public static void shutdown() {
 		end = true;
 		try {
-			synchronized (Class.forName("serverSide.main.ServerRestaurantBar")) {
-				(Class.forName("serverSide.main.ServerRestaurantBar")).notify();
+			synchronized (Class.forName("serverSide.main.BarMain")) {
+				(Class.forName("serverSide.main.BarMain")).notify();
 			}
 		} catch (ClassNotFoundException e) {
 			GenericIO.writelnString("The data type ServerRestaurantBar was not found (waking up)!");

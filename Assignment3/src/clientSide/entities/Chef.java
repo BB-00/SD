@@ -60,7 +60,6 @@ public class Chef extends Thread {
 
 			while (!haveAllPortionsBeenDelivered()) {
 				haveNextPortionReady();
-				// this.bar.alertWaiter();
 			}
 
 		} while (!hasOrderBeenCompleted());
@@ -68,6 +67,11 @@ public class Chef extends Thread {
 		cleanUp();
 	}
 
+	/**
+	 * 	Operation watch the news
+	 * 	Remote operation.
+	 * 	It is called by the chef, he waits for waiter to notify him of the order
+	 */
 	public void watchTheNews() { // kitchen
 		try {
 			chefState = kitchen.watchTheNews();
@@ -77,6 +81,12 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 * 	Operation start presentation
+	 * 	Remote operation.
+	 * 	It is called by the chef after waiter has notified him of the order to be prepared 
+	 * 	to signal that preparation of the course has started
+	 */
 	public void startPreparation() { // kitchen
 		try {
 			chefState = kitchen.startPreparation();
@@ -86,6 +96,11 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 * 	Operation continue preparation
+	 *  Remote operation.
+	 * 	It is called by the chef when all portions have been delivered, but the course has not been completed yet
+	 */
 	public void continuePreparation() { // kitchen
 		try {
 			chefState = kitchen.continuePreparation();
@@ -95,6 +110,11 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 * 	Operation proceed presentation
+	 *  Remote operation.
+	 * 	It is called by the chef when a portion needs to be prepared
+	 */
 	public void proceedToPresentation() { // kitchen
 		try {
 			chefState = kitchen.proceedToPresentation();
@@ -104,6 +124,12 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 * Operation alert the waiter
+	 * Remote operation.
+	 * It is called by the chef to alert the waiter that a portion was dished
+	 * 	A request is putted in the queue (chef id will be N+1)
+	 */
 	public void alertWaiter() { // bar
 		try {
 			chefState = bar.alertWaiter();
@@ -113,6 +139,13 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 * 	Operation have all portions been delivered
+	 *  Remote operation.
+	 * 	It is called by the chef when he finishes a portion and checks if another one needs to be prepared or not
+	 * 	It is also here were the chef blocks waiting for waiter do deliver the current portion
+	 * 	@return true if all portions have been delivered, false otherwise
+	 */
 	public boolean haveAllPortionsBeenDelivered() { // kitchen
 		boolean ret = false; // return value
 
@@ -125,6 +158,11 @@ public class Chef extends Thread {
 		return ret;
 	}
 
+	/**
+	 * Operation have next portion ready
+	 * Remote operation.
+	 * It is called by the chef after a portion has been delivered and another one needs to be prepared
+	 */
 	public void haveNextPortionReady() { // kitchen
 		try {
 			chefState = kitchen.haveNextPortionReady();
@@ -134,6 +172,12 @@ public class Chef extends Thread {
 		}
 	}
 
+	/**
+	 *	Operation has order been completed
+	 *  Remote operation.
+	 * 	It is called by the chef when he finishes preparing all courses to check if order has been completed or not
+	 * 	@return true if all courses have been completed, false or not
+	 */
 	public boolean hasOrderBeenCompleted() { // kitchen
 		boolean ret = false; // return value
 
@@ -146,6 +190,11 @@ public class Chef extends Thread {
 		return ret;
 	}
 
+	/**
+	 * Operation clean up
+	 * Remote operation.
+	 * It is called by the chef when he finishes the order, to close service
+	 */
 	public void cleanUp() { // kitchen
 		try {
 			chefState = kitchen.cleanUp();

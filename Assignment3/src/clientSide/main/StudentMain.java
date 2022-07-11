@@ -48,7 +48,7 @@ public class StudentMain {
 
 		/* problem initialisation */
 
-		String nameEntryGeneralRepos = "GeneralRepository"; // Public name of the General Repository object
+		String nameEntryGeneralRepos = "GenRepos"; // Public name of the General Repository object
 		String nameEntryTable = "Table"; // Public name of the Table object
 		String nameEntryBar = "Bar"; // Public name of the Bar object
 		GenReposInterface reposStub = null; // Remote reference to the General Repository object

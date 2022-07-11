@@ -71,6 +71,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation what the news, in this operation the chef is waiting for the waiter
 	 * to give in an order
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int watchTheNews() throws RemoteException {
@@ -93,6 +96,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation start preparation, in this operation the chef will start the
 	 * preparation of a course
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int startPreparation() throws RemoteException {
@@ -111,6 +117,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation proceed to presentation, in this operation the chef will dish each
 	 * portion
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int proceedToPresentation() throws RemoteException {
@@ -129,6 +138,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation have next portion ready, the chef has just served one portion and
 	 * needs to dish another one
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int haveNextPortionReady() throws RemoteException {
@@ -157,6 +169,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation continue preparation, in this operation the chef has finished one
 	 * course and will start preparating another one
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int continuePreparation() throws RemoteException {
@@ -176,6 +191,7 @@ public class Kitchen implements KitchenInterface {
 	 * all portions have been served before starting preparing another portion
 	 *
 	 * @return true if all portions have been served, false otherwise
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized boolean haveAllPortionsBeenDelivered() throws RemoteException {
@@ -201,6 +217,7 @@ public class Kitchen implements KitchenInterface {
 	 * completed or not
 	 *
 	 * @return true if the order has been completed, false otherwise
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized boolean hasOrderBeenCompleted() throws RemoteException {
@@ -214,6 +231,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation clean up, the chef has finished the order and starts cleaning the
 	 * kitchen
+	 * 
+	 * @return chef state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int cleanUp() throws RemoteException {
@@ -236,6 +256,9 @@ public class Kitchen implements KitchenInterface {
 
 	/**
 	 * Operation return to bar, the waiter is in the kitchen and returns to the bar
+	 * 
+	 * @return waiter state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int returnToBar() throws RemoteException {
@@ -250,6 +273,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation hand note to chef, the waiter hands the order note to the chef and
 	 * wakes him up
+	 * 
+	 * @return waiter state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int handNoteToChef() throws RemoteException {
@@ -275,6 +301,9 @@ public class Kitchen implements KitchenInterface {
 	/**
 	 * Operation collect portion, the waiter collects the portion and will deliver
 	 * it to the client, is signaled by the chef
+	 * 
+	 * @return waiter state
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized int collectPortion() throws RemoteException {
@@ -308,6 +337,8 @@ public class Kitchen implements KitchenInterface {
 	 * Operation server shutdown.
 	 *
 	 * New operation.
+	 * 
+	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
 	 */
 	@Override
 	public synchronized void shutdown() throws RemoteException {

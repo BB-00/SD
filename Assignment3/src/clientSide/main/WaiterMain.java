@@ -50,7 +50,7 @@ public class WaiterMain {
 
         /* problem initialisation */
 
-		String nameEntryGeneralRepos = "GeneralRepository";	//Public name of the General Repository object
+		String nameEntryGeneralRepos = "GenRepos";	//Public name of the General Repository object
 		String nameEntryTable = "Table";				    //Public name of the Table object 
 		String nameEntryBar = "Bar";						//Public name of the Bar object
         String nameEntryKitchen = "Kitchen";				//Public name of the Kitchen object 

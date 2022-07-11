@@ -17,7 +17,6 @@ import commInfra.ExecConsts;
  * an implicit monitor. All public methods are executed in mutual exclusion.
  * There are no internal synchronisation points.
  */
-
 public class GenRepos implements GenReposInterface {
 	/**
 	 * Number of entity groups requesting the shutdown.
@@ -48,14 +47,14 @@ public class GenRepos implements GenReposInterface {
 	 * State of the Chef
 	 */
 	private int chefState;
-	
+
 	/**
-	 *	Number of courses delivered (not sure)
+	 * Number of courses delivered
 	 */
 	private int nCourse = 0;
-	
+
 	/**
-	 * 	Number of Portions delivered (not sure)
+	 * Number of Portions delivered
 	 */
 	private int nPortion = 0;
 
@@ -76,7 +75,7 @@ public class GenRepos implements GenReposInterface {
 		}
 		this.waiterState = WaiterStates.APPRAISING_SITUATION;
 		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
-		
+
 		this.nCourse = 0;
 		this.nPortion = 0;
 
@@ -88,6 +87,8 @@ public class GenRepos implements GenReposInterface {
 	 * 
 	 * @param studentID
 	 * @param studentState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updateStudentState(int studentID, int studentState) throws RemoteException {
@@ -100,32 +101,39 @@ public class GenRepos implements GenReposInterface {
 	 * 
 	 * @param studentID
 	 * @param studentSeat
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updateStudentSeat(int studentID, int studentSeat) throws RemoteException {
 		seats[studentID] = studentSeat;
 		reportStatus();
 	}
-	
+
 	/**
 	 * Set Student Seat
 	 * 
 	 * @param studentID
 	 * @param studentSeat
+	 * @param studentState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
-	public synchronized void updateStudentSeatAndState(int studentID, int studentSeat, int studentState) throws RemoteException {
+	public synchronized void updateStudentSeatAndState(int studentID, int studentSeat, int studentState)
+			throws RemoteException {
 		studentStates[studentID] = studentState;
 		seats[studentSeat] = studentID;
 		reportStatus();
 	}
-	
 
 	/**
 	 * Get Student Seat
 	 * 
 	 * @param studentID
 	 * @return number of seat
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized int getStudentSeat(int studentSeat) throws RemoteException {
@@ -138,9 +146,30 @@ public class GenRepos implements GenReposInterface {
 	}
 
 	/**
+	 * Update the leaving of a student in the seats of the table
+	 * 
+	 * @param id student id to leave table
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
+	 */
+	@Override
+	public synchronized void updateSeatsAtLeaving(int id) throws RemoteException {
+		int seat = 0;
+
+		for (int i = 0; i < this.seats.length; i++) {
+			if (this.seats[i] == id)
+				seat = i;
+		}
+
+		this.seats[seat] = -1;
+	}
+
+	/**
 	 * Update Waiter State
 	 * 
-	 * @param newWaiterState
+	 * @param WaiterState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updateWaiterState(int waiterState) throws RemoteException {
@@ -152,17 +181,22 @@ public class GenRepos implements GenReposInterface {
 	 * Update Chef State
 	 * 
 	 * @param newChefState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updateChefState(int chefState) throws RemoteException {
 		this.chefState = chefState;
 		reportStatus();
 	}
-	
+
 	/**
 	 * Set variable nCourses and report status in the logging file
-	 * @param value nCourses value to set
-	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 * 
+	 * @param nCourse
+	 * @param chefState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updateCourse(int nCourse, int chefState) throws RemoteException {
@@ -170,11 +204,14 @@ public class GenRepos implements GenReposInterface {
 		this.nCourse = nCourse;
 		reportStatus();
 	}
-	
+
 	/**
 	 * Write the portion value in the logging file
-	 * @param value nPortions value to set
-	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 * 
+	 * @param value     nPortions value to set
+	 * @param chefState
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updatePortion(int nPortion, int chefState) throws RemoteException {
@@ -182,14 +219,15 @@ public class GenRepos implements GenReposInterface {
 		this.nPortion = nPortion;
 		reportStatus();
 	}
-	
+
 	/**
 	 * Update the chef state, the nPortion and nCourse values
 	 * 
-	 * @param nPortion number of the portion to be set
-	 * @param nCourse number of the course to be set
+	 * @param nPortion  number of the portion to be set
+	 * @param nCourse   number of the course to be set
 	 * @param chefState chef state
-	 * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	@Override
 	public synchronized void updatePortionAndCourse(int nPortion, int nCourse, int chefState) throws RemoteException {
@@ -327,6 +365,9 @@ public class GenRepos implements GenReposInterface {
 	 * Operation server shutdown.
 	 *
 	 * New operation.
+	 * 
+	 * @throws RemoteException if either the invocation of the remote method, or the
+	 *                         communication with the registry service fails
 	 */
 	public synchronized void shutdown() {
 		nEntities += 1;

@@ -68,7 +68,7 @@ public class TableMain {
 
 		/* get a remote reference to the general repository object */
 
-		String nameEntryGeneralRepos = "GeneralRepository"; // public name of the general repository object
+		String nameEntryGeneralRepos = "GenRepos"; // public name of the general repository object
 		GenReposInterface reposStub = null; // remote reference to the general repository object
 		Registry registry = null; // remote reference for registration in the RMI registry service
 
@@ -145,15 +145,15 @@ public class TableMain {
 		GenericIO.writelnString("Table is in operation!");
 		try {
 			while (!end)
-				synchronized (Class.forName("serverSide.main.ServerRestaurantTable")) {
+				synchronized (Class.forName("serverSide.main.TableMain")) {
 					try {
-						(Class.forName("serverSide.main.ServerRestaurantTable")).wait();
+						(Class.forName("serverSide.main.TableMain")).wait();
 					} catch (InterruptedException e) {
 						GenericIO.writelnString("Table main thread was interrupted!");
 					}
 				}
 		} catch (ClassNotFoundException e) {
-			GenericIO.writelnString("The data type ServerRestaurantTable was not found (blocking)!");
+			GenericIO.writelnString("The data type TableMain was not found (blocking)!");
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -194,11 +194,11 @@ public class TableMain {
 	public static void shutdown() {
 		end = true;
 		try {
-			synchronized (Class.forName("serverSide.main.ServerRestaurantTable")) {
-				(Class.forName("serverSide.main.ServerRestaurantTable")).notify();
+			synchronized (Class.forName("serverSide.main.TableMain")) {
+				(Class.forName("serverSide.main.TableMain")).notify();
 			}
 		} catch (ClassNotFoundException e) {
-			GenericIO.writelnString("The data type ServerRestaurantTable was not found (waking up)!");
+			GenericIO.writelnString("The data type TableMain was not found (waking up)!");
 			e.printStackTrace();
 			System.exit(1);
 		}

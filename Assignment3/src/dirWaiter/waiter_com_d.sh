@@ -1,1 +1,1 @@
-java clientSide.main.WaiterMain l040101-ws08.ua.pt 22150
+java clientSide.main.WaiterMain l040101-ws10.ua.pt 22150
