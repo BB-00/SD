@@ -83,7 +83,7 @@ public class Kitchen {
 	public synchronized void startPreparation() {
 		Chef chef = ((Chef) Thread.currentThread());
 		chef.setChefState(ChefStates.PREPARING_THE_COURSE);
-		repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
+		repos.updateCourse(numberOfCoursesServed + 1, ChefStates.PREPARING_THE_COURSE);
 
 		notifyAll();
 	}
@@ -97,7 +97,7 @@ public class Kitchen {
 
 		numberOfPortionsPrepared++;
 		chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
-		repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
+		repos.updatePortion(numberOfPortionsPrepared, ChefStates.DISHING_THE_PORTIONS);
 
 		numberOfPortionsCooked++;
 	}
@@ -108,8 +108,10 @@ public class Kitchen {
 	 */
 	public synchronized void haveNextPortionReady() {
 		Chef chef = ((Chef) Thread.currentThread());
+
+		numberOfPortionsPrepared++;
 		chef.setChefState(ChefStates.DISHING_THE_PORTIONS);
-		repos.updateChefState(ChefStates.DISHING_THE_PORTIONS);
+		repos.updatePortion(numberOfPortionsPrepared, ChefStates.DISHING_THE_PORTIONS);
 
 		numberOfPortionsCooked++;
 
@@ -129,7 +131,8 @@ public class Kitchen {
 		numberOfPortionsPrepared = 0;
 
 		chef.setChefState(ChefStates.PREPARING_THE_COURSE);
-		repos.updateChefState(ChefStates.PREPARING_THE_COURSE);
+		repos.updatePortionAndCourse(numberOfPortionsPrepared, numberOfCoursesServed + 1,
+				ChefStates.PREPARING_THE_COURSE);
 	}
 
 	/**
@@ -195,7 +198,7 @@ public class Kitchen {
 	public synchronized void returnToBar() {
 		Waiter waiter = ((Waiter) Thread.currentThread());
 		waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
-		repos.updateChefState(WaiterStates.APPRAISING_SITUATION);
+		repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
 	}
 
 	/**
@@ -205,7 +208,7 @@ public class Kitchen {
 	public synchronized void handNoteToChef() {
 		Waiter waiter = ((Waiter) Thread.currentThread());
 		waiter.setWaiterState(WaiterStates.PLACING_THE_ORDER);
-		repos.updateChefState(WaiterStates.PLACING_THE_ORDER);
+		repos.updateWaiterState(WaiterStates.PLACING_THE_ORDER);
 
 		notifyAll();
 
@@ -225,7 +228,7 @@ public class Kitchen {
 	public synchronized void collectPortion() {
 		Waiter waiter = ((Waiter) Thread.currentThread());
 		waiter.setWaiterState(WaiterStates.WAITING_FOR_PORTION);
-		repos.updateChefState(WaiterStates.WAITING_FOR_PORTION);
+		repos.updateWaiterState(WaiterStates.WAITING_FOR_PORTION);
 
 		while (numberOfPortionsCooked == 0) {
 			try {
@@ -244,5 +247,4 @@ public class Kitchen {
 		notifyAll();
 
 	}
-
 }

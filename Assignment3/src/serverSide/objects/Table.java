@@ -36,11 +36,6 @@ public class Table implements TableInterface {
 	private int nEntities;
 
 	/**
-	 * number of Students that are seated at the table
-	 */
-	private int numberOfStudentsAtTable;
-
-	/**
 	 * number of Students that have already chosen the courses
 	 */
 	private int numberOfStudentsThatHasChosen;

@@ -94,6 +94,7 @@ public class GenRepos {
 	 */
 	public synchronized void updateStudentSeat(int studentID, int studentSeat) {
 		seats[studentID] = studentSeat;
+		reportStatus();
 	}
 
 	/**
@@ -181,6 +182,13 @@ public class GenRepos {
 	public synchronized void updatePortion(int nPortion, int chefState) {
 		this.chefState = chefState;
 		this.nPortion = nPortion;
+		reportStatus();
+	}
+	
+	public synchronized void updatePortionAndCourse(int nPortion, int nCourse,int chefState) {
+		this.chefState = chefState;
+		this.nPortion = nPortion;
+		this.nCourse = nCourse;
 		reportStatus();
 	}
 

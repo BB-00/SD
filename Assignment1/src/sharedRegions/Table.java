@@ -31,11 +31,6 @@ public class Table {
 	private final Student[] students;
 
 	/**
-	 * number of Students that are seated at the table
-	 */
-	private int numberOfStudentsAtTable;
-
-	/**
 	 * number of Students that have already chosen the courses
 	 */
 	private int numberOfStudentsThatHasChosen;
@@ -341,10 +336,7 @@ public class Table {
 
 		students[studentID] = student;
 		students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-		repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-
-		// repos.updateStudentSeat(studentID, numberOfStudentsAtTable);
-		// numberOfStudentsAtTable++;
+		student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
 		// -------------- DEBUG ----------------------
 		// System.out.println("Student " + studentID + " took a seat!");
@@ -380,6 +372,7 @@ public class Table {
 		int studentID = student.getStudentID();
 
 		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
+		student.setStudentState(StudentStates.SELECTING_THE_COURSES);
 		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 
 		studentsThatHaveReadTheMenu[studentID] = true;
@@ -399,6 +392,7 @@ public class Table {
 		numberOfStudentsThatHasChosen++;
 
 		students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
+		((Student) Thread.currentThread()).setStudentState(StudentStates.ORGANIZING_THE_ORDER);
 		repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
 	}
 
@@ -473,6 +467,7 @@ public class Table {
 	 */
 	public synchronized void joinTalk() {
 		students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+		((Student) Thread.currentThread()).setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
 		repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
 	}
 
@@ -499,6 +494,7 @@ public class Table {
 		notifyAll();
 
 		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
 		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
 	}
 
@@ -511,14 +507,16 @@ public class Table {
 		Student student = ((Student) Thread.currentThread());
 		int studentID = student.getStudentID();
 
-		synchronized(this) {			
+		synchronized (this) {
 			students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
+			student.setStudentState(StudentStates.ENJOYING_THE_MEAL);
 			repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
 		}
 
 		try {
 			Thread.sleep((long) (1 + 100 * Math.random()));
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+		}
 	}
 
 	/**
@@ -540,6 +538,7 @@ public class Table {
 		}
 
 		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
 		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
 	}
 
@@ -623,9 +622,10 @@ public class Table {
 					e.printStackTrace();
 				}
 			}
-			
+
 			// --------------------- DEUBG -----------------
-			// System.out.println("All portions have been served, course " + numberOfCoursesEaten);
+			// System.out.println("All portions have been served, course " +
+			// numberOfCoursesEaten);
 			return false;
 		}
 
@@ -645,7 +645,9 @@ public class Table {
 
 		if (studentID == lastToArriveID) {
 			students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
-			repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);			return true;
+			student.setStudentState(StudentStates.PAYING_THE_MEAL);
+			repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
+			return true;
 		} else
 			return false;
 	}

@@ -124,6 +124,7 @@ public class Bar {
 			students[studentID] = student;
 
 			students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
 			repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 
 			numberOfStudentsAtRestaurant++;
@@ -142,6 +143,8 @@ public class Bar {
 
 			numberOfPendingRequests++;
 
+			students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 			repos.updateStudentSeatAndState(studentID, numberOfStudentsAtRestaurant - 1, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
 			notifyAll();
@@ -217,6 +220,7 @@ public class Bar {
 		numberOfPendingRequests++;
 		
 		students[studentID].setStudentState(StudentStates.GOING_HOME);
+		student.setStudentState(StudentStates.GOING_HOME);
 		repos.updateStudentState(studentID, StudentStates.GOING_HOME);
 
 		notifyAll();
