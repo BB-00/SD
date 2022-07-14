@@ -45,8 +45,8 @@ public class Chef extends Thread {
 	 * Instantiation of chef thread
 	 * 
 	 * @param name thread name
-	 * @param kitchen  reference to the kitchen stub
-	 * @param bar  reference to the bar stub
+	 * @param kitchen  reference to the kitchen
+	 * @param bar  reference to the bar
 	 */
 	public Chef(String name, int chefState, Kitchen kitchen, Bar bar) {
 		super(name);

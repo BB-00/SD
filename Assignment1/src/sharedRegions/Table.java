@@ -248,10 +248,8 @@ public class Table {
 	 */
 	public synchronized void getThePad() {
 		Waiter waiter = ((Waiter) Thread.currentThread());
-		if (waiter.getWaiterState() != WaiterStates.TAKING_THE_ORDER) {
-			waiter.setWaiterState(WaiterStates.TAKING_THE_ORDER);
-			repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
-		}
+		waiter.setWaiterState(WaiterStates.TAKING_THE_ORDER);
+		repos.updateWaiterState(WaiterStates.TAKING_THE_ORDER);
 
 		takingTheOrder = true;
 

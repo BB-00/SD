@@ -351,10 +351,8 @@ public class Bar {
 		numberOfPendingRequests++;
 		courseFinished = false;
 
-		if (chef.getChefState() != ChefStates.DELIVERING_THE_PORTIONS) {
-			chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
-			repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
-		}
+		chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
+		repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
 
 		notifyAll();
 	}

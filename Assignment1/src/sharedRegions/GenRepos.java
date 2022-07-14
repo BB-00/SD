@@ -3,7 +3,6 @@ package sharedRegions;
 import genclass.GenericIO;
 import genclass.TextFile;
 import java.util.Objects;
-
 import java.util.Arrays;
 
 import entities.*;
@@ -54,6 +53,9 @@ public class GenRepos {
 	 */
 	private int nPortion = 0;
 
+	/**
+	 * Instantiation of a general repository object.
+	 */
 	public GenRepos(String file) {
 		this.logFileName = file;
 
@@ -121,7 +123,7 @@ public class GenRepos {
 		seats[studentSeat] = studentID;
 		reportStatus();
 	}
-	
+
 	/**
 	 * Update seats when a student leaves
 	 * 
@@ -205,6 +207,7 @@ public class GenRepos {
 
 	/**
 	 * Write the body of the logging file.
+	 *
 	 */
 	private void reportStatus() {
 		TextFile log = new TextFile(); // instantiation of a text file handler
