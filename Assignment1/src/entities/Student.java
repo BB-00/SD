@@ -34,10 +34,10 @@ public class Student extends Thread {
 	/**
 	 * Instatiation of a student thread
 	 * 
-	 * @param studentID, student id
+	 * @param studentID,    student id
 	 * @param studentState, student state
-	 * @param bar, reference to bar
-	 * @param table, reference to table
+	 * @param bar,          reference to bar
+	 * @param table,        reference to table
 	 */
 	public Student(String name, int studentID, int studentState, Bar bar, Table table) {
 		super(name);
@@ -99,14 +99,14 @@ public class Student extends Thread {
 		} else
 			table.informCompanion();
 
-		int coursesEatenNum=0;
+		int coursesEatenNum = 0;
 		while (!table.haveAllCoursesBeenEaten()) {
 			table.startEating();
 			table.endEating();
 			coursesEatenNum++;
-			
+
 			while (!table.hasEverybodyFinishedEating());
-			
+
 			if (studentID == table.getLastToEat() && coursesEatenNum != ExecConsts.M)
 				bar.signalWaiter();
 		}
