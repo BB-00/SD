@@ -474,19 +474,44 @@ public class MessageType {
 	 * updateStudentSeat (REQUEST)
 	 */
 	public static final int SETUSSEAT = 92;
-
+	
+	/**
+	 * updateStudentSeatAndState (REQUEST)
+	 */
+	public static final int SETUSSEATANDSTATE = 93;
+	
+	/**
+	 * updateSeatsAtLeaving (REQUEST)
+	 */
+	public static final int SETUSEATATLEAVING = 94;
+	
+	/**
+	 * updateCourse (REQUEST)
+	 */
+	public static final int SETUCOURSE = 95;
+	
+	/**
+	 * updatePortion (REQUEST)
+	 */
+	public static final int SETUPORTION = 96;
+	
+	/**
+	 * updatePortionAndCourse (REQUEST)
+	 */
+	public static final int SETUPORTIONANDCOURSE = 97;
+	
 	/**
 	 * Setting acknowledged (REPLY).
 	 */
-	public static final int SACK = 93;
+	public static final int SACK = 98;
 
 	///////////// TABLE TYPES /////////////
 
-	public static final int REQSFTA = 94;
+	public static final int REQSFTA = 99;
 
-	public static final int SFTADONE = 95;
+	public static final int SFTADONE = 100;
 
-	public static final int REQSLTA = 96;
+	public static final int REQSLTA = 101;
 
-	public static final int SLTADONE = 97;
+	public static final int SLTADONE = 102;
 }

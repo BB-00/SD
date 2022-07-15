@@ -35,8 +35,8 @@ public class GenReposStub {
 	/**
 	 * Write in the logging file the updated student state
 	 * 
-	 * @param id    student id
-	 * @param state student state to be set
+	 * @param studentID    student id
+	 * @param studentState student state to be set
 	 */
 	public void updateStudentState(int studentID, int studentState) {
 		ClientCom com; // communication channel
@@ -66,8 +66,8 @@ public class GenReposStub {
 	/**
 	 * Write in the logging file the updated seats value at the table
 	 * 
-	 * @param id   student id to sit
-	 * @param seat seat at the table
+	 * @param studentID   student id to sit
+	 * @param studentSeat student seat to be set
 	 */
 	public void updateStudentSeat(int studentID, int studentSeat) {
 		ClientCom com; // communication channel
@@ -91,6 +91,72 @@ public class GenReposStub {
 			GenericIO.writelnString(inMessage.toString());
 			System.exit(1);
 		}
+		com.close();
+	}
+
+	/**
+	 * Write in the logging file the updated student seat and state
+	 * 
+	 * @param studentID student id
+	 * @param studentSeat student seat to be set
+	 * @param studentState student state to be set
+	 */
+	public void updateStudentSeatAndState(int studentID, int studentSeat, int studentState) {
+		ClientCom com; // Client communication
+		Message outMessage, inMessage; // outGoing and inGoing messages
+
+		com = new ClientCom(serverHostName, serverPortNum);
+		// Wait for a connection to be established
+		while (!com.open()) {
+			try {
+				Thread.currentThread().sleep((long) (10));
+			} catch (InterruptedException e) {
+			}
+		}
+
+		outMessage = new Message(MessageType.SETUSSEATANDSTATE, studentID, studentSeat, studentState);
+		com.writeObject(outMessage); // Write outGoing message in the communication channel
+		inMessage = (Message) com.readObject(); // Read inGoing message
+
+		// Validate inGoing message type and arguments
+		if (inMessage.getMsgType() != MessageType.SACK) {
+			GenericIO.writelnString("Thread " + Thread.currentThread().getName() + ": Invalid message type!");
+			GenericIO.writelnString(inMessage.toString());
+			System.exit(1);
+		}
+		// Close communication channel
+		com.close();
+	}
+	
+	/**
+	 * Write in the logging file the updated student seat when he leaves
+	 * 
+	 * @param studentID student id
+	 */
+	public void updateSeatsAtLeaving(int studentID) {
+		ClientCom com; // Client communication
+		Message outMessage, inMessage; // outGoing and inGoing messages
+
+		com = new ClientCom(serverHostName, serverPortNum);
+		// Wait for a connection to be established
+		while (!com.open()) {
+			try {
+				Thread.currentThread().sleep((long) (10));
+			} catch (InterruptedException e) {
+			}
+		}
+
+		outMessage = new Message(MessageType.SETUSEATATLEAVING, studentID);
+		com.writeObject(outMessage); // Write outGoing message in the communication channel
+		inMessage = (Message) com.readObject(); // Read inGoing message
+
+		// Validate inGoing message type and arguments
+		if (inMessage.getMsgType() != MessageType.SACK) {
+			GenericIO.writelnString("Thread " + Thread.currentThread().getName() + ": Invalid message type!");
+			GenericIO.writelnString(inMessage.toString());
+			System.exit(1);
+		}
+		// Close communication channel
 		com.close();
 	}
 
@@ -143,6 +209,100 @@ public class GenReposStub {
 		}
 
 		outMessage = new Message(MessageType.SETUCS, chefState);
+		com.writeObject(outMessage);
+		inMessage = (Message) com.readObject();
+
+		if (inMessage.getMsgType() != MessageType.SACK) {
+			GenericIO.writelnString("Thread " + Thread.currentThread().getName() + ": Invalid message type!");
+			GenericIO.writelnString(inMessage.toString());
+			System.exit(1);
+		}
+		com.close();
+	}
+	
+	/**
+	 * Write in the logging file the update number of Course and new chef state
+	 * 
+	 * @param nCourse number of course to set
+	 * @param chefState chef state to set
+	 */
+	public void updateCourse(int nCourse, int chefState) {
+		ClientCom com; // communication channel
+		Message outMessage, // outgoing message
+				inMessage; // incoming message
+
+		com = new ClientCom(serverHostName, serverPortNum);
+		while (!com.open()) {
+			try {
+				Thread.currentThread().sleep((long) (10));
+			} catch (InterruptedException e) {
+			}
+		}
+
+		outMessage = new Message(MessageType.SETUCOURSE, nCourse, chefState);
+		com.writeObject(outMessage);
+		inMessage = (Message) com.readObject();
+
+		if (inMessage.getMsgType() != MessageType.SACK) {
+			GenericIO.writelnString("Thread " + Thread.currentThread().getName() + ": Invalid message type!");
+			GenericIO.writelnString(inMessage.toString());
+			System.exit(1);
+		}
+		com.close();
+	}
+	
+	/**
+	 * Write in the logging file the update number of Portion and new chef state
+	 * 
+	 * @param nPortion number of portion to set
+	 * @param chefState chef state to set
+	 */
+	public void updatePortion(int nPortion, int chefState) {
+		ClientCom com; // communication channel
+		Message outMessage, // outgoing message
+				inMessage; // incoming message
+
+		com = new ClientCom(serverHostName, serverPortNum);
+		while (!com.open()) {
+			try {
+				Thread.currentThread().sleep((long) (10));
+			} catch (InterruptedException e) {
+			}
+		}
+
+		outMessage = new Message(MessageType.SETUPORTION, nPortion, chefState);
+		com.writeObject(outMessage);
+		inMessage = (Message) com.readObject();
+
+		if (inMessage.getMsgType() != MessageType.SACK) {
+			GenericIO.writelnString("Thread " + Thread.currentThread().getName() + ": Invalid message type!");
+			GenericIO.writelnString(inMessage.toString());
+			System.exit(1);
+		}
+		com.close();
+	}
+
+	/**
+	 * Write in the logging file the update number of Portion, number of Course and new chef state
+	 * 
+	 * @param nPortion number of portion to set
+	 * @param nCourse number of course to set
+	 * @param chefState chef state to set
+	 */
+	public synchronized void updatePortionAndCourse(int nPortion, int nCourse,int chefState) {
+		ClientCom com; // communication channel
+		Message outMessage, // outgoing message
+				inMessage; // incoming message
+
+		com = new ClientCom(serverHostName, serverPortNum);
+		while (!com.open()) {
+			try {
+				Thread.currentThread().sleep((long) (10));
+			} catch (InterruptedException e) {
+			}
+		}
+
+		outMessage = new Message(MessageType.SETUPORTIONANDCOURSE, nPortion, nCourse, chefState);
 		com.writeObject(outMessage);
 		inMessage = (Message) com.readObject();
 

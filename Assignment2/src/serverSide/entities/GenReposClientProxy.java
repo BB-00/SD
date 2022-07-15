@@ -54,6 +54,16 @@ public class GenReposClientProxy extends Thread {
 	private int studentSeat;
 
 	/**
+	 * Number of Portions
+	 */
+	private int nPortion;
+
+	/**
+	 * Number of Courses;
+	 */
+	private int nCourse;
+
+	/**
 	 * Instantiation of a client proxy.
 	 *
 	 * @param sconi      communication channel
@@ -202,5 +212,41 @@ public class GenReposClientProxy extends Thread {
 	 */
 	public void setStudentSeat(int studentSeat) {
 		this.studentSeat = studentSeat;
+	}
+
+	/**
+	 * Get number of Portion
+	 * 
+	 * @return number of Portion
+	 */
+	public int getNPortion() {
+		return nPortion;
+	}
+
+	/**
+	 * Set number of Portion
+	 * 
+	 * @param nPortion number of Portion
+	 */
+	public void setNPortion(int nPortion) {
+		this.nPortion = nPortion;
+	}
+	
+	/**
+	 * Get number of Course
+	 * 
+	 * @return number of Course
+	 */
+	public int getNCourse() {
+		return nCourse;
+	}
+
+	/**
+	 * Set number of Course
+	 * 
+	 * @param nCourse number of Course
+	 */
+	public void setNCourse(int nCourse) {
+		this.nCourse = nCourse;
 	}
 }

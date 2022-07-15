@@ -180,8 +180,12 @@ public class Message implements Serializable {
 				chefState = stateOrId;
 			else if (msgType == MessageType.SETUWS)
 				waiterState = stateOrId;
-			else
-				studentID = stateOrId;
+			else if (msgType == MessageType.SETUSEATATLEAVING)
+				if (stateOrId < 0 || stateOrId >= ExecConsts.N) { // Not a valid Student id
+					GenericIO.writelnString("Invalid student id");
+					System.exit(1);
+				}
+			studentID = stateOrId;
 		} else {
 			GenericIO.writelnString("Message type = " + msgType + ": non-implemented instantiation!");
 			System.exit(1);
@@ -219,13 +223,14 @@ public class Message implements Serializable {
 	/**
 	 * Message instantiation (form 4).
 	 *
-	 * @param type        message type
-	 * @param id          student identification or student being answered by the
-	 *                    waiter identification
-	 * @param stateOrSeat student state, waiter state or seat at the table (when
-	 *                    used in the general repos functions)
+	 * @param type              message type
+	 * @param idOrCoursePortion student identification or student being answered by
+	 *                          the waiter identification or number of Portion or
+	 *                          Course
+	 * @param stateOrSeat       student state, waiter state, chef state or seat at
+	 *                          the table (when used in the general repos functions)
 	 */
-	public Message(int type, int id, int stateOrSeat) {
+	public Message(int type, int idOrCoursePortion, int stateOrSeat) {
 		msgType = type;
 		int entity = getEntitieFromMessageType(type);
 
@@ -234,19 +239,27 @@ public class Message implements Serializable {
 			seatAtTable = stateOrSeat;
 		// salute a client (waiter in the table)
 		else if (msgType == MessageType.REQSC || msgType == MessageType.SCDONE) {
-			studentBeingAnswered = id;
+			studentBeingAnswered = idOrCoursePortion;
 			waiterState = stateOrSeat;
+			return;
+		} else if (msgType == MessageType.SETUCOURSE) {
+			nCourses = idOrCoursePortion;
+			chefState = stateOrSeat;
+			return;
+		} else if (msgType == MessageType.SETUPORTION) {
+			nPortions = idOrCoursePortion;
+			chefState = stateOrSeat;
 			return;
 		} else {
 			studentState = stateOrSeat;
 		}
 
 		// Update studentID
-		if (id < 0 || id >= ExecConsts.N) { // Not a valid Student id
+		if (idOrCoursePortion < 0 || idOrCoursePortion >= ExecConsts.N) { // Not a valid Student id
 			GenericIO.writelnString("Invalid student id");
 			System.exit(1);
 		}
-		studentID = id;
+		studentID = idOrCoursePortion;
 	}
 
 	/**
@@ -273,7 +286,6 @@ public class Message implements Serializable {
 	 * @param bValue that can hold shouldHaveArrivedEarlier value or hold value
 	 *               (used in general repos)
 	 */
-
 	public Message(int type, int id, int state, boolean bValue) {
 		// Check if student id is valid
 		if (id < 0 || id >= ExecConsts.N) { // Not a valid Student id
@@ -299,6 +311,28 @@ public class Message implements Serializable {
 	public Message(int type, char c) {
 		msgType = type;
 		requestType = c;
+	}
+
+	/**
+	 * Message instantiation (form 8).
+	 * 
+	 * @param type         message type
+	 * @param idOrPortion  student id or number of Portion
+	 * @param seatOrCourse student seat or number of Course
+	 * @param state        student state or chef state
+	 */
+	public Message(int type, int idOrPortion, int seatOrCourse, int state) {
+		msgType = type;
+		if (msgType == MessageType.SETUSSEATANDSTATE) {
+			studentID = idOrPortion;
+			seatAtTable = seatOrCourse;
+			studentState = state;
+			return;
+		} else if (msgType == MessageType.SETUPORTIONANDCOURSE) {
+			nPortions = idOrPortion;
+			nCourses = seatOrCourse;
+			chefState = state;
+		}
 	}
 
 	/**
@@ -622,6 +656,11 @@ public class Message implements Serializable {
 		case MessageType.SETUWS:
 		case MessageType.SETUSSTATE:
 		case MessageType.SETUSSEAT:
+		case MessageType.SETUCOURSE:
+		case MessageType.SETUPORTION:
+		case MessageType.SETUPORTIONANDCOURSE:
+		case MessageType.SETUSEATATLEAVING:
+		case MessageType.SETUSSEATANDSTATE:
 		case MessageType.SACK:
 			return 5;
 		default:
