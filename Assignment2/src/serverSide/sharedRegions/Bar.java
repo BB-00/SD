@@ -75,7 +75,7 @@ public class Bar {
 	 * Bar instantiation
 	 * 
 	 * @param repos reference to the general repository to the table stub
-	 * @param tab referecen the table stub
+	 * @param table reference the table stub
 	 */
 	public Bar(GenReposStub repos, TableStub tab) {
 		this.nEntities = 0;
@@ -103,12 +103,15 @@ public class Bar {
 	}
 
 	/**
-	 * @return ID of the student whose request is being answered
+	 * @return Id of the student whose request is being answered
 	 */
 	public int getStudentBeingAnswered() {
 		return studentBeingAnswered;
 	}
 
+	/**
+	 * @return number of students in the restaurant
+	 */
 	public int getNumberOfStudentsAtRestaurant() {
 		return numberOfStudentsAtRestaurant;
 	}
@@ -130,11 +133,9 @@ public class Bar {
 
 			students[studentID] = student;
 
-			if (student.getStudentState() != StudentStates.GOING_TO_THE_RESTAURANT) {
-				students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
-				student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
-				repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
-			}
+			students[studentID].setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			student.setStudentState(StudentStates.GOING_TO_THE_RESTAURANT);
+			repos.updateStudentState(studentID, StudentStates.GOING_TO_THE_RESTAURANT);
 
 			numberOfStudentsAtRestaurant++;
 
@@ -152,12 +153,9 @@ public class Bar {
 
 			numberOfPendingRequests++;
 
-			if (student.getStudentState() != StudentStates.TAKING_A_SEAT_AT_THE_TABLE) {
-				students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-				student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-				repos.updateStudentState(studentID, StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-			}
-			repos.updateStudentSeat(numberOfStudentsAtRestaurant - 1, studentID);
+			students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
+			repos.updateStudentSeatAndState(studentID, numberOfStudentsAtRestaurant-1 ,StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
 
 			notifyAll();
 		}
@@ -232,13 +230,9 @@ public class Bar {
 
 		numberOfPendingRequests++;
 
-		repos.updateStudentSeat(studentID, -1);
-
-		if (student.getStudentState() != StudentStates.GOING_HOME) {
-			students[studentID].setStudentState(StudentStates.GOING_HOME);
-			student.setStudentState(StudentStates.GOING_HOME);
-			repos.updateStudentState(studentID, StudentStates.GOING_HOME);
-		}
+		students[studentID].setStudentState(StudentStates.GOING_HOME);
+		student.setStudentState(StudentStates.GOING_HOME);
+		repos.updateStudentState(studentID, StudentStates.GOING_HOME);
 
 		notifyAll();
 
@@ -301,13 +295,18 @@ public class Bar {
 	 * @return true if there are no more students at the restaurant, false otherwise
 	 */
 	public synchronized boolean sayGoodbye() {
+		BarClientProxy waiter = ((BarClientProxy) Thread.currentThread());
 		studentsGreeted[studentBeingAnswered] = true;
 
 		notifyAll();
 
 		// Update number of students at the restaurant
 		numberOfStudentsAtRestaurant--;
+		repos.updateSeatsAtLeaving(studentBeingAnswered);
 		studentBeingAnswered = -1;
+		
+		waiter.setWaiterState(WaiterStates.APPRAISING_SITUATION);
+		repos.updateWaiterState(WaiterStates.APPRAISING_SITUATION);
 
 		if (numberOfStudentsAtRestaurant == 0)
 			return true;
@@ -322,10 +321,8 @@ public class Bar {
 	 */
 	public synchronized void preprareBill() {
 		BarClientProxy waiter = ((BarClientProxy) Thread.currentThread());
-		if (waiter.getWaiterState() != WaiterStates.PROCESSING_THE_BILL) {
 			waiter.setWaiterState(WaiterStates.PROCESSING_THE_BILL);
 			repos.updateWaiterState(WaiterStates.PROCESSING_THE_BILL);
-		}
 	}
 
 	/**
@@ -364,10 +361,8 @@ public class Bar {
 		numberOfPendingRequests++;
 		courseFinished = false;
 
-		if (chef.getChefState() != ChefStates.DELIVERING_THE_PORTIONS) {
 			chef.setChefState(ChefStates.DELIVERING_THE_PORTIONS);
 			repos.updateChefState(ChefStates.DELIVERING_THE_PORTIONS);
-		}
 
 		notifyAll();
 	}

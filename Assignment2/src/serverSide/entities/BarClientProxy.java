@@ -6,198 +6,178 @@ import commInfra.*;
 import genclass.GenericIO;
 
 /**
- *  Service provider agent for access to the Bar.
+ * Service provider agent for access to the Bar.
  *
- *    Implementation of a client-server model of type 2 (server replication).
- *    Communication is based on a communication channel under the TCP protocol.
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
  */
-public class BarClientProxy extends Thread implements StudentCloning, WaiterCloning, ChefCloning  {
-    
-    /**
-   *  Number of instantiayed threads.
-   */
+public class BarClientProxy extends Thread implements StudentCloning, WaiterCloning, ChefCloning {
+	/**
+	 * Number of instantiated threads.
+	 */
+	private static int nProxy = 0;
 
-   private static int nProxy = 0;
+	/**
+	 * Communication channel.
+	 */
+	private ServerCom sconi;
 
-  /**
-   *  Communication channel.
-   */
+	/**
+	 * Interface to the Bar.
+	 */
+	private BarInterface barInterface;
 
-   private ServerCom sconi;
+	/**
+	 * Student identification.
+	 */
+	private int studentID = -1;
 
-  /**
-   *  Interface to the Bar.
-   */
+	/**
+	 * Student state.
+	 */
+	private int studentState = 0;
 
-   private BarInterface barInterface;
+	/**
+	 * Chef state.
+	 */
+	private int chefState = 0;
 
-  /**
-   *  Student identification.
-   */
+	/**
+	 * Waiter state.
+	 */
+	private int waiterState = 0;
 
-   private int studentID = -1;
+	/**
+	 * Instantiation of a client proxy.
+	 *
+	 * @param sconi    communication channel
+	 * @param barInter interface to the bar
+	 */
+	public BarClientProxy(ServerCom sconi, BarInterface barInter) {
+		super("BarProxy_" + BarClientProxy.getProxyId());
+		this.sconi = sconi;
+		this.barInterface = barInter;
+	}
 
-  /**
-   *  Student state.
-   */
+	/**
+	 * Generation of the instantiation identifier.
+	 *
+	 * @return instantiation identifier
+	 */
+	private static int getProxyId() {
+		Class<?> cl = null; // representation of the BarClientProxy object in JVM
+		int proxyId; // instantiation identifier
 
-   private int studentState = 0;
+		try {
+			cl = Class.forName("serverSide.entities.BarClientProxy");
+		} catch (ClassNotFoundException e) {
+			GenericIO.writelnString("Data type BarClientProxy was not found!");
+			e.printStackTrace();
+			System.exit(1);
+		}
 
-  /**
-   *  Chef state.
-   */
+		synchronized (cl) {
+			proxyId = nProxy;
+			nProxy += 1;
+		}
 
-   private int chefState = 0;
-   
-   /**
-   *  Waiter state.
-   */
+		return proxyId;
+	}
 
-   private int waiterState = 0;
-    
+	/**
+	 * Life cycle of the service provider agent.
+	 */
+	@Override
+	public void run() {
+		Message inMessage = null, // service request
+				outMessage = null; // service reply
 
-    /**
-    *  Instantiation of a client proxy.
-    *
-    *     @param sconi communication channel
-    *     @param barInter interface to the bar
-    */
+		/* service providing */
 
-    public BarClientProxy(ServerCom sconi, BarInterface barInter) {
-       super ("BarProxy_"+BarClientProxy.getProxyId());
-       this.sconi = sconi;
-       this.barInterface = barInter;
-    }
+		inMessage = (Message) sconi.readObject(); // get service request
 
-    /**
-    *  Generation of the instantiation identifier.
-    *
-    *     @return instantiation identifier
-    */
+		try {
+			outMessage = barInterface.processAndReply(inMessage); // process it
+		} catch (MessageException e) {
+			GenericIO.writelnString("Thread " + getName() + ": " + e.getMessage() + "!");
+			GenericIO.writelnString(e.getMessageVal().toString());
+			System.exit(1);
+		}
 
-    private static int getProxyId() {
-       Class<?> cl = null;                                            // representation of the BarClientProxy object in JVM
-       int proxyId;                                                   // instantiation identifier
+		sconi.writeObject(outMessage); // send service reply
+		sconi.close(); // close the communication channel
+	}
 
-       try {
-    	   cl = Class.forName("serverSide.entities.BarClientProxy");
-       } catch (ClassNotFoundException e) {
-    	   GenericIO.writelnString("Data type BarClientProxy was not found!");
-    	   e.printStackTrace();
-    	   System.exit(1);
-       }
-       
-       synchronized(cl) {
-    	   proxyId = nProxy;
-    	   nProxy += 1;
-       }
-       
-       return proxyId;
-    }
+	/**
+	 * Set student id.
+	 *
+	 * @param id student id
+	 */
+	public void setStudentID(int id) {
+		studentID = id;
+	}
 
-    /**
-   *  Life cycle of the service provider agent.
-   */
+	/**
+	 * Get student id.
+	 *
+	 * @return student id
+	 */
+	public int getStudentID() {
+		return studentID;
+	}
 
-    @Override
-    public void run() {
-       Message inMessage = null,                                      // service request
-               outMessage = null;                                     // service reply
+	/**
+	 * Set student state.
+	 *
+	 * @param state new student state
+	 */
+	public void setStudentState(int state) {
+		studentState = state;
+	}
 
-      /* service providing */
-       
-       inMessage = (Message) sconi.readObject();                     // get service request
-       
-       try {
-    	   outMessage = barInterface.processAndReply(inMessage);         // process it
-       } catch (MessageException e) {
-    	   GenericIO.writelnString("Thread "+getName()+": "+e.getMessage()+"!");
-    	   GenericIO.writelnString(e.getMessageVal().toString());
-    	   System.exit(1);
-       }
-       
-       sconi.writeObject(outMessage);                                // send service reply
-       sconi.close();                                                // close the communication channel
-    }
-    
-    /**
-    *   Set student id.
-    *
-    *     @param id student id
-    */
+	/**
+	 * Get student state.
+	 *
+	 * @return student state
+	 */
+	public int getStudentState() {
+		return studentState;
+	}
 
-    public void setStudentID(int id) {
-       studentID = id;
-    }
-    
-    /**
-    *   Get student id.
-    *
-    *     @return student id
-    */
+	/**
+	 * Set waiter state.
+	 *
+	 * @param state new waiter state
+	 */
+	public void setWaiterState(int state) {
+		// System.out.println("BarProxy WAITER STATE: "+ state);
+		waiterState = state;
+	}
 
-    public int getStudentID() {
-       return studentID;
-    }
-    
-    /**
-    *   Set student state.
-    *
-    *     @param state new student state
-    */
+	/**
+	 * Get waiter state.
+	 *
+	 * @return waiter state
+	 */
+	public int getWaiterState() {
+		return waiterState;
+	}
 
-    public void setStudentState(int state) {
-       studentState = state;
-    }
-    
-    /**
-    *   Get student state.
-    *
-    *     @return student state
-    */
+	/**
+	 * Set chef state.
+	 *
+	 * @param state new chef state
+	 */
+	public void setChefState(int state) {
+		chefState = state;
+	}
 
-    public int getStudentState() {
-       return studentState;
-    }
-    
-    /**
-    *   Set waiter state.
-    *
-    *     @param state new waiter state
-    */
-    
-    public void setWaiterState(int state) {
-    	//System.out.println("BarProxy WAITER STATE: "+ state);
-       waiterState = state;
-    }
-    
-    /**
-    *   Get waiter state.
-    *
-    *     @return waiter state
-    */
-
-    public int getWaiterState() {
-       return waiterState;
-    }
-    
-    /**
-    *   Set chef state.
-    *
-    *     @param state new chef state
-    */
-    
-    public void setChefState(int state) {
-       chefState = state;
-    }
-    
-    /**
-    *   Get chef state.
-    *
-    *     @return chef state
-    */
-
-    public int getChefState() {
-       return chefState;
-    }
+	/**
+	 * Get chef state.
+	 *
+	 * @return chef state
+	 */
+	public int getChefState() {
+		return chefState;
+	}
 }

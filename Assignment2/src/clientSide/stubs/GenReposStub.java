@@ -4,11 +4,11 @@ import commInfra.*;
 import genclass.GenericIO;
 
 /**
- *  Stub to the General Repository.
+ * Stub to the General Repository.
  *
- *    It instantiates a remote reference to the general repository.
- *    Implementation of a client-server model of type 2 (server replication).
- *    Communication is based on a communication channel under the TCP protocol.
+ * It instantiates a remote reference to the general repository. Implementation
+ * of a client-server model of type 2 (server replication). Communication is
+ * based on a communication channel under the TCP protocol.
  */
 public class GenReposStub {
 	/**
@@ -34,7 +34,8 @@ public class GenReposStub {
 
 	/**
 	 * Write in the logging file the updated student state
-	 * @param id student id
+	 * 
+	 * @param id    student id
 	 * @param state student state to be set
 	 */
 	public void updateStudentState(int studentID, int studentState) {
@@ -64,7 +65,8 @@ public class GenReposStub {
 
 	/**
 	 * Write in the logging file the updated seats value at the table
-	 * @param id student id to sit
+	 * 
+	 * @param id   student id to sit
 	 * @param seat seat at the table
 	 */
 	public void updateStudentSeat(int studentID, int studentSeat) {
@@ -94,6 +96,7 @@ public class GenReposStub {
 
 	/**
 	 * Write in the logging file the new waiter state
+	 * 
 	 * @param state waiter state to set
 	 */
 	public void updateWaiterState(int waiterState) {
@@ -123,6 +126,7 @@ public class GenReposStub {
 
 	/**
 	 * Write in the logging file the new chef state
+	 * 
 	 * @param state chef state to set
 	 */
 	public void updateChefState(int chefState) {
@@ -151,9 +155,9 @@ public class GenReposStub {
 	}
 
 	/**
-	 *   Operation server shutdown.
+	 * Operation server shutdown.
 	 *
-	 *   New operation.
+	 * New operation.
 	 */
 	public void shutdown() {
 		ClientCom com; // communication channel

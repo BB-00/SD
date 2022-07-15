@@ -6,144 +6,130 @@ import commInfra.*;
 import genclass.GenericIO;
 
 /**
- *  Service provider agent for access to the Kitchen.
+ * Service provider agent for access to the Kitchen.
  *
- *    Implementation of a client-server model of type 2 (server replication).
- *    Communication is based on a communication channel under the TCP protocol.
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
  */
-public class KitchenClientProxy extends Thread implements WaiterCloning, ChefCloning  {
-    
-    /**
-   *  Number of instantiayed threads.
-   */
+public class KitchenClientProxy extends Thread implements WaiterCloning, ChefCloning {
+	/**
+	 * Number of instantiated threads.
+	 */
+	private static int nProxy = 0;
 
-   private static int nProxy = 0;
+	/**
+	 * Communication channel.
+	 */
+	private ServerCom sconi;
 
-  /**
-   *  Communication channel.
-   */
+	/**
+	 * Interface to the Kitchen.
+	 */
+	private KitchenInterface kitchenInter;
 
-   private ServerCom sconi;
+	/**
+	 * Chef state.
+	 */
+	private int chefState = 0;
 
-  /**
-   *  Interface to the Kitchen.
-   */
+	/**
+	 * Waiter state.
+	 */
+	private int waiterState = 0;
 
-   private KitchenInterface kitchenInter;
+	/**
+	 * Instantiation of a client proxy.
+	 *
+	 * @param sconi        communication channel
+	 * @param kitchenInter interface to the Kitchen
+	 */
+	public KitchenClientProxy(ServerCom sconi, KitchenInterface kitchenInter) {
+		super("KitchenProxy_" + KitchenClientProxy.getProxyId());
+		this.sconi = sconi;
+		this.kitchenInter = kitchenInter;
+	}
 
-  /**
-   *  Chef state.
-   */
+	/**
+	 * Generation of the instantiation identifier.
+	 *
+	 * @return instantiation identifier
+	 */
+	private static int getProxyId() {
+		Class<?> cl = null; // representation of the KitchenProxy object in JVM
+		int proxyId; // instantiation identifier
 
-   private int chefState = 0;
-   
-   /**
-   *  Waiter state.
-   */
+		try {
+			cl = Class.forName("serverSide.entities.KitchenClientProxy");
+		} catch (ClassNotFoundException e) {
+			GenericIO.writelnString("Data type KitchenClientProxy was not found!");
+			e.printStackTrace();
+			System.exit(1);
+		}
 
-   private int waiterState = 0;
-    
+		synchronized (cl) {
+			proxyId = nProxy;
+			nProxy += 1;
+		}
 
-    /**
-    *  Instantiation of a client proxy.
-    *
-    *     @param sconi communication channel
-    *     @param kitchenInter interface to the Kitchen
-    */
+		return proxyId;
+	}
 
-    public KitchenClientProxy(ServerCom sconi, KitchenInterface kitchenInter) {
-       super ("KitchenProxy_"+KitchenClientProxy.getProxyId());
-       this.sconi = sconi;
-       this.kitchenInter = kitchenInter;
-    }
+	/**
+	 * Life cycle of the service provider agent.
+	 */
+	@Override
+	public void run() {
+		Message inMessage = null, // service request
+				outMessage = null; // service reply
 
-    /**
-    *  Generation of the instantiation identifier.
-    *
-    *     @return instantiation identifier
-    */
+		/* service providing */
 
-    private static int getProxyId() {
-       Class<?> cl = null;                                            // representation of the KitchenProxy object in JVM
-       int proxyId;                                                   // instantiation identifier
+		inMessage = (Message) sconi.readObject(); // get service request
+		try {
+			outMessage = kitchenInter.processAndReply(inMessage); // process it
+		} catch (MessageException e) {
+			GenericIO.writelnString("Thread " + getName() + ": " + e.getMessage() + "!");
+			GenericIO.writelnString(e.getMessageVal().toString());
+			System.exit(1);
+		}
 
-       try {
-    	   cl = Class.forName("serverSide.entities.KitchenClientProxy");
-       } catch (ClassNotFoundException e) {
-    	   GenericIO.writelnString("Data type KitchenClientProxy was not found!");
-    	   e.printStackTrace();
-    	   System.exit(1);
-       }
-       
-       synchronized(cl) {
-    	   proxyId = nProxy;
-    	   nProxy += 1;
-       }
-       
-       return proxyId;
-    }
+		sconi.writeObject(outMessage); // send service reply
+		sconi.close(); // close the communication channel
+	}
 
-    /**
-   *  Life cycle of the service provider agent.
-   */
+	/**
+	 * Set waiter state.
+	 *
+	 * @param state new waiter state
+	 */
+	public void setWaiterState(int state) {
+		waiterState = state;
+	}
 
-    @Override
-    public void run() {
-       Message inMessage = null,                                      // service request
-               outMessage = null;                                     // service reply
+	/**
+	 * Get waiter state.
+	 *
+	 * @return waiter state
+	 */
+	public int getWaiterState() {
+		return waiterState;
+	}
 
-      /* service providing */
+	/**
+	 * Set chef state.
+	 *
+	 * @param state new chef state
+	 */
+	public void setChefState(int state) {
+		chefState = state;
+	}
 
-       inMessage = (Message) sconi.readObject();                     // get service request
-       try {
-    	   outMessage = kitchenInter.processAndReply(inMessage);         // process it
-       } catch (MessageException e) {
-    	   GenericIO.writelnString("Thread "+getName()+": "+e.getMessage()+"!");
-    	   GenericIO.writelnString(e.getMessageVal().toString());
-    	   System.exit(1);
-       }
-       
-       sconi.writeObject(outMessage);                                // send service reply
-       sconi.close();                                                // close the communication channel
-    }
-    
-    /**
-    *   Set waiter state.
-    *
-    *     @param state new waiter state
-    */
-    
-    public void setWaiterState(int state) {
-       waiterState = state;
-    }
-    
-    /**
-    *   Get waiter state.
-    *
-    *     @return waiter state
-    */
-
-    public int getWaiterState() {
-       return waiterState;
-    }
-    
-    /**
-    *   Set chef state.
-    *
-    *     @param state new chef state
-    */
-    
-    public void setChefState(int state) {
-       chefState = state;
-    }
-    
-    /**
-    *   Get chef state.
-    *
-    *     @return chef state
-    */
-
-    public int getChefState() {
-       return chefState;
-    }
+	/**
+	 * Get chef state.
+	 *
+	 * @return chef state
+	 */
+	public int getChefState() {
+		return chefState;
+	}
 }

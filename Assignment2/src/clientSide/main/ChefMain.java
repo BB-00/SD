@@ -1,6 +1,7 @@
 package clientSide.main;
 
 import clientSide.entities.Chef;
+import clientSide.entities.ChefStates;
 import clientSide.stubs.*;
 import genclass.GenericIO;
 
@@ -73,11 +74,11 @@ public class ChefMain {
 	    try {
 	    	genReposServerPortNum = Integer.parseInt(args[5]);
 	    } catch(NumberFormatException e) {
-	    	GenericIO.writelnString("args[3] is not a valid port number!");
+	    	GenericIO.writelnString("args[5] is not a valid port number!");
 	    	System.exit(1);
 	    }
 	    if ((genReposServerPortNum < 4000) || (genReposServerPortNum >= 65536)) {
-		    GenericIO.writelnString("args[3] is not a valid port number!");
+		    GenericIO.writelnString("args[5] is not a valid port number!");
 		    System.exit (1);
 		}
 		
@@ -87,13 +88,12 @@ public class ChefMain {
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
 		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 		
-		chef = new Chef("Chef", kitchen, bar);
+		chef = new Chef("Chef", ChefStates.WAITING_FOR_AN_ORDER, kitchen, bar);
 		
 		
 		// Start of simulation
 		chef.start();
-        GenericIO.writelnString("Chef thread"+Thread.currentThread().getName()+" Started");
-
+        GenericIO.writelnString("Chef thread "+Thread.currentThread().getName()+" started!");
 
         try {
             chef.join();
@@ -104,5 +104,7 @@ public class ChefMain {
         bar.shutdown();
         kitchen.shutdown();
         genRepos.shutdown();
+        
+        GenericIO.writelnString("Chef thread "+Thread.currentThread().getName()+" finished!");
 	}
 }

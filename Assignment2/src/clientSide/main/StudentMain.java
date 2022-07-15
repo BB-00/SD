@@ -1,6 +1,7 @@
 package clientSide.main;
 
 import clientSide.entities.Student;
+import clientSide.entities.StudentStates;
 import clientSide.stubs.*;
 import commInfra.ExecConsts;
 import genclass.GenericIO;
@@ -26,7 +27,6 @@ public class StudentMain {
 	 */
 	public static void main(String[] args) {
 		
-		
 		String barServerHostName;						// name of the platform where is located the bar server
 		int barServerPortNum = -1; 						// port number for listening to service requests
 		String tableServerHostName;						// name of the platform where is located the table server
@@ -45,6 +45,7 @@ public class StudentMain {
 	    	GenericIO.writelnString("Wrong number of parameters!");
 	        System.exit (1);
 	    }
+	    
 	    barServerHostName = args[0];
 	    try {
 	    	barServerPortNum = Integer.parseInt (args[1]);
@@ -73,11 +74,11 @@ public class StudentMain {
 	    try {
 	    	genReposServerPortNum = Integer.parseInt (args[5]);
 	    } catch (NumberFormatException e) {
-	    	GenericIO.writelnString ("args[7] is not a number!");
+	    	GenericIO.writelnString ("args[5] is not a number!");
 	        System.exit (1);
 	    }
 	    if ((genReposServerPortNum < 4000) || (genReposServerPortNum >= 65536)) {
-	    	GenericIO.writelnString ("args[7] is not a valid port number!");
+	    	GenericIO.writelnString ("args[5] is not a valid port number!");
 	        System.exit (1);
 	    }
 	    
@@ -88,14 +89,14 @@ public class StudentMain {
 		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 		
 		for(int i=0; i<ExecConsts.N; i++){
-            students[i] = new Student("Student_"+i, i, bar, table);
+            students[i] = new Student("Student_"+i, i, StudentStates.GOING_TO_THE_RESTAURANT, bar, table);
         }
 		
 		
 		// Start of simulation
 		for(int i=0; i<ExecConsts.N; i++){
             students[i].start();
-            GenericIO.writelnString("Student thread "+i+" Started");
+            GenericIO.writelnString("Student thread "+i+" started!");
         }
 		
 		
@@ -110,5 +111,10 @@ public class StudentMain {
 		bar.shutdown();
 		table.shutdown();
 		genRepos.shutdown();
+		
+		for(int i=0; i<ExecConsts.N; i++){
+            students[i].start();
+            GenericIO.writelnString("Student thread "+i+" finished!");
+        }
 	}
 }

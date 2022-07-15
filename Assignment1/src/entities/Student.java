@@ -57,6 +57,8 @@ public class Student extends Thread {
 	}
 
 	/**
+	 * Get the studentID
+	 * 
 	 * @return studentID
 	 */
 	public int getStudentID() {
@@ -73,6 +75,8 @@ public class Student extends Thread {
 	}
 
 	/**
+	 * Get the student state
+	 * 
 	 * @return student state
 	 */
 	public int getStudentState() {
@@ -124,5 +128,4 @@ public class Student extends Thread {
 		} catch (InterruptedException e) {
 		}
 	}
-
 }

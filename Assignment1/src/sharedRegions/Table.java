@@ -155,7 +155,6 @@ public class Table {
 	}
 
 	/**
-	 * 
 	 * @return id of the last student to finish eating a meal
 	 */
 	public int getLastToEat() {

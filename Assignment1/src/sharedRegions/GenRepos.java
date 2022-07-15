@@ -69,8 +69,8 @@ public class GenRepos {
 		waiterState = WaiterStates.APPRAISING_SITUATION;
 		chefState = ChefStates.WAITING_FOR_AN_ORDER;
 
-		this.nCourse = 0;
-		this.nPortion = 0;
+		nCourse = 0;
+		nPortion = 0;
 
 		reportInitialStatus();
 	}

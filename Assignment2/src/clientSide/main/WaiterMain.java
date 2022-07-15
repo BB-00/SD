@@ -1,6 +1,7 @@
 package clientSide.main;
 
 import clientSide.entities.Waiter;
+import clientSide.entities.WaiterStates;
 import clientSide.stubs.*;
 import genclass.GenericIO;
 
@@ -104,12 +105,12 @@ public class WaiterMain {
 		kitchen = new KitchenStub(kitchenServerHostName, kitchenServerPortNum);
 		genRepos = new GenReposStub(genReposServerHostName, genReposServerPortNum);
 
-		waiter = new Waiter("Waiter", kitchen, bar, table);
+		waiter = new Waiter("Waiter", WaiterStates.APPRAISING_SITUATION, kitchen, bar, table);
 
 
 		// Start of simulation
 		waiter.start();
-		GenericIO.writelnString("Waiter thread" + Thread.currentThread().getName() + " Started");
+		GenericIO.writelnString("Waiter thread " + Thread.currentThread().getName() + " started!");
 
 		try {
 			waiter.join();
@@ -121,6 +122,8 @@ public class WaiterMain {
 		kitchen.shutdown();
 		table.shutdown();
 		genRepos.shutdown();
+		
+		GenericIO.writelnString("Waiter thread " + Thread.currentThread().getName() + " finished!");
 	}
 
 }

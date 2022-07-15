@@ -5,12 +5,11 @@ import commInfra.ExecConsts;
 import clientSide.stubs.BarStub;
 
 /**
- *   Student thread.
+ * Student thread.
  *
- *   It simulates the student life cycle.
+ * It simulates the student life cycle.
  */
-public class Student extends Thread{
-	
+public class Student extends Thread {
 	/**
 	 * Reference to the Table
 	 */
@@ -20,118 +19,112 @@ public class Student extends Thread{
 	 * Reference to the Bar
 	 */
 	private final BarStub bar;
-	
+
 	/**
 	 * Student ID
 	 */
-	private  int studentID;
-	
+	private int studentID;
+
 	/**
 	 * Student States
 	 */
 	private int studentState;
-	
+
 	/**
 	 * Instatiation of a student thread
 	 * 
-	 * @param studentID student id
-	 * @param reference to bar stub
-	 * @param reference to table stub
+	 * @param studentID,    student id
+	 * @param studentState, student state
+	 * @param bar,          reference to bar
+	 * @param table,        reference to table
 	 */
-	public Student(String name, int studentID, BarStub bar, TableStub table) {
+	public Student(String name, int studentID, int studentState, BarStub bar, TableStub table) {
 		super(name);
 		this.studentID = studentID;
-		this.studentState = StudentStates.GOING_TO_THE_RESTAURANT;
+		this.studentState = studentState;
 		this.bar = bar;
 		this.table = table;
 	}
-	
+
 	/**
 	 * Set the studentID
 	 * 
-	 * @param studentID
+	 * @param id, student id
 	 */
 	public void setStudentID(int id) {
-		this.studentID = id;
+		studentID = id;
 	}
-	
+
 	/**
+	 * Get the studentID
+	 * 
 	 * @return studentID
 	 */
 	public int getStudentID() {
-		return this.studentID;
+		return studentID;
 	}
-	
+
 	/**
-	 * set the student state
+	 * Set the student state
 	 * 
-	 * @param studentState
+	 * @param state, student state
 	 */
 	public void setStudentState(int state) {
-		this.studentState = state;
+		studentState = state;
 	}
-	
+
 	/**
+	 * Get the student state
+	 * 
 	 * @return student state
 	 */
 	public int getStudentState() {
-		return this.studentState;
+		return studentState;
 	}
-	/**
-	 *	Life cycle of the student
-	 */
 
+	/**
+	 * Life cycle of the student
+	 */
 	@Override
-	public void run ()
-	{
+	public void run() {
 		walkABit();
 		bar.enter();
 		table.readMenu();
-		
-		if(studentID == table.getFirstToArrive())
-		{
+
+		if (studentID == table.getFirstToArrive()) {
 			table.prepareOrder();
-			do{
+			do {
 				table.addUpOnesChoices();
-			}while(!table.everybodyHasChosen());
+			} while (!table.everybodyHasChosen());
 			bar.callWaiter();
 			table.describeOrder();
 			table.joinTalk();
-		}
-		else table.informCompanion();
-		// do{
-		// 	this.table.startEating();
-		// 	this.table.endEating();
-		// 	while(!this.table.hasEverybodyFinishedEating());
-		// 	if(studentID == this.table.getLastToEat()) this.bar.signalWaiter();
-		// }while(!this.table.haveAllCoursesBeenEaten());
+		} else
+			table.informCompanion();
 
 		int coursesEatenNum = 0;
-		while(!table.haveAllCoursesBeenEaten()){
-			//if(table.haveAllClientsBeenServed()){
-				table.startEating();
-				table.endEating();
-				coursesEatenNum++;
-				
-				while(!table.hasEverybodyFinishedEating());
-				if(studentID == table.getLastToEat() && coursesEatenNum != ExecConsts.M) bar.signalWaiter();
-			//}
+		while (!table.haveAllCoursesBeenEaten()) {
+			table.startEating();
+			table.endEating();
+			coursesEatenNum++;
+
+			while (!table.hasEverybodyFinishedEating());
+
+			if (studentID == table.getLastToEat() && coursesEatenNum != ExecConsts.M)
+				bar.signalWaiter();
 		}
 
-		if(table.shouldHaveArrivedEarlier()) {
+		if (table.shouldHaveArrivedEarlier()) {
 			bar.signalWaiter();
 			table.honourBill();
 		}
 		bar.exit();
 	}
-	
-	/**
-	 * sleep for a random time
-	 */
-	private void walkABit(){
-		try{ 
-			sleep ((long) (1 + 50 * Math.random ()));
-		} catch (InterruptedException e) {}
+
+	private void walkABit() {
+		try {
+			sleep((long) (1 + 50 * Math.random()));
+		} catch (InterruptedException e) {
+		}
 	}
-	
 }

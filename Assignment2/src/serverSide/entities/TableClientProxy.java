@@ -6,182 +6,165 @@ import commInfra.*;
 import genclass.GenericIO;
 
 /**
- *  Service provider agent for access to the Table.
+ * Service provider agent for access to the Table.
  *
- *    Implementation of a client-server model of type 2 (server replication).
- *    Communication is based on a communication channel under the TCP protocol.
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
  */
-public class TableClientProxy extends Thread implements StudentCloning, WaiterCloning  {
-    
-    /**
-   *  Number of instantiayed threads.
-   */
+public class TableClientProxy extends Thread implements StudentCloning, WaiterCloning {
+	/**
+	 * Number of instantiated threads.
+	 */
+	private static int nProxy = 0;
 
-   private static int nProxy = 0;
+	/**
+	 * Communication channel.
+	 */
+	private ServerCom sconi;
 
-  /**
-   *  Communication channel.
-   */
+	/**
+	 * Interface to the Table.
+	 */
+	private TableInterface tableInter;
 
-   private ServerCom sconi;
+	/**
+	 * Student identification.
+	 */
+	private int studentID;
 
-  /**
-   *  Interface to the Table.
-   */
+	/**
+	 * Student state.
+	 */
+	private int studentState;
 
-   private TableInterface tableInter;
+	/**
+	 * Waiter state.
+	 */
+	private int waiterState;
 
-  /**
-   *  Student identification.
-   */
-
-   private int studentID;
-
-  /**
-   *  Student state.
-   */
-
-   private int studentState;
-   
-   /**
-   *  Waiter state.
-   */
-
-   private int waiterState;
-   
-   /**
+	/**
 	 * Id of the student whose request the waiter is taking care of
 	 */
 	private int studentBeingAnswered;
-    
 
-    /**
-    *  Instantiation of a client proxy.
-    *
-    *     @param sconi communication channel
-    *     @param tableInter interface to the Table
-    */
+	/**
+	 * Instantiation of a client proxy.
+	 *
+	 * @param sconi      communication channel
+	 * @param tableInter interface to the Table
+	 */
+	public TableClientProxy(ServerCom sconi, TableInterface tableInter) {
+		super("TableProxy_" + TableClientProxy.getProxyId());
+		this.sconi = sconi;
+		this.tableInter = tableInter;
+	}
 
-    public TableClientProxy(ServerCom sconi, TableInterface tableInter) {
-       super ("TableProxy_" + TableClientProxy.getProxyId ());
-       this.sconi = sconi;
-       this.tableInter = tableInter;
-    }
+	/**
+	 * Generation of the instantiation identifier.
+	 *
+	 * @return instantiation identifier
+	 */
+	private static int getProxyId() {
+		Class<?> cl = null; // representation of the TableProxy object in JVM
+		int proxyId; // instantiation identifier
 
-    /**
-    *  Generation of the instantiation identifier.
-    *
-    *     @return instantiation identifier
-    */
+		try {
+			cl = Class.forName("serverSide.entities.TableClientProxy");
+		} catch (ClassNotFoundException e) {
+			GenericIO.writelnString("Data type TableClientProxy was not found!");
+			e.printStackTrace();
+			System.exit(1);
+		}
 
-    private static int getProxyId() {
-       Class<?> cl = null;                                            // representation of the TableProxy object in JVM
-       int proxyId;                                                   // instantiation identifier
+		synchronized (cl) {
+			proxyId = nProxy;
+			nProxy += 1;
+		}
 
-       try {
-    	   cl = Class.forName("serverSide.entities.TableClientProxy");
-       } catch (ClassNotFoundException e) {
-    	   GenericIO.writelnString("Data type TableClientProxy was not found!");
-    	   e.printStackTrace();
-    	   System.exit(1);
-       }
-       
-       synchronized(cl) {
-    	   proxyId = nProxy;
-    	   nProxy += 1;
-       }
-       
-       return proxyId;
-    }
+		return proxyId;
+	}
 
-    /**
-   *  Life cycle of the service provider agent.
-   */
+	/**
+	 * Life cycle of the service provider agent.
+	 */
+	@Override
+	public void run() {
+		Message inMessage = null, // service request
+				outMessage = null; // service reply
 
-    @Override
-    public void run() {
-       Message inMessage = null,                                      // service request
-               outMessage = null;                                     // service reply
+		/* service providing */
 
-      /* service providing */
+		inMessage = (Message) sconi.readObject(); // get service request
+		try {
+			outMessage = tableInter.processAndReply(inMessage); // process it
+		} catch (MessageException e) {
+			GenericIO.writelnString("Thread " + getName() + ": " + e.getMessage() + "!");
+			GenericIO.writelnString(e.getMessageVal().toString());
+			System.exit(1);
+		}
 
-       inMessage = (Message) sconi.readObject();                     // get service request
-       try {
-    	   outMessage = tableInter.processAndReply (inMessage);         // process it
-       }
-       catch (MessageException e) {
-    	   GenericIO.writelnString("Thread "+getName()+": "+e.getMessage()+"!");
-    	   GenericIO.writelnString(e.getMessageVal().toString());
-    	   System.exit(1);
-       }
-       
-       sconi.writeObject(outMessage);                                // send service reply
-       sconi.close();                                                // close the communication channel
-    }
-    
-    /**
-    *   Set student id.
-    *
-    *     @param id student id
-    */
+		sconi.writeObject(outMessage); // send service reply
+		sconi.close(); // close the communication channel
+	}
 
-    public void setStudentID(int id) {
-       studentID = id;
-    }
-    
-    /**
-    *   Get student id.
-    *
-    *     @return student id
-    */
+	/**
+	 * Set student id.
+	 *
+	 * @param id student id
+	 */
+	public void setStudentID(int id) {
+		studentID = id;
+	}
 
-    public int getStudentID() {
-       return studentID;
-    }
-    
-    /**
-    *   Set student state.
-    *
-    *     @param state new student state
-    */
+	/**
+	 * Get student id.
+	 *
+	 * @return student id
+	 */
+	public int getStudentID() {
+		return studentID;
+	}
 
-    public void setStudentState(int state) {
-       studentState = state;
-    }
-    
-    /**
-    *   Get student state.
-    *
-    *     @return student state
-    */
+	/**
+	 * Set student state.
+	 *
+	 * @param state new student state
+	 */
+	public void setStudentState(int state) {
+		studentState = state;
+	}
 
-    public int getStudentState() {
-       return studentState;
-    }
-    
-    /**
-    *   Set waiter state.
-    *
-    *     @param state new waiter state
-    */
-    
-    public void setWaiterState(int state) {
-       waiterState = state;
-    }
-    
-    /**
-    *   Get waiter state.
-    *
-    *     @return waiter state
-    */
+	/**
+	 * Get student state.
+	 *
+	 * @return student state
+	 */
+	public int getStudentState() {
+		return studentState;
+	}
 
-    public int getWaiterState() {
-       return waiterState;
-    }
-    
-    /**
+	/**
+	 * Set waiter state.
+	 *
+	 * @param state new waiter state
+	 */
+	public void setWaiterState(int state) {
+		waiterState = state;
+	}
+
+	/**
+	 * Get waiter state.
+	 *
+	 * @return waiter state
+	 */
+	public int getWaiterState() {
+		return waiterState;
+	}
+
+	/**
 	 * Set studentBeingAnswered Id
-	 * 	@param id studentBeingAnswered ID
+	 * 
+	 * @param id studentBeingAnswered ID
 	 */
 	public void setStudentBeingAnswered(int id) {
 		studentBeingAnswered = id;
@@ -189,7 +172,8 @@ public class TableClientProxy extends Thread implements StudentCloning, WaiterCl
 
 	/**
 	 * Get studentBeingAnswered Id
-	 *	@return id studentBeingAnswered
+	 * 
+	 * @return id studentBeingAnswered
 	 */
 	public int getStudentBeingAnswered() {
 		return studentBeingAnswered;

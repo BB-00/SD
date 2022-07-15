@@ -1,17 +1,16 @@
 package commInfra;
 
 /**
- *    Definition of the execution parameters.
+ * Definition of the execution parameters.
  */
 public class ExecConsts {
 	/**
-	 *	Number of Students
+	 * Number of Students
 	 */
-    public static final int N = 7;
-    
-    /**
-	 *	Number of Courses
-	 */
-    public static int M = 3;
+	public static final int N = 7;
 
+	/**
+	 * Number of Courses
+	 */
+	public static int M = 3;
 }

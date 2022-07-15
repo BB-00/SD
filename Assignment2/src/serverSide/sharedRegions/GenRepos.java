@@ -48,24 +48,37 @@ public class GenRepos {
 	 * State of the Chef
 	 */
 	private int chefState;
+	
+	/**
+	 * Number of courses delivered
+	 */
+	private int nCourse = 0;
+
+	/**
+	 * Number of Portions delivered
+	 */
+	private int nPortion = 0;
 
 	/**
 	 * Instantiation of a general repository object.
 	 */
 	public GenRepos() {
-		this.nEntities = 0;
+		nEntities = 0;
 
-		this.logFileName = "log";
+		logFileName = "log";
 
 		// set initial states
-		this.studentStates = new int[ExecConsts.N];
-		this.seats = new int[ExecConsts.N];
+		studentStates = new int[ExecConsts.N];
+		seats = new int[ExecConsts.N];
 		for (int i = 0; i < ExecConsts.N; i++) {
-			this.studentStates[i] = StudentStates.GOING_TO_THE_RESTAURANT;
-			this.seats[i] = -1;
+			studentStates[i] = StudentStates.GOING_TO_THE_RESTAURANT;
+			seats[i] = -1;
 		}
-		this.waiterState = WaiterStates.APPRAISING_SITUATION;
-		this.chefState = ChefStates.WAITING_FOR_AN_ORDER;
+		waiterState = WaiterStates.APPRAISING_SITUATION;
+		chefState = ChefStates.WAITING_FOR_AN_ORDER;
+		
+		nCourse = 0;
+		nPortion = 0;
 
 		reportInitialStatus();
 	}
@@ -106,6 +119,35 @@ public class GenRepos {
 		}
 		return -1;
 	}
+	
+	/**
+	 * Update Student Seat and State
+	 * 
+	 * @param studentID
+	 * @param studentSeat
+	 * @param studentState
+	 */
+	public synchronized void updateStudentSeatAndState(int studentID, int studentSeat, int studentState) {
+		studentStates[studentID] = studentState;
+		seats[studentSeat] = studentID;
+		reportStatus();
+	}
+
+	/**
+	 * Update seats when a student leaves
+	 * 
+	 * @param studentID student id to leave table
+	 */
+	public synchronized void updateSeatsAtLeaving(int studentID) {
+		int seat = 0;
+
+		for (int i = 0; i < this.seats.length; i++) {
+			if (this.seats[i] == studentID)
+				seat = i;
+		}
+
+		this.seats[seat] = -1;
+	}
 
 	/**
 	 * Update Waiter State
@@ -124,6 +166,37 @@ public class GenRepos {
 	 */
 	public synchronized void updateChefState(int chefState) {
 		this.chefState = chefState;
+		reportStatus();
+	}
+	
+	/**
+	 * Update number of Courses and chef state
+	 * 
+	 * @param nCourse
+	 * @param chefState
+	 */
+	public synchronized void updateCourse(int nCourse, int chefState) {
+		this.chefState = chefState;
+		this.nCourse = nCourse;
+		reportStatus();
+	}
+
+	/**
+	 * Update number of Portions and chef state
+	 * 
+	 * @param nPortion
+	 * @param chefState
+	 */
+	public synchronized void updatePortion(int nPortion, int chefState) {
+		this.chefState = chefState;
+		this.nPortion = nPortion;
+		reportStatus();
+	}
+	
+	public synchronized void updatePortionAndCourse(int nPortion, int nCourse,int chefState) {
+		this.chefState = chefState;
+		this.nPortion = nPortion;
+		this.nCourse = nCourse;
 		reportStatus();
 	}
 
@@ -233,7 +306,7 @@ public class GenRepos {
 			}
 		}
 
-		lineStatus += ExecConsts.M + "\t\t" + ExecConsts.N + "\t";
+		lineStatus += this.nCourse + "\t\t" + this.nPortion + "\t";
 
 		for (int i = 0; i < ExecConsts.N; i++) {
 			lineStatus += "\t";
