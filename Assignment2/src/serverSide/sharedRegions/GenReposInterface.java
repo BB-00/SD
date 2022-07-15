@@ -49,6 +49,9 @@ public class GenReposInterface {
 		switch (inMessage.getMsgType()) {
 		// verify Chef state
 		case MessageType.SETUCS:
+		case MessageType.SETUCOURSE:
+		case MessageType.SETUPORTION:
+		case MessageType.SETUPORTIONANDCOURSE:
 			if (inMessage.getChefState() < ChefStates.WAITING_FOR_AN_ORDER
 					|| inMessage.getChefState() > ChefStates.CLOSING_SERVICE)
 				throw new MessageException("Invalid Chef state!", inMessage);
@@ -61,13 +64,14 @@ public class GenReposInterface {
 			break;
 		// verify Student state
 		case MessageType.SETUSSTATE:
-			// case MessageType.REQUPDTSTUST2:
+		case MessageType.SETUSSEATANDSTATE:
 			if (inMessage.getStudentState() < StudentStates.GOING_TO_THE_RESTAURANT
 					|| inMessage.getStudentState() > StudentStates.GOING_HOME)
 				throw new MessageException("Invalid Student state!", inMessage);
 			break;
 		// verify only message type
 		case MessageType.SETUSSEAT:
+		case MessageType.SETUSEATATLEAVING:
 		case MessageType.SHUT:
 			break;
 		default:
@@ -75,7 +79,6 @@ public class GenReposInterface {
 		}
 
 		// processing
-
 		switch (inMessage.getMsgType()) {
 		case MessageType.SETUSSTATE:
 			repos.updateStudentState(inMessage.getStudentID(), inMessage.getStudentState());
@@ -87,10 +90,37 @@ public class GenReposInterface {
 			outMessage = new Message(MessageType.SACK);
 			break;
 
+		case MessageType.SETUSSEATANDSTATE:
+			repos.updateStudentSeatAndState(inMessage.getStudentID(), inMessage.getSeatAtTable(),
+					inMessage.getStudentState());
+			outMessage = new Message(MessageType.SACK);
+			break;
+
+		case MessageType.SETUSEATATLEAVING:
+			repos.updateSeatsAtLeaving(inMessage.getStudentID());
+			outMessage = new Message(MessageType.SACK);
+			break;
+
 		case MessageType.SETUCS:
 			repos.updateChefState(inMessage.getChefState());
 			outMessage = new Message(MessageType.SACK);
 			break;
+
+		case MessageType.SETUCOURSE:
+			repos.updateCourse(inMessage.getNCourses(), inMessage.getChefState());
+			outMessage = new Message(MessageType.SACK);
+			break;
+
+		case MessageType.SETUPORTION:
+			repos.updatePortion(inMessage.getNPortions(), inMessage.getChefState());
+			outMessage = new Message(MessageType.SACK);
+			break;
+
+		case MessageType.SETUPORTIONANDCOURSE:
+			repos.updatePortionAndCourse(inMessage.getNPortions(), inMessage.getNCourses(), inMessage.getChefState());
+			outMessage = new Message(MessageType.SACK);
+			break;
+
 		case MessageType.SETUWS:
 			repos.updateWaiterState(inMessage.getWaiterState());
 			outMessage = new Message(MessageType.SACK);
