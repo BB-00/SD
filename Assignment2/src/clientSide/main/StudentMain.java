@@ -113,7 +113,6 @@ public class StudentMain {
 		genRepos.shutdown();
 		
 		for(int i=0; i<ExecConsts.N; i++){
-            students[i].start();
             GenericIO.writelnString("Student thread "+i+" finished!");
         }
 	}
