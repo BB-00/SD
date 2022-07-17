@@ -335,8 +335,7 @@ public class Table {
 
 		students[studentID] = student;
 		students[studentID].setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-		student.setStudentState(StudentStates.TAKING_A_SEAT_AT_THE_TABLE);
-
+		
 		// -------------- DEBUG ----------------------
 		// System.out.println("Student " + studentID + " took a seat!");
 
@@ -371,7 +370,6 @@ public class Table {
 		int studentID = student.getStudentID();
 
 		students[studentID].setStudentState(StudentStates.SELECTING_THE_COURSES);
-		student.setStudentState(StudentStates.SELECTING_THE_COURSES);
 		repos.updateStudentState(studentID, StudentStates.SELECTING_THE_COURSES);
 
 		studentsThatHaveReadTheMenu[studentID] = true;
@@ -391,7 +389,6 @@ public class Table {
 		numberOfStudentsThatHasChosen++;
 
 		students[firstToArriveID].setStudentState(StudentStates.ORGANIZING_THE_ORDER);
-		((Student) Thread.currentThread()).setStudentState(StudentStates.ORGANIZING_THE_ORDER);
 		repos.updateStudentState(firstToArriveID, StudentStates.ORGANIZING_THE_ORDER);
 	}
 
@@ -466,7 +463,6 @@ public class Table {
 	 */
 	public synchronized void joinTalk() {
 		students[firstToArriveID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-		((Student) Thread.currentThread()).setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
 		repos.updateStudentState(firstToArriveID, StudentStates.CHATTING_WITH_COMPANIONS);
 	}
 
@@ -477,24 +473,26 @@ public class Table {
 	 * preferences Blocks waiting for courses
 	 */
 	public synchronized void informCompanion() {
-		Student student = ((Student) Thread.currentThread());
-		int studentID = student.getStudentID();
-
-		while (informingCompanion) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		informingCompanion = true;
-		notifyAll();
-
-		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+    	
+    	//If some other student is informing about his order then wait must be done
+    	while(informingCompanion)
+    	{
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+    	}
+    	
+    	informingCompanion = true;
+    	//notify first student to arrive, so that he can register ones preference
+    	notifyAll();
+    	
+    	//Update student state
+    	students[studentId].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	repos.updateStudentState(studentId, ((Student) Thread.currentThread()).getStudentState());
 	}
 
 	/**
@@ -503,19 +501,17 @@ public class Table {
 	 * Called by the student to start eating the meal (During random time)
 	 */
 	public synchronized void startEating() {
-		Student student = ((Student) Thread.currentThread());
-		int studentID = student.getStudentID();
-
-		synchronized (this) {
-			students[studentID].setStudentState(StudentStates.ENJOYING_THE_MEAL);
-			student.setStudentState(StudentStates.ENJOYING_THE_MEAL);
-			repos.updateStudentState(studentID, StudentStates.ENJOYING_THE_MEAL);
-		}
-
-		try {
-			Thread.sleep((long) (1 + 100 * Math.random()));
-		} catch (InterruptedException e) {
-		}
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+    	 
+    	//Update student state
+    	students[studentId].setStudentState(StudentStates.ENJOYING_THE_MEAL);
+    	repos.updateStudentState(studentId, ((Student) Thread.currentThread()).getStudentState());
+    	
+    	//Enjoy meal during random time
+        try
+        { Thread.sleep ((long) (1 + 100 * Math.random ()));
+        }
+        catch (InterruptedException e) {}
 	}
 
 	/**
@@ -524,21 +520,23 @@ public class Table {
 	 * Called by the student to signal that he has finished eating his meal
 	 */
 	public synchronized void endEating() {
-		Student student = ((Student) Thread.currentThread());
-		int studentID = student.getStudentID();
-
-		numberOfStudentsThatHasFinishEat++;
-		// --------------------- DEUBG -----------------
-		// System.out.println("Student " + studentID + " finished");
-
-		if (numberOfStudentsThatHasFinishEat == ExecConsts.N) {
-			numberOfCoursesEaten++;
-			lastToEatID = studentID;
-		}
-
-		students[studentID].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-		student.setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
-		repos.updateStudentState(studentID, StudentStates.CHATTING_WITH_COMPANIONS);
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+    	
+    	//Update numstudents finished course
+    	numberOfStudentsThatHasFinishEat++;
+    	System.out.println(studentId+" finished"+numberOfCoursesEaten);
+    	
+    	//If all students have finished means that one more course was eaten
+    	if(numberOfStudentsThatHasFinishEat == ExecConsts.N)
+    	{
+            numberOfCoursesEaten++;
+            //register last to eat
+            lastToEatID = studentId;
+    	}
+    	
+    	//Update student state
+    	students[studentId].setStudentState(StudentStates.CHATTING_WITH_COMPANIONS);
+    	repos.updateStudentState(studentId, ((Student) Thread.currentThread()).getStudentState());
 	}
 
 	/**
@@ -547,36 +545,40 @@ public class Table {
 	 * Called by to student to wait for his companions to finish eating
 	 */
 	public synchronized boolean hasEverybodyFinishedEating() {
-		int studentID = ((Student) Thread.currentThread()).getStudentID();
-
-		if (studentID == lastToEatID) {
-			numberOfStudentsThatHasFinishEat = 0;
-			numberOfStudentsServed = 0;
-			numberOfStudentsWokenUp++;
-			notifyAll();
-			while (numberOfStudentsWokenUp != ExecConsts.N) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-
-		while (numberOfStudentsThatHasFinishEat != 0) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		numberOfStudentsWokenUp++;
-		if (numberOfStudentsWokenUp == ExecConsts.N)
-			notifyAll();
-
-		return true;
+		int studentId = ((Student) Thread.currentThread()).getStudentID();
+    	
+    	//Notify all students that the last one to eat has already finished
+    	if(studentId == lastToEatID)
+    	{
+            numberOfStudentsThatHasFinishEat = 0;
+            numberOfStudentsServed = 0;
+            numberOfStudentsWokenUp++;
+            notifyAll();
+            while(numberOfStudentsWokenUp != ExecConsts.N)
+            {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+    	}
+    	
+    	//Wait while not all students have finished
+    	while(numberOfStudentsThatHasFinishEat != 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+    	}
+    	numberOfStudentsWokenUp++;
+    	if(numberOfStudentsWokenUp == ExecConsts.N)
+            notifyAll();
+    	
+    	return true;
 	}
 
 	/**
@@ -610,23 +612,22 @@ public class Table {
 	 * @return true if all courses have been eaten, false otherwise
 	 */
 	public synchronized boolean haveAllCoursesBeenEaten() {
-		if (numberOfCoursesEaten == ExecConsts.M)
-			return true;
-		else {
-			while (numberOfStudentsServed != ExecConsts.N) {
-				try {
-					wait();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			// --------------------- DEUBG -----------------
-			// System.out.println("All portions have been served, course " +
-			// numberOfCoursesEaten);
-			return false;
-		}
+		if(numberOfCoursesEaten == ExecConsts.M)
+            return true;
+            else {
+            //Student blocks waiting for all companions to be served
+            while(numberOfStudentsServed != ExecConsts.N)
+            {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+      
+            return false;
+    	}
 
 	}
 
@@ -638,16 +639,16 @@ public class Table {
 	 * @return True if current student was the last to arrive, false otherwise
 	 */
 	public synchronized boolean shouldHaveArrivedEarlier() {
-		Student student = ((Student) Thread.currentThread());
 
-		int studentID = student.getStudentID();
+		int studentID = ((Student) Thread.currentThread()).getStudentID();
 
-		if (studentID == lastToArriveID) {
-			students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
-			student.setStudentState(StudentStates.PAYING_THE_MEAL);
-			repos.updateStudentState(studentID, StudentStates.PAYING_THE_MEAL);
-			return true;
-		} else
-			return false;
+    	if(studentID == lastToArriveID) {
+            //Update student state
+            students[studentID].setStudentState(StudentStates.PAYING_THE_MEAL);
+            repos.updateStudentState(studentID, ((Student) Thread.currentThread()).getStudentState());
+            return true;
+    	}
+    	else
+            return false;
 	}
 }

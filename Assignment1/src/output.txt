@@ -113259,3 +113259,1753 @@ Student 2 has left!
 Student 3 has left!
 Student 6 has left!
 Student 0 has left!
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Courses delivered: 1
+Courses delivered: 2
+Courses delivered: 3
+Student2 took a seat
+Student4 took a seat
+Student1 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student0 took a seat
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student5 took a seat
+Student6 took a seat
+Student 2 read the menu (2)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Student3 took a seat
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Waiter is now waiting for order description
+Student 2 requested the order
+Waiter Got the order
+All served!!! Course 0
+2 finished1
+All served!!! Course 0
+3 finished2
+All served!!! Course 0
+5 finished3
+All served!!! Course 0
+4 finished4
+All served!!! Course 0
+0 finished5
+All served!!! Course 0
+6 finished6
+All served!!! Course 0
+1 finished7
+All served!!! Course 1
+3 finished1
+All served!!! Course 1
+2 finished2
+All served!!! Course 1
+6 finished3
+All served!!! Course 1
+0 finished4
+All served!!! Course 1
+1 finished5
+All served!!! Course 1
+4 finished6
+All served!!! Course 1
+5 finished7
+All served!!! Course 2
+2 finished1
+All served!!! Course 2
+3 finished2
+All served!!! Course 2
+4 finished3
+All served!!! Course 2
+1 finished4
+All served!!! Course 2
+0 finished5
+All served!!! Course 2
+6 finished6
+All served!!! Course 2
+5 finished7
+I PAYED THE MEAL
+Student2 took a seat
+Student0 took a seat
+Student1 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Student4 took a seat
+Student3 took a seat
+Saluting
+Waiter Saluting student 1 true
+Student6 took a seat
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Student5 took a seat
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Waiter is now waiting for order description
+Student 2 requested the order
+Waiter Got the order
+All served!!! Course 0
+All served!!! Course 0
+All served!!! Course 0
+4 finished1
+All served!!! Course 0
+0 finished2
+All served!!! Course 0
+1 finished3
+All served!!! Course 0
+3 finished4
+All served!!! Course 0
+6 finished5
+5 finished6
+2 finished7
+All served!!! Course 1
+0 finished1
+All served!!! Course 1
+2 finished2
+All served!!! Course 1
+4 finished3
+All served!!! Course 1
+5 finished4
+All served!!! Course 1
+6 finished5
+All served!!! Course 1
+3 finished6
+All served!!! Course 1
+1 finished7
+All served!!! Course 2
+2 finished1
+All served!!! Course 2
+0 finished2
+All served!!! Course 2
+3 finished3
+All served!!! Course 2
+6 finished4
+All served!!! Course 2
+5 finished5
+All served!!! Course 2
+1 finished6
+All served!!! Course 2
+4 finished7
+I PAYED THE MEAL
+Student4 took a seat
+Student6 took a seat
+Saluting
+Waiter Saluting student 4 true
+Student5 took a seat
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Student0 took a seat
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Student3 took a seat
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Student2 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Waiter is now waiting for order description
+Student 4 requested the order
+Waiter Got the order
+Student1 took a seat
+Saluting
+Waiter Saluting student 1 true
+All served!!! Course 0
+All served!!! Course 0
+0 finished1
+All served!!! Course 0
+6 finished2
+All served!!! Course 0
+5 finished3
+All served!!! Course 0
+3 finished4
+All served!!! Course 0
+4 finished5
+2 finished6
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+All served!!! Course 0
+1 finished7
+All served!!! Course 1
+0 finished1
+All served!!! Course 1
+1 finished2
+All served!!! Course 1
+2 finished3
+All served!!! Course 1
+4 finished4
+All served!!! Course 1
+3 finished5
+All served!!! Course 1
+5 finished6
+All served!!! Course 1
+6 finished7
+All served!!! Course 2
+1 finished1
+All served!!! Course 2
+0 finished2
+All served!!! Course 2
+5 finished3
+All served!!! Course 2
+3 finished4
+All served!!! Course 2
+4 finished5
+All served!!! Course 2
+2 finished6
+All served!!! Course 2
+6 finished7
+I PAYED THE MEAL
+Student3 took a seat
+Student4 took a seat
+Saluting
+Waiter Saluting student 3 true
+Student0 took a seat
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Student5 took a seat
+Student1 took a seat
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Student6 took a seat
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Waiter is now waiting for order description
+Student 3 requested the order
+Waiter Got the order
+Student2 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+All served!!! Course 0
+All served!!! Course 0
+3 finished1
+All served!!! Course 0
+1 finished2
+All served!!! Course 0
+0 finished3
+All served!!! Course 0
+5 finished4
+All served!!! Course 0
+4 finished5
+All served!!! Course 0
+6 finished6
+2 finished7
+All served!!! Course 1
+1 finished1
+All served!!! Course 1
+3 finished2
+All served!!! Course 1
+6 finished3
+All served!!! Course 1
+4 finished4
+All served!!! Course 1
+5 finished5
+All served!!! Course 1
+0 finished6
+All served!!! Course 1
+2 finished7
+All served!!! Course 2
+3 finished1
+All served!!! Course 2
+1 finished2
+All served!!! Course 2
+0 finished3
+All served!!! Course 2
+5 finished4
+All served!!! Course 2
+4 finished5
+All served!!! Course 2
+6 finished6
+All served!!! Course 2
+2 finished7
+I PAYED THE MEAL
+Student2 took a seat
+Student5 took a seat
+Student3 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Student1 took a seat
+Student6 took a seat
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Saluting
+Waiter Saluting student 5 true
+Student4 took a seat
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Waiter is now waiting for order description
+Student 2 requested the order
+Student0 took a seat
+Waiter Got the order
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+All served!!! Course 0
+All served!!! Course 0
+3 finished1
+All served!!! Course 0
+5 finished2
+All served!!! Course 0
+4 finished3
+All served!!! Course 0
+6 finished4
+All served!!! Course 0
+2 finished5
+All served!!! Course 0
+1 finished6
+0 finished7
+All served!!! Course 1
+5 finished1
+All served!!! Course 1
+3 finished2
+All served!!! Course 1
+1 finished3
+All served!!! Course 1
+2 finished4
+All served!!! Course 1
+6 finished5
+All served!!! Course 1
+4 finished6
+All served!!! Course 1
+0 finished7
+All served!!! Course 2
+3 finished1
+All served!!! Course 2
+5 finished2
+All served!!! Course 2
+4 finished3
+All served!!! Course 2
+6 finished4
+All served!!! Course 2
+2 finished5
+All served!!! Course 2
+1 finished6
+All served!!! Course 2
+0 finished7
+I PAYED THE MEAL
+Student3 took a seat
+Student0 took a seat
+Saluting
+Waiter Saluting student 3 true
+Student2 took a seat
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Student1 took a seat
+Student6 took a seat
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Student5 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Student4 took a seat
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Waiter is now waiting for order description
+Student 3 requested the order
+Waiter Got the order
+All served!!! Course 0
+All served!!! Course 0
+4 finished1
+All served!!! Course 0
+6 finished2
+All served!!! Course 0
+1 finished3
+All served!!! Course 0
+5 finished4
+All served!!! Course 0
+0 finished5
+All served!!! Course 0
+2 finished6
+3 finished7
+All served!!! Course 1
+6 finished1
+All served!!! Course 1
+4 finished2
+All served!!! Course 1
+2 finished3
+All served!!! Course 1
+0 finished4
+All served!!! Course 1
+5 finished5
+All served!!! Course 1
+1 finished6
+All served!!! Course 1
+3 finished7
+All served!!! Course 2
+4 finished1
+All served!!! Course 2
+6 finished2
+All served!!! Course 2
+1 finished3
+All served!!! Course 2
+5 finished4
+All served!!! Course 2
+0 finished5
+All served!!! Course 2
+2 finished6
+All served!!! Course 2
+3 finished7
+I PAYED THE MEAL
+Student3 took a seat
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Student6 took a seat
+Student2 took a seat
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Student5 took a seat
+Student4 took a seat
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Student1 took a seat
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Waiter is now waiting for order description
+Student 3 requested the order
+Waiter Got the order
+All served!!! Course 0
+3 finished1
+All served!!! Course 0
+6 finished2
+All served!!! Course 0
+5 finished3
+All served!!! Course 0
+2 finished4
+All served!!! Course 0
+1 finished5
+All served!!! Course 0
+4 finished6
+Student0 took a seat
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+All served!!! Course 0
+0 finished7
+All served!!! Course 1
+4 finished1
+All served!!! Course 1
+3 finished2
+All served!!! Course 1
+6 finished3
+All served!!! Course 1
+5 finished4
+All served!!! Course 1
+2 finished5
+All served!!! Course 1
+0 finished6
+All served!!! Course 1
+1 finished7
+All served!!! Course 2
+3 finished1
+All served!!! Course 2
+4 finished2
+All served!!! Course 2
+0 finished3
+All served!!! Course 2
+2 finished4
+All served!!! Course 2
+5 finished5
+All served!!! Course 2
+6 finished6
+All served!!! Course 2
+1 finished7
+I PAYED THE MEAL
+Student5 took a seat
+Student0 took a seat
+Student1 took a seat
+Student2 took a seat
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Student3 took a seat
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Student4 took a seat
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Waiter is now waiting for order description
+Student 5 requested the order
+Waiter Got the order
+Student6 took a seat
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+All served!!! Course 0
+All served!!! Course 0
+5 finished1
+All served!!! Course 0
+2 finished2
+All served!!! Course 0
+0 finished3
+All served!!! Course 0
+1 finished4
+All served!!! Course 0
+4 finished5
+All served!!! Course 0
+3 finished6
+6 finished7
+All served!!! Course 1
+2 finished1
+All served!!! Course 1
+5 finished2
+All served!!! Course 1
+3 finished3
+All served!!! Course 1
+4 finished4
+All served!!! Course 1
+1 finished5
+All served!!! Course 1
+6 finished6
+All served!!! Course 1
+0 finished7
+All served!!! Course 2
+5 finished1
+All served!!! Course 2
+2 finished2
+All served!!! Course 2
+6 finished3
+All served!!! Course 2
+1 finished4
+All served!!! Course 2
+4 finished5
+All served!!! Course 2
+3 finished6
+All served!!! Course 2
+0 finished7
+I PAYED THE MEAL
+Student1 took a seat
+Student2 took a seat
+Student0 took a seat
+Student5 took a seat
+Saluting
+Waiter Saluting student 1 true
+Student4 took a seat
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student3 took a seat
+Student 1 read the menu (1)
+Student6 took a seat
+Saluting
+Waiter Saluting student 5 true
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Waiter is now waiting for order description
+Student 1 requested the order
+Waiter Got the order
+All served!!! Course 0
+All served!!! Course 0
+0 finished1
+All served!!! Course 0
+2 finished2
+All served!!! Course 0
+4 finished3
+All served!!! Course 0
+5 finished4
+All served!!! Course 0
+3 finished5
+All served!!! Course 0
+1 finished6
+6 finished7
+All served!!! Course 1
+2 finished1
+All served!!! Course 1
+0 finished2
+All served!!! Course 1
+1 finished3
+All served!!! Course 1
+3 finished4
+All served!!! Course 1
+5 finished5
+All served!!! Course 1
+4 finished6
+All served!!! Course 1
+6 finished7
+All served!!! Course 2
+0 finished1
+All served!!! Course 2
+2 finished2
+All served!!! Course 2
+4 finished3
+All served!!! Course 2
+5 finished4
+All served!!! Course 2
+3 finished5
+All served!!! Course 2
+6 finished6
+All served!!! Course 2
+1 finished7
+I PAYED THE MEAL
+Student5 took a seat
+Student6 took a seat
+Student1 took a seat
+Student4 took a seat
+Saluting
+Waiter Saluting student 5 true
+Student0 took a seat
+Student 5 Can Proceed
+Student 5 has received the menu (5)
+Student 5 read the menu (5)
+Student3 took a seat
+Student2 took a seat
+Saluting
+Waiter Saluting student 4 true
+Student 4 Can Proceed
+Student 4 has received the menu (4)
+Student 4 read the menu (4)
+Saluting
+Waiter Saluting student 1 true
+Student 1 Can Proceed
+Student 1 has received the menu (1)
+Student 1 read the menu (1)
+Saluting
+Waiter Saluting student 6 true
+Student 6 Can Proceed
+Student 6 has received the menu (6)
+Student 6 read the menu (6)
+Saluting
+Waiter Saluting student 0 true
+Student 0 Can Proceed
+Student 0 has received the menu (0)
+Student 0 read the menu (0)
+Saluting
+Waiter Saluting student 3 true
+Student 3 Can Proceed
+Student 3 has received the menu (3)
+Student 3 read the menu (3)
+Saluting
+Waiter Saluting student 2 true
+Student 2 Can Proceed
+Student 2 has received the menu (2)
+Student 2 read the menu (2)
+Waiter is now waiting for order description
+Student 5 requested the order
+Waiter Got the order
+All served!!! Course 0
+All served!!! Course 0
+2 finished1
+All served!!! Course 0
+3 finished2
+All served!!! Course 0
+1 finished3
+All served!!! Course 0
+4 finished4
+All served!!! Course 0
+6 finished5
+All served!!! Course 0
+0 finished6
+5 finished7
+All served!!! Course 1
+3 finished1
+All served!!! Course 1
+2 finished2
+All served!!! Course 1
+0 finished3
+All served!!! Course 1
+6 finished4
+All served!!! Course 1
+4 finished5
+All served!!! Course 1
+1 finished6
+All served!!! Course 1
+5 finished7
+All served!!! Course 2
+2 finished1
+All served!!! Course 2
+3 finished2
+All served!!! Course 2
+1 finished3
+All served!!! Course 2
+4 finished4
+All served!!! Course 2
+6 finished5
+All served!!! Course 2
+0 finished6
+All served!!! Course 2
+5 finished7
+I PAYED THE MEAL
+1 finished0
+5 finished0
+4 finished0
+3 finished0
+6 finished0
+2 finished0
+0 finished0
+5 finished1
+1 finished1
+0 finished1
+2 finished1
+6 finished1
+3 finished1
+4 finished1
+1 finished2
+5 finished2
+3 finished2
+6 finished2
+2 finished2
+4 finished2
+0 finished2
+0 finished0
+6 finished0
+2 finished0
+3 finished0
+1 finished0
+4 finished0
+5 finished0
+1 finished1
+4 finished1
+0 finished1
+6 finished1
+2 finished1
+5 finished1
+3 finished1
+4 finished2
+1 finished2
+5 finished2
+2 finished2
+6 finished2
+0 finished2
+3 finished2
+5 finished0
+0 finished0
+4 finished0
+2 finished0
+3 finished0
+1 finished0
+6 finished0
+1 finished1
+5 finished1
+0 finished1
+4 finished1
+2 finished1
+3 finished1
+6 finished1
+5 finished2
+1 finished2
+3 finished2
+2 finished2
+4 finished2
+0 finished2
+6 finished2
+2 finished0
+0 finished0
+1 finished0
+3 finished0
+4 finished0
+6 finished0
+5 finished0
+0 finished1
+2 finished1
+6 finished1
+4 finished1
+3 finished1
+1 finished1
+5 finished1
+2 finished2
+0 finished2
+1 finished2
+3 finished2
+4 finished2
+6 finished2
+5 finished2
+4 finished0
+3 finished0
+6 finished0
+2 finished0
+0 finished0
+5 finished0
+1 finished0
+4 finished1
+5 finished1
+0 finished1
+2 finished1
+6 finished1
+3 finished1
+1 finished1
+5 finished2
+4 finished2
+3 finished2
+6 finished2
+2 finished2
+0 finished2
+1 finished2
+3 finished0
+6 finished0
+0 finished0
+4 finished0
+5 finished0
+2 finished0
+1 finished0
+3 finished1
+2 finished1
+5 finished1
+4 finished1
+0 finished1
+6 finished1
+1 finished1
+2 finished2
+3 finished2
+6 finished2
+0 finished2
+4 finished2
+1 finished2
+5 finished2
+0 finished0
+6 finished0
+3 finished0
+1 finished0
+5 finished0
+4 finished0
+2 finished0
+6 finished1
+0 finished1
+4 finished1
+5 finished1
+1 finished1
+3 finished1
+2 finished1
+0 finished2
+6 finished2
+3 finished2
+1 finished2
+5 finished2
+2 finished2
+4 finished2
+5 finished0
+6 finished0
+3 finished0
+4 finished0
+2 finished0
+0 finished0
+1 finished0
+5 finished1
+0 finished1
+2 finished1
+4 finished1
+3 finished1
+6 finished1
+1 finished1
+0 finished2
+5 finished2
+6 finished2
+3 finished2
+4 finished2
+2 finished2
+1 finished2
+0 finished0
+5 finished0
+3 finished0
+6 finished0
+2 finished0
+1 finished0
+4 finished0
+2 finished1
+1 finished1
+0 finished1
+5 finished1
+3 finished1
+4 finished1
+6 finished1
+1 finished2
+2 finished2
+4 finished2
+3 finished2
+5 finished2
+6 finished2
+0 finished2
+1 finished0
+5 finished0
+4 finished0
+0 finished0
+3 finished0
+2 finished0
+6 finished0
+2 finished1
+1 finished1
+5 finished1
+4 finished1
+0 finished1
+6 finished1
+3 finished1
+1 finished2
+2 finished2
+6 finished2
+0 finished2
+4 finished2
+3 finished2
+5 finished2
+6 finished0
+0 finished0
+2 finished0
+5 finished0
+4 finished0
+1 finished0
+3 finished0
+0 finished1
+6 finished1
+1 finished1
+4 finished1
+5 finished1
+2 finished1
+3 finished1
+6 finished2
+0 finished2
+2 finished2
+5 finished2
+4 finished2
+1 finished2
+3 finished2
+2 finished0
+3 finished0
+1 finished0
+6 finished0
+5 finished0
+0 finished0
+4 finished0
+3 finished1
+2 finished1
+0 finished1
+5 finished1
+6 finished1
+4 finished1
+1 finished1
+2 finished2
+3 finished2
+4 finished2
+6 finished2
+5 finished2
+0 finished2
+1 finished2
+2 finished0
+4 finished0
+3 finished0
+5 finished0
+1 finished0
+6 finished0
+0 finished0
+4 finished1
+2 finished1
+6 finished1
+1 finished1
+5 finished1
+3 finished1
+0 finished1
+2 finished2
+4 finished2
+3 finished2
+5 finished2
+1 finished2
+6 finished2
+0 finished2
+1 finished0
+5 finished0
+4 finished0
+6 finished0
+0 finished0
+3 finished0
+2 finished0
+5 finished1
+1 finished1
+3 finished1
+0 finished1
+6 finished1
+2 finished1
+4 finished1
+1 finished2
+5 finished2
+2 finished2
+6 finished2
+0 finished2
+3 finished2
+4 finished2
+0 finished0
+6 finished0
+3 finished0
+2 finished0
+4 finished0
+1 finished0
+5 finished0
+1 finished1
+0 finished1
+6 finished1
+3 finished1
+2 finished1
+4 finished1
+5 finished1
+0 finished2
+1 finished2
+4 finished2
+2 finished2
+3 finished2
+5 finished2
+6 finished2
+4 finished0
+3 finished0
+1 finished0
+5 finished0
+0 finished0
+6 finished0
+2 finished0
+0 finished1
+6 finished1
+4 finished1
+3 finished1
+1 finished1
+2 finished1
+5 finished1
+6 finished2
+0 finished2
+2 finished2
+1 finished2
+3 finished2
+5 finished2
+4 finished2
+0 finished0
+2 finished0
+6 finished0
+3 finished0
+5 finished0
+4 finished0
+1 finished0
+2 finished1
+0 finished1
+4 finished1
+5 finished1
+3 finished1
+1 finished1
+6 finished1
+0 finished2
+2 finished2
+1 finished2
+3 finished2
+5 finished2
+6 finished2
+4 finished2
+5 finished0
+0 finished0
+6 finished0
+1 finished0
+3 finished0
+4 finished0
+2 finished0
+0 finished1
+5 finished1
+4 finished1
+3 finished1
+2 finished1
+1 finished1
+6 finished1
+5 finished2
+0 finished2
+1 finished2
+2 finished2
+3 finished2
+6 finished2
+4 finished2
+3 finished0
+5 finished0
+6 finished0
+0 finished0
+4 finished0
+1 finished0
+2 finished0
+1 finished1
+3 finished1
+5 finished1
+6 finished1
+0 finished1
+2 finished1
+4 finished1
+1 finished2
+2 finished2
+0 finished2
+6 finished2
+5 finished2
+4 finished2
+3 finished2
+2 finished0
+6 finished0
+4 finished0
+3 finished0
+5 finished0
+1 finished0
+0 finished0
+6 finished1
+2 finished1
+1 finished1
+5 finished1
+3 finished1
+0 finished1
+4 finished1
+2 finished2
+6 finished2
+0 finished2
+3 finished2
+5 finished2
+1 finished2
+4 finished2
+6 finished0
+5 finished0
+4 finished0
+1 finished0
+0 finished0
+2 finished0
+3 finished0
+5 finished1
+6 finished1
+2 finished1
+3 finished1
+0 finished1
+1 finished1
+4 finished1
+6 finished2
+5 finished2
+1 finished2
+0 finished2
+3 finished2
+2 finished2
+4 finished2
+4 finished0
+2 finished0
+3 finished0
+6 finished0
+1 finished0
+0 finished0
+5 finished0
+0 finished1
+4 finished1
+2 finished1
+3 finished1
+6 finished1
+5 finished1
+1 finished1
+4 finished2
+0 finished2
+5 finished2
+6 finished2
+3 finished2
+2 finished2
+1 finished2
+6 finished0
+0 finished0
+1 finished0
+2 finished0
+3 finished0
+4 finished0
+5 finished0
+6 finished1
+4 finished1
+3 finished1
+5 finished1
+2 finished1
+1 finished1
+0 finished1
+4 finished2
+6 finished2
+1 finished2
+2 finished2
+5 finished2
+3 finished2
+0 finished2
+5 finished0
+4 finished0
+2 finished0
+0 finished0
+3 finished0
+6 finished0
+1 finished0
+5 finished1
+6 finished1
+3 finished1
+0 finished1
+2 finished1
+4 finished1
+1 finished1
+6 finished2
+5 finished2
+4 finished2
+2 finished2
+0 finished2
+1 finished2
+3 finished2
+2 finished0
+6 finished0
+3 finished0
+0 finished0
+5 finished0
+1 finished0
+4 finished0
+2 finished1
+1 finished1
+5 finished1
+0 finished1
+3 finished1
+6 finished1
+4 finished1
+1 finished2
+2 finished2
+6 finished2
+3 finished2
+0 finished2
+5 finished2
+4 finished2
+1 finished0
+2 finished0
+0 finished0
+4 finished0
+6 finished0
+5 finished0
+3 finished0
+1 finished1
+5 finished1
+6 finished1
+4 finished1
+3 finished1
+0 finished1
+2 finished1
+5 finished2
+1 finished2
+0 finished2
+3 finished2
+4 finished2
+6 finished2
+2 finished2
+0 finished0
+6 finished0
+1 finished0
+2 finished0
+4 finished0
+3 finished0
+5 finished0
+6 finished1
+0 finished1
+3 finished1
+4 finished1
+2 finished1
+5 finished1
+1 finished1
+0 finished2
+6 finished2
+5 finished2
+2 finished2
+4 finished2
+3 finished2
+1 finished2
+3 finished0
+6 finished0
+2 finished0
+4 finished0
+1 finished0
+5 finished0
+0 finished0
+3 finished1
+5 finished1
+1 finished1
+4 finished1
+2 finished1
+6 finished1
+0 finished1
+5 finished2
+3 finished2
+6 finished2
+2 finished2
+4 finished2
+1 finished2
+0 finished2
+1 finished0
+0 finished0
+4 finished0
+2 finished0
+3 finished0
+6 finished0
+5 finished0
+0 finished1
+1 finished1
+6 finished1
+3 finished1
+2 finished1
+5 finished1
+4 finished1
+1 finished2
+0 finished2
+5 finished2
+2 finished2
+3 finished2
+4 finished2
+6 finished2
+1 finished0
+4 finished0
+5 finished0
+6 finished0
+2 finished0
+0 finished0
+3 finished0
+4 finished1
+1 finished1
+0 finished1
+2 finished1
+6 finished1
+5 finished1
+3 finished1
+1 finished2
+4 finished2
+5 finished2
+6 finished2
+2 finished2
+0 finished2
+3 finished2
+1 finished0
+4 finished0
+6 finished0
+0 finished0
+5 finished0
+2 finished0
+3 finished0
+4 finished1
+1 finished1
+2 finished1
+5 finished1
+0 finished1
+3 finished1
+6 finished1
+1 finished2
+4 finished2
+3 finished2
+0 finished2
+5 finished2
+2 finished2
+6 finished2
+4 finished0
+0 finished0
+1 finished0
+2 finished0
+6 finished0
+3 finished0
+5 finished0
+6 finished1
+3 finished1
+4 finished1
+0 finished1
+1 finished1
+5 finished1
+2 finished1
+3 finished2
+6 finished2
+5 finished2
+1 finished2
+0 finished2
+2 finished2
+4 finished2
+3 finished0
+0 finished0
+5 finished0
+2 finished0
+4 finished0
+6 finished0
+1 finished0
+0 finished1
+3 finished1
+6 finished1
+4 finished1
+2 finished1
+5 finished1
+1 finished1
+3 finished2
+0 finished2
+5 finished2
+2 finished2
+4 finished2
+1 finished2
+6 finished2
+4 finished0
+3 finished0
+5 finished0
+6 finished0
+2 finished0
+0 finished0
+1 finished0
+4 finished1
+0 finished1
+2 finished1
+6 finished1
+1 finished1
+5 finished1
+3 finished1
+0 finished2
+4 finished2
+5 finished2
+1 finished2
+6 finished2
+2 finished2
+3 finished2
+5 finished0
+4 finished0
+2 finished0
+3 finished0
+0 finished0
+1 finished0
+6 finished0
+5 finished1
+1 finished1
+0 finished1
+3 finished1
+2 finished1
+6 finished1
+4 finished1
+1 finished2
+5 finished2
+6 finished2
+2 finished2
+3 finished2
+4 finished2
+0 finished2
+3 finished0
+1 finished0
+6 finished0
+5 finished0
+0 finished0
+2 finished0
+4 finished0
+0 finished1
+2 finished1
+3 finished1
+1 finished1
+6 finished1
+5 finished1
+4 finished1
+2 finished2
+0 finished2
+5 finished2
+6 finished2
+4 finished2
+1 finished2
+3 finished2
+6 finished0
+3 finished0
+1 finished0
+4 finished0
+2 finished0
+5 finished0
+0 finished0
+2 finished1
+5 finished1
+6 finished1
+3 finished1
+1 finished1
+0 finished1
+4 finished1
+5 finished2
+2 finished2
+0 finished2
+1 finished2
+3 finished2
+6 finished2
+4 finished2
+5 finished0
+2 finished0
+3 finished0
+1 finished0
+6 finished0
+0 finished0
+4 finished0
+2 finished1
+5 finished1
+0 finished1
+6 finished1
+1 finished1
+3 finished1
+4 finished1
+5 finished2
+2 finished2
+3 finished2
+1 finished2
+6 finished2
+0 finished2
+4 finished2
+5 finished0
+3 finished0
+6 finished0
+2 finished0
+4 finished0
+1 finished0
+0 finished0
+3 finished1
+5 finished1
+1 finished1
+4 finished1
+2 finished1
+0 finished1
+6 finished1
+5 finished2
+3 finished2
+0 finished2
+2 finished2
+4 finished2
+1 finished2
+6 finished2
+5 finished0
+0 finished0
+2 finished0
+1 finished0
+3 finished0
+6 finished0
+4 finished0
+0 finished1
+5 finished1
+6 finished1
+3 finished1
+4 finished1
+1 finished1
+2 finished1
+5 finished2
+0 finished2
+1 finished2
+4 finished2
+3 finished2
+2 finished2
+6 finished2

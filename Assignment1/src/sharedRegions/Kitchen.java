@@ -83,8 +83,7 @@ public class Kitchen {
 	public synchronized void startPreparation() {
 		Chef chef = ((Chef) Thread.currentThread());
 		chef.setChefState(ChefStates.PREPARING_THE_COURSE);
-		repos.updateCourse(numberOfCoursesServed + 1, ChefStates.PREPARING_THE_COURSE);
-
+		
 		notifyAll();
 	}
 
